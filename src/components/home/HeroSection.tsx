@@ -15,7 +15,7 @@ const HeroSection = () => {
       </video>
       <div className="absolute inset-0 bg-gradient-to-r from-[#040615]/60 via-[#040615]/40 to-[#040615]/20 z-10" />
       
-      <div className="section-container relative z-10 mt-12 md:mt-0">
+      <div className="section-container relative z-10 mt-12 md:mt-0 md:pt-16">
         <div className="grid lg:grid-cols-2 gap-8 items-start md:items-center">
           <div className="space-y-6 animate-fade-in-up pt-4 md:pt-10">
             <div className="inline-block animate-fade-in-up pt-12 md:pt-0 -mt-10 md:mt-0" style={{animationDelay: "0.2s"}}>

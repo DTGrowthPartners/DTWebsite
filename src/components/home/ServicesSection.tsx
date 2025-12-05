@@ -85,12 +85,26 @@ const ServicesSection = () => {
                     ))}
                   </ul>
 
-                  <Link to={service.path} className="mt-auto">
-                    <Button variant="ghost" className="group w-full justify-between mt-3 p-2 text-xs scroll-glow-button">
-                      {t("services.seeMore")}
-                      <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </Link>
+                  {service.titleKey === "services.chatbots" ? (
+                    <a
+                      href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-auto"
+                    >
+                      <Button variant="ghost" className="group w-full justify-between mt-3 p-2 text-xs scroll-glow-button">
+                        {t("services.seeMore")}
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </a>
+                  ) : (
+                    <Link to={service.path} className="mt-auto">
+                      <Button variant="ghost" className="group w-full justify-between mt-3 p-2 text-xs scroll-glow-button">
+                        {t("services.seeMore")}
+                        <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  )}
                 </CardContent>
               </Card>
             );
