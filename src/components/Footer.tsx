@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/context/LanguageContext";
+import logo from "@/assets/DT-GROWTH-LOGO.png";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -9,10 +10,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-                 <Link to="/" className="flex items-center space-x-2 py-2" id="logito">
-                          <img src="http://dtgrowthpartners.com/wp-content/uploads/2025/11/LOGO-BLANCO-DTGROWTH.png" alt=""  width={170}/>
+                   <Link to="/" className="flex items-center space-x-2 py-2" id="logito">
+                       <img src={logo} alt="DT Growth" width={170} />
 
-          </Link>
+                 </Link>
             </div>
             <p className="text-sm text-muted-foreground">
               {t("footer.description")}

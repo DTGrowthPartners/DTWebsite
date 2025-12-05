@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -20,8 +21,7 @@ const Navigation = () => {
       <div className="section-container">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2 py-5">
-                          <img src="http://dtgrowthpartners.com/wp-content/uploads/2025/11/LOGO-BLANCO-DTGROWTH.png" alt=""  width={170}/>
-
+            <img src={logo} alt="DT Growth" width={170} />
           </Link>
 
           {/* DT-OS Mobile Icon - only visible on mobile when menu is closed */}
