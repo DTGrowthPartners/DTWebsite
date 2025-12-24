@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install framer-motion)",
+      "Bash(npx shadcn@latest add:*)"
+    ]
+  }
+}
