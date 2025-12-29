@@ -526,26 +526,54 @@ const MetaAds = () => {
                 </CardContent>
               </Card>
 
-              {/* Placeholder card para contenido futuro */}
-              <Card className="card-hover bg-card border-border/50 opacity-50">
+              {/* Caso 3: Restaurante de Comida Típica */}
+              <Card
+                className="card-hover bg-card border-border/50 cursor-pointer group relative overflow-hidden"
+                onClick={() => window.location.href = '/casos-exito/reconocimiento-local-restaurante'}
+              >
                 <CardContent className="p-6 space-y-4">
-                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-                    <FileCheck className="w-12 h-12 text-muted-foreground" />
-                  </div>
-                  <h3 className="text-xl font-semibold">Caso de Éxito #3</h3>
-                  <p className="text-muted-foreground">
-                    Contenido por agregar. Aquí irá la descripción del caso de éxito.
-                  </p>
-                  <div className="flex items-center gap-4 pt-2">
-                    <div>
-                      <div className="text-2xl font-bold text-primary">--</div>
-                      <div className="text-xs text-muted-foreground">Métrica</div>
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <div className="text-xs text-primary font-semibold uppercase tracking-wider">
+                        Reconocimiento Local | Restaurante
+                      </div>
+                      <h3 className="text-xl font-bold">440K personas de la zona ahora conocen el restaurante</h3>
                     </div>
-                    <div>
-                      <div className="text-2xl font-bold text-primary">--</div>
-                      <div className="text-xs text-muted-foreground">Resultado</div>
+                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </div>
+
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <div className="text-sm text-muted-foreground">El Desafío</div>
+                    <p className="text-sm">
+                      Restaurante de comida típica caribeña con bajo reconocimiento local. La gente no sabía dónde estaba ubicado.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">Alcance</div>
+                      <div className="text-lg font-bold text-primary">440K</div>
+                    </div>
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">Inversión</div>
+                      <div className="text-lg font-bold text-primary">$407</div>
                     </div>
                   </div>
+
+                  <div className="pt-2 border-t border-border/50">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Nuevos seguidores</span>
+                      <span className="font-semibold text-primary">+1,303</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    Ver caso completo
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
                 </CardContent>
               </Card>
             </div>

@@ -11,6 +11,7 @@ import DesarrolloWeb from "./pages/DesarrolloWeb";
 import SistemasAutomatizaciones from "./pages/SistemasAutomatizaciones";
 import CaseStudyRetailLicores from "./pages/CaseStudyRetailLicores";
 import CaseStudyEscalamientoTrimestral from "./pages/CaseStudyEscalamientoTrimestral";
+import CaseStudyRestaurante from "./pages/CaseStudyRestaurante";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/servicios/sistemas-automatizaciones" element={<SistemasAutomatizaciones />} />
             <Route path="/casos-exito/retail-bebidas" element={<CaseStudyRetailLicores />} />
             <Route path="/casos-exito/escalamiento-trimestral" element={<CaseStudyEscalamientoTrimestral />} />
+            <Route path="/casos-exito/reconocimiento-local-restaurante" element={<CaseStudyRestaurante />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
