@@ -411,6 +411,147 @@ const MetaAds = () => {
           </div>
         </section>
 
+        {/* Success Cases */}
+        <section className="py-20">
+          <div className="section-container">
+            <div className="text-center mb-16 -mt-8 sm:mt-0">
+              <h2 className="text-3xl lg:text-4xl font-bold mb-4">
+                Casos de <span className="gradient-text">Éxito</span>
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Historias reales de empresas que transformaron sus resultados con nuestras estrategias de Meta Ads.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Caso 1: Retail de Bebidas */}
+              <Card
+                className="card-hover bg-card border-border/50 cursor-pointer group relative overflow-hidden"
+                onClick={() => window.location.href = '/casos-exito/retail-bebidas'}
+              >
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <div className="text-xs text-primary font-semibold uppercase tracking-wider">
+                        Retail de Bebidas Online
+                      </div>
+                      <h3 className="text-xl font-bold">De ROAS 1.3x a resultados escalables</h3>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </div>
+
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <div className="text-sm text-muted-foreground">El Desafío</div>
+                    <p className="text-sm">
+                      Cliente con meses de inversión en Meta Ads sin resultados. Campañas enfocadas en alcance sin conversiones configuradas.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">Período</div>
+                      <div className="text-lg font-bold text-primary">60 días</div>
+                    </div>
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">Inversión</div>
+                      <div className="text-lg font-bold text-primary">$1.2M</div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-border/50">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">ROAS inicial</span>
+                      <span className="font-semibold text-red-400">1.3x</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    Ver caso completo
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Caso 2: Escalamiento Trimestral */}
+              <Card
+                className="card-hover bg-card border-border/50 cursor-pointer group relative overflow-hidden"
+                onClick={() => window.location.href = '/casos-exito/escalamiento-trimestral'}
+              >
+                <CardContent className="p-6 space-y-4">
+                  <div className="flex items-start justify-between">
+                    <div className="space-y-1">
+                      <div className="text-xs text-primary font-semibold uppercase tracking-wider">
+                        E-commerce Retail
+                      </div>
+                      <h3 className="text-xl font-bold">+92% en ventas escalando trimestralmente</h3>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </div>
+
+                  <div className="bg-muted/50 rounded-lg p-4 space-y-2">
+                    <div className="text-sm text-muted-foreground">El Contexto</div>
+                    <p className="text-sm">
+                      Después de estabilizar campañas, necesitábamos escalar sin desperdiciar presupuesto manteniendo el ROAS.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">Período</div>
+                      <div className="text-lg font-bold text-primary">6 meses</div>
+                    </div>
+                    <div className="bg-primary/5 rounded-lg p-3 text-center">
+                      <div className="text-xs text-muted-foreground mb-1">ROAS Q2</div>
+                      <div className="text-lg font-bold text-primary">41x</div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2 border-t border-border/50">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Crecimiento ventas</span>
+                      <span className="font-semibold text-primary">+92%</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    variant="outline"
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                  >
+                    Ver caso completo
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Placeholder card para contenido futuro */}
+              <Card className="card-hover bg-card border-border/50 opacity-50">
+                <CardContent className="p-6 space-y-4">
+                  <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
+                    <FileCheck className="w-12 h-12 text-muted-foreground" />
+                  </div>
+                  <h3 className="text-xl font-semibold">Caso de Éxito #3</h3>
+                  <p className="text-muted-foreground">
+                    Contenido por agregar. Aquí irá la descripción del caso de éxito.
+                  </p>
+                  <div className="flex items-center gap-4 pt-2">
+                    <div>
+                      <div className="text-2xl font-bold text-primary">--</div>
+                      <div className="text-xs text-muted-foreground">Métrica</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary">--</div>
+                      <div className="text-xs text-muted-foreground">Resultado</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Client Logos */}
         <section className="py-20">
           <div className="section-container">

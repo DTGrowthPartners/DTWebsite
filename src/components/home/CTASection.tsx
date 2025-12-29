@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import fondoVideo from "@/assets/fondo-video.mp4";
 
 const CTASection = () => {
   const { t } = useLanguage();
@@ -17,7 +16,7 @@ const CTASection = () => {
             muted
             playsInline
           >
-            <source src={fondoVideo} type="video/mp4" />
+            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-hero opacity-30" />
           

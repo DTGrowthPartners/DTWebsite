@@ -9,6 +9,8 @@ import Index from "./pages/Index";
 import MetaAds from "./pages/MetaAds";
 import DesarrolloWeb from "./pages/DesarrolloWeb";
 import SistemasAutomatizaciones from "./pages/SistemasAutomatizaciones";
+import CaseStudyRetailLicores from "./pages/CaseStudyRetailLicores";
+import CaseStudyEscalamientoTrimestral from "./pages/CaseStudyEscalamientoTrimestral";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +38,8 @@ const App = () => (
             <Route path="/servicios/meta-ads" element={<MetaAds />} />
             <Route path="/servicios/desarrollo-web" element={<DesarrolloWeb />} />
             <Route path="/servicios/sistemas-automatizaciones" element={<SistemasAutomatizaciones />} />
+            <Route path="/casos-exito/retail-bebidas" element={<CaseStudyRetailLicores />} />
+            <Route path="/casos-exito/escalamiento-trimestral" element={<CaseStudyEscalamientoTrimestral />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
