@@ -533,11 +533,15 @@ const MetaAds = () => {
               >
                 <CardContent className="p-6 space-y-4">
                   <div className="flex items-start justify-between">
-                    <div className="space-y-1">
+                    <div className="space-y-1 flex-1 pr-2">
                       <div className="text-xs text-primary font-semibold uppercase tracking-wider">
                         Reconocimiento Local | Restaurante
                       </div>
-                      <h3 className="text-xl font-bold">440K personas de la zona ahora conocen el restaurante</h3>
+                      <h3 className="text-base sm:text-lg font-bold leading-tight">
+                        <span className="block sm:inline">440 mil personas</span>
+                        <span className="block sm:inline sm:ml-1">de la zona ahora</span>
+                        <span className="block sm:inline sm:ml-1">conocen el restaurante</span>
+                      </h3>
                     </div>
                     <ArrowRight className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
                   </div>
@@ -552,7 +556,7 @@ const MetaAds = () => {
                   <div className="grid grid-cols-2 gap-4 pt-2">
                     <div className="bg-primary/5 rounded-lg p-3 text-center">
                       <div className="text-xs text-muted-foreground mb-1">Alcance</div>
-                      <div className="text-lg font-bold text-primary">440K</div>
+                      <div className="text-lg font-bold text-primary">440 mil</div>
                     </div>
                     <div className="bg-primary/5 rounded-lg p-3 text-center">
                       <div className="text-xs text-muted-foreground mb-1">Inversión</div>

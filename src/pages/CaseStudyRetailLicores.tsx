@@ -371,8 +371,18 @@ const CaseStudyRetailLicores = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-card">
-          <div className="section-container">
+        <section className="py-20 relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/70 to-background/80" />
+          <div className="section-container relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-3xl lg:text-5xl font-bold">
                 ¿Quieres resultados <span className="gradient-text">así</span>?

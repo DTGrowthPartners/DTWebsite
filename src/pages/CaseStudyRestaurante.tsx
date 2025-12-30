@@ -126,17 +126,22 @@ const CaseStudyRestaurante = () => {
 
             <div className="max-w-4xl space-y-6">
               <div className="inline-block">
-                <span className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-semibold uppercase tracking-wider">
-                  Reconocimiento Local | Restaurante
+                <span className="px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-semibold uppercase tracking-wider text-center whitespace-nowrap">
+                  RECONOCIMIENTO LOCAL | RESTAURANTE
                 </span>
               </div>
 
-              <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                <span className="gradient-text">440K personas</span> de la zona ahora conocen el restaurante
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight">
+                <span className="block sm:inline">
+                  <span className="gradient-text">440 mil personas</span>
+                  <span className="block sm:inline sm:ml-2">de la zona</span>
+                </span>
+                <span className="block sm:inline sm:ml-2">conocen el restaurante</span>
               </h1>
 
-              <p className="text-xl text-muted-foreground max-w-3xl">
-                Cómo dimos a conocer un restaurante de comida típica caribeña a toda su zona de influencia con producción de video y Meta Ads.
+              <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl">
+                <span className="block sm:inline">Dimos a conocer un restaurante de comida típica caribeña</span>
+                <span className="block sm:inline sm:ml-1">a toda su zona con video y Meta Ads.</span>
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 pt-6">
@@ -284,30 +289,28 @@ const CaseStudyRestaurante = () => {
                 </p>
               </div>
 
-              <Card className="bg-card border-border/50 overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="overflow-x-auto">
-                    <table className="w-full">
-                      <thead className="bg-muted/50">
-                        <tr>
-                          <th className="text-left p-4 font-semibold">Campaña</th>
-                          <th className="text-left p-4 font-semibold">Resultados</th>
-                          <th className="text-left p-4 font-semibold">Costo/Resultado</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {campaignResults.map((campaign, index) => (
-                          <tr key={index} className="border-t border-border/50">
-                            <td className="p-4 font-medium">{campaign.campaign}</td>
-                            <td className="p-4 text-primary font-semibold">{campaign.results}</td>
-                            <td className="p-4 text-muted-foreground">{campaign.cost}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
+              <div className="space-y-4">
+                {campaignResults.map((campaign, index) => (
+                  <Card key={index} className="bg-card border-border/50">
+                    <CardContent className="p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Campaña</div>
+                          <div className="font-medium">{campaign.campaign}</div>
+                        </div>
+                        <div className="text-right space-y-1">
+                          <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Resultados</div>
+                          <div className="text-lg font-bold text-primary">{campaign.results}</div>
+                        </div>
+                      </div>
+                      <div className="mt-3 pt-3 border-t border-border/50">
+                        <div className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-1">Costo/Resultado</div>
+                        <div className="text-sm text-muted-foreground">{campaign.cost}</div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -318,7 +321,7 @@ const CaseStudyRestaurante = () => {
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-16">
                 <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                  <span className="gradient-text">Impacto</span> total achieved
+                  <span className="gradient-text">Impacto</span> Total Achieved
                 </h2>
               </div>
 
@@ -329,7 +332,7 @@ const CaseStudyRestaurante = () => {
                   <div className="text-center space-y-6">
                     <div>
                       <div className="text-6xl lg:text-8xl font-bold gradient-text mb-4">
-                        440K
+                        440 mil
                       </div>
                       <div className="text-xl text-muted-foreground mb-2">personas de la zona</div>
                       <div className="text-sm text-muted-foreground">
@@ -382,51 +385,105 @@ const CaseStudyRestaurante = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Video del restaurante */}
-                <Card className="bg-card border-border/50 group">
-                  <CardContent className="p-6 space-y-4">
-                    <div className="relative w-full rounded-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
-                      <iframe 
-                        className="absolute top-0 left-0 w-full h-full rounded-lg"
-                        src="https://player.vimeo.com/video/1150209750?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-                        frameBorder="0" 
-                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
-                        referrerPolicy="strict-origin-when-cross-origin" 
-                        title="Descubre tradición caribe la mejor arepa de huevo de Cartagena"
-                      />
-                      <script src="https://player.vimeo.com/api/player.js"></script>
-                    </div>
-                    <div className="text-center space-y-2">
-                      <div className="text-sm text-muted-foreground">Video de ubicación</div>
-                      <div className="text-3xl font-bold text-primary">20 seg</div>
-                      <div className="text-xs text-muted-foreground">Producción DT Growth Partners</div>
-                      <div className="text-xs text-primary/60 mt-2">Video completo disponible</div>
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="space-y-8">
+                {/* Videos del restaurante - Grid horizontal */}
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Video del restaurante - Video 1 */}
+                  <Card className="bg-card border-border/50 group">
+                    <CardContent className="p-5 space-y-3">
+                      <div className="relative w-full max-w-sm mx-auto">
+                        {/* Marco del teléfono */}
+                        <img
+                          src="/images/fono.png"
+                          alt="Phone frame"
+                          className="w-full h-auto relative z-10 pointer-events-none"
+                          style={{ transform: 'scale(1.0)' }}
+                        />
+                        {/* Video posicionado dentro del marco */}
+                        <div className="absolute" style={{
+                          top: '10%',
+                          left: '14%',
+                          width: '72%',
+                          height: '80%'
+                        }}>
+                          <iframe
+                            className="w-full h-full rounded-3xl"
+                            src="https://player.vimeo.com/video/1150209750?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            title="Descubre tradición caribe la mejor arepa de huevo de Cartagena"
+                          />
+                        </div>
+                      </div>
+                      <div className="text-center space-y-1">
+                        <div className="text-sm text-muted-foreground">Video de ubicación</div>
+                        <div className="text-2xl font-bold text-primary">20 seg</div>
+                        <div className="text-xs text-muted-foreground">Producción DT Growth Partners</div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-                {/* Resultados finales TC */}
-                <Card className="bg-card border-primary/30 border-2 group">
-                  <CardContent className="p-6 space-y-4">
-                    <div 
-                      className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg overflow-hidden cursor-zoom-in transition-transform hover:scale-[1.02]"
-                      onClick={() => setSelectedImage('/images/TC.png')}
-                    >
-                      <img
-                        src="/images/TC.png"
-                        alt="Resultados finales restaurante - TC Campaign"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="text-center space-y-2">
-                      <div className="text-sm text-muted-foreground">Resultados TC</div>
-                      <div className="text-3xl font-bold text-primary">440,911</div>
-                      <div className="text-xs text-primary">alcance total</div>
-                      <div className="text-xs text-primary/60 mt-2">Click para ampliar</div>
-                    </div>
-                  </CardContent>
-                </Card>
+                  {/* Video del restaurante - Video 2 */}
+                  <Card className="bg-card border-border/50 group">
+                    <CardContent className="p-5 space-y-3">
+                      <div className="relative w-full max-w-sm mx-auto">
+                        {/* Marco del teléfono */}
+                        <img
+                          src="/images/fono.png"
+                          alt="Phone frame"
+                          className="w-full h-auto relative z-10 pointer-events-none"
+                          style={{ transform: 'scale(1.0)' }}
+                        />
+                        {/* Video posicionado dentro del marco */}
+                        <div className="absolute" style={{
+                          top: '10%',
+                          left: '14%',
+                          width: '72%',
+                          height: '80%'
+                        }}>
+                          <iframe
+                            className="w-full h-full rounded-3xl"
+                            src="https://player.vimeo.com/video/1150217209?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                            referrerPolicy="strict-origin-when-cross-origin"
+                            title="Arepas de huevo carne pollo camaron desde 4.000 pesos"
+                          />
+                        </div>
+                      </div>
+                      <div className="text-center space-y-1">
+                        <div className="text-sm text-muted-foreground">Video de productos</div>
+                        <div className="text-2xl font-bold text-primary">20 seg</div>
+                        <div className="text-xs text-muted-foreground">Producción DT Growth Partners</div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Resultados finales TC - Centrado */}
+                <div className="flex justify-center">
+                  <Card className="bg-card border-primary/30 border-2 group max-w-md w-full">
+                    <CardContent className="p-6 space-y-4">
+                      <div
+                        className="aspect-video bg-gradient-to-br from-primary/20 to-primary/5 rounded-lg overflow-hidden cursor-zoom-in transition-transform hover:scale-[1.02]"
+                        onClick={() => setSelectedImage('/images/TC.png')}
+                      >
+                        <img
+                          src="/images/TC.png"
+                          alt="Resultados finales restaurante - TC Campaign"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="text-center space-y-2">
+                        <div className="text-sm text-muted-foreground">Resultados TC</div>
+                        <div className="text-3xl font-bold text-primary">440,911</div>
+                        <div className="text-xs text-primary">alcance total</div>
+                        <div className="text-xs text-primary/60 mt-2">Click para ampliar</div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
 
               <div className="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-lg text-center">
@@ -439,8 +496,18 @@ const CaseStudyRestaurante = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-card">
-          <div className="section-container">
+        <section className="py-20 relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/70 to-background/80" />
+          <div className="section-container relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-3xl lg:text-5xl font-bold">
                 ¿Quieres que tu negocio local sea <span className="gradient-text">conocido</span>?

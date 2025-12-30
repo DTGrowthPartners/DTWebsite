@@ -104,8 +104,9 @@ const CaseStudyEscalamientoTrimestral = () => {
 
             <div className="max-w-4xl space-y-6">
               <div className="inline-block">
-                <span className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-semibold uppercase tracking-wider">
-                  Escalamiento Trimestral | E-commerce
+                <span className="px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-semibold uppercase tracking-wider text-center whitespace-nowrap">
+                  <span className="hidden sm:inline">Escalamiento Trimestral | E-commerce</span>
+                  <span className="sm:hidden">Escalamiento | E-commerce</span>
                 </span>
               </div>
 
@@ -366,8 +367,18 @@ const CaseStudyEscalamientoTrimestral = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-gradient-card">
-          <div className="section-container">
+        <section className="py-20 relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover opacity-50"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-br from-background/80 via-background/70 to-background/80" />
+          <div className="section-container relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-3xl lg:text-5xl font-bold">
                 ¿Listo para <span className="gradient-text">escalar</span>?
