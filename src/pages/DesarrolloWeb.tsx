@@ -7,6 +7,7 @@ import { BackgroundBeamsWithCollision } from "@/components/ui/shadcn-io/backgrou
 import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
 import { RetroGrid } from "@/components/ui/shadcn-io/retro-grid";
 import { useState, useEffect, useRef } from "react";
+import ImageSlider from "@/components/home/ImageSlider";
 import {
   Dialog,
   DialogContent,
@@ -232,9 +233,9 @@ const DesarrolloWeb = () => {
     <div className="min-h-screen">
       <Navigation />
       
-      <main className="pt-16">
+      <main>
         {/* Hero */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+        <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black -mt-16 pt-16">
           {/* Retro Grid Background */}
           <RetroGrid
             angle={65}
@@ -265,10 +266,10 @@ const DesarrolloWeb = () => {
                   size="lg"
                   className="btn-primary group"
                   onClick={() => {
-                    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('webs-portafolio')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  Ver Portfolio
+                  Ver Portafolios
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <Button size="default" variant="outline" className="btn-outline sm:h-11 sm:px-8 sm:text-base" asChild>
@@ -590,258 +591,8 @@ const DesarrolloWeb = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Portfolio Projects */}
-        <section id="portfolio" className="py-20 bg-black relative">
-          <div className="section-container">
-            <div className="text-center mb-16 space-y-6">
-              <h2 className="text-3xl lg:text-4xl font-bold">
-                Portafolio <span className="gradient-text">de proyectos</span>
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Conoce algunos de nuestros trabajos más destacados
-              </p>
-            </div>
-
-            {/* Project Navigation */}
-            <div className="flex justify-center mb-12">
-              <div className="flex space-x-1 sm:space-x-2 p-1 bg-background/50 rounded-xl border border-border/50 backdrop-blur-sm max-w-full overflow-x-auto">
-                {projects.map((project, index) => (
-                  <button
-                    key={project.id}
-                    onClick={() => setActiveProject(index)}
-                    className={`px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all duration-300 whitespace-nowrap text-sm sm:text-base ${
-                      activeProject === index
-                        ? 'bg-primary text-primary-foreground shadow-lg'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
-                  >
-                    <span className="hidden xs:inline">{project.title}</span>
-                    <span className="xs:hidden">{project.title.split(' ')[0]}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Main Portfolio Display */}
-            <div className="relative max-w-7xl mx-auto flex justify-center items-center gap-16">
-              {/* Project Info Sidebar - Left Side */}
-              <div className="portfolio-sidebar w-[400px] z-10 hidden lg:block flex-shrink-0">
-                <Card className="bg-card backdrop-blur-md border-2 border-blue-500/30 shadow-2xl transition-all duration-300 hover:shadow-3xl hover:border-blue-500/50">
-                  <CardContent className="p-8 space-y-6">
-                    {/* Logo */}
-                    <div className="flex items-center justify-center mb-6">
-                      <img 
-                        src={projects[activeProject].logo} 
-                        alt={projects[activeProject].title}
-                        className={`h-16 w-auto object-contain ${
-                          activeProject === 1 ? 'brightness-0 invert' : ''
-                        }`}
-                      />
-                    </div>
-
-                    {/* Title and Category */}
-                    <div className="text-center space-y-3">
-                      <h3 className="text-2xl font-bold text-foreground">
-                        {projects[activeProject].title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-medium">
-                        {projects[activeProject].category}
-                      </p>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed text-center">
-                      {projects[activeProject].description}
-                    </p>
-
-                    {/* Technologies */}
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-foreground">Tecnologías utilizadas:</h4>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {projects[activeProject].technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1 bg-gradient-to-r from-[#0f76d6] to-[#1e293b] text-white text-xs font-medium rounded-full shadow-lg"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Action Button */}
-                    <div className="pt-4">
-                      <Button className="w-full bg-gradient-to-r from-[#0f76d6] to-[#26bdf0] hover:from-[#0a5aa3] hover:to-[#1e9fca] text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group" asChild>
-                        <a 
-                          href={projects[activeProject].url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <span>Ver Proyecto</span>
-                          <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
-                    </div>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-4 gap-3 pt-4 border-t border-border/50">
-                      <div className="text-center space-y-1">
-                        <div className="text-lg font-bold text-blue-600">
-                          {projects[activeProject].stats.responsive}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Responsive</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-lg font-bold text-green-600">
-                          {projects[activeProject].stats.performance}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Performance</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-lg font-bold text-purple-600">
-                          {projects[activeProject].stats.seo}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Optimizado</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-lg font-bold text-orange-600">
-                          {projects[activeProject].stats.year}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Desarrollo</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Iframe Container - Right Side */}
-              <div className="portfolio-iframe hidden lg:block flex-shrink-0">
-                <div ref={tiltRef} className="relative w-[1000px] h-[650px] rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-3xl bg-white">
-                  <iframe
-                    src={projects[activeProject].url}
-                    className="w-full h-full border-0"
-                    style={{
-                      transform: 'scale(0.75)',
-                      transformOrigin: 'top left',
-                      width: '133.3%',
-                      height: '133.3%'
-                    }}
-                    allowFullScreen
-                    title={projects[activeProject].title}
-                  />
-                </div>
-              </div>
-
-              {/* Mobile Layout */}
-              <div className="lg:hidden space-y-8">
-                {/* Mobile Preview Image - TOP */}
-                <div className="relative max-w-md mx-auto">
-                  <img 
-                    src={projects[activeProject].previewImage}
-                    alt={`${projects[activeProject].title} preview`}
-                    className="w-full h-auto rounded-xl shadow-lg"
-                    onLoad={() => console.log('Image loaded:', projects[activeProject].previewImage)}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      console.log('Image failed to load:', projects[activeProject].previewImage);
-                      target.src = projects[activeProject].fallbackImage;
-                    }}
-                  />
-                </div>
-
-                {/* Mobile Project Info Card - BOTTOM */}
-                <Card className="bg-card backdrop-blur-md border-border/50 shadow-2xl">
-                  <CardContent className="p-6 space-y-6">
-                    {/* Logo */}
-                    <div className="flex items-center justify-center mb-6">
-                      <img 
-                        src={projects[activeProject].logo} 
-                        alt={projects[activeProject].title}
-                        className={`h-12 w-auto object-contain ${
-                          activeProject === 1 ? 'brightness-0 invert' : ''
-                        }`}
-                      />
-                    </div>
-
-                    {/* Title and Category */}
-                    <div className="text-center space-y-2">
-                      <h3 className="text-xl font-bold text-foreground">
-                        {projects[activeProject].title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-medium">
-                        {projects[activeProject].category}
-                      </p>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-sm text-muted-foreground leading-relaxed text-center">
-                      {projects[activeProject].description}
-                    </p>
-
-                    {/* Technologies */}
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-foreground text-center">Tecnologías utilizadas:</h4>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {projects[activeProject].technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 bg-gradient-to-r from-[#0f76d6] to-[#1e293b] text-white text-xs font-medium rounded-full shadow-lg"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Action Button */}
-                    <div className="pt-4">
-                      <Button className="w-full bg-gradient-to-r from-[#0f76d6] to-[#26bdf0] hover:from-[#0a5aa3] hover:to-[#1e9fca] text-white font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group" asChild>
-                        <a 
-                          href={projects[activeProject].url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2"
-                        >
-                          <span>Ver Proyecto</span>
-                          <ExternalLink className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                        </a>
-                      </Button>
-                    </div>
-
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-4 gap-2 pt-4 border-t border-border/50">
-                      <div className="text-center space-y-1">
-                        <div className="text-sm font-bold text-blue-600">
-                          {projects[activeProject].stats.responsive}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Responsive</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-sm font-bold text-green-600">
-                          {projects[activeProject].stats.performance}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Performance</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-sm font-bold text-purple-600">
-                          {projects[activeProject].stats.seo}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Optimizado</div>
-                      </div>
-                      <div className="text-center space-y-1">
-                        <div className="text-sm font-bold text-orange-600">
-                          {projects[activeProject].stats.year}
-                        </div>
-                        <div className="text-xs text-muted-foreground">Desarrollo</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* Image Slider */}
+        <ImageSlider />
 
         {/* Process */}
         <section className="py-20 bg-black relative">
