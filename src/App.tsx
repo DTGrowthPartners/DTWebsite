@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { LanguageProvider } from "./context/LanguageContext";
 import { useEffect } from "react";
 import Index from "./pages/Index";
@@ -36,6 +36,8 @@ const App = () => (
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/home" element={<Navigate to="/" replace />} />
+            <Route path="/about-me" element={<Navigate to="/#servicios" replace />} />
             <Route path="/servicios/meta-ads" element={<MetaAds />} />
             <Route path="/servicios/desarrollo-web" element={<DesarrolloWeb />} />
             <Route path="/servicios/sistemas-automatizaciones" element={<SistemasAutomatizaciones />} />
