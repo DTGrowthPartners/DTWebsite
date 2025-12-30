@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import fondoVideo from "@/assets/fondo-video.mp4";
 
 const HeroSection = () => {
   const { t } = useLanguage();
   return (
     <section className="min-h-[90vh] md:min-h-screen flex items-start justify-center relative overflow-hidden pt-16 md:pt-20">
       <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0 object-center">
-        <source src="/src/assets/fondo-video.mp4" type="video/mp4" />
+        <source src={fondoVideo} type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-gradient-to-r from-[#040615]/60 via-[#040615]/40 to-[#040615]/20 z-10" />
       
