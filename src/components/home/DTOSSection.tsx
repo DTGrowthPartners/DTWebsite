@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, FileText, Calendar, Workflow, MessageCircle } from "lucide-react";
-import cohete from "@/assets/cohete.png";
 import fondoDesktop from "@/assets/fondo-seccion-DT-OS2.mp4?url";
 import fondoMobile from "@/assets/fondo-seccion-DT-OS-mobile.mp4?url";
 import { useEffect, useState } from "react";
@@ -125,14 +124,6 @@ const DTOSSection = () => {
             </div>
           </div>
 
-          <div className="relative animate-rocket" style={{ animationDelay: "0.2s" }}>
-            <div className="absolute inset-0 bg-primary/20 blur-[120px]" />
-            <img
-              src={cohete}
-              alt="Rocket"
-              className=""
-            />
-          </div>
         </div>
       </div>
     </section>
