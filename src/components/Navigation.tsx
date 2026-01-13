@@ -86,7 +86,7 @@ const Navigation = () => {
               </a>
             ))}
             <Button asChild className="btn-primary">
-              <a href="https://api.whatsapp.com/send/?phone=14158702322&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+              <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                 {t("common.consultation")}
               </a>
             </Button>
@@ -132,7 +132,7 @@ const Navigation = () => {
                 </a>
               ))}
               <Button asChild className="btn-primary w-full">
-                <a href="https://api.whatsapp.com/send/?phone=14158702322&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                   {t("common.consultation")}
                 </a>
               </Button>

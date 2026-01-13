@@ -31,7 +31,7 @@ const CTASection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button asChild size="lg" className="btn-primary group text-base sm:text-lg px-6 sm:px-8">
-                <a href="https://api.whatsapp.com/send/?phone=14158702322&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                   <Calendar className="mr-2 h-5 w-5" />
                   {t("cta.buttonText")}
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />

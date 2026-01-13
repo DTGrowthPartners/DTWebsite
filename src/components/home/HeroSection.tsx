@@ -31,7 +31,7 @@ const HeroSection = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{animationDelay: "0.8s"}}>
               <Button asChild size="lg" className="btn-primary group">
-                <a href="https://api.whatsapp.com/send/?phone=14158702322&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
+                <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                   {t("hero.consultation")}
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </a>

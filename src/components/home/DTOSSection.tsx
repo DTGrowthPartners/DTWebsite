@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BarChart3, FileText, Calendar, Workflow, MessageCircle } from "lucide-react";
 import fondoDesktop from "@/assets/fondo-seccion-DT-OS2.mp4?url";
 import fondoMobile from "@/assets/fondo-seccion-DT-OS-mobile.mp4?url";
+import coheteImg from "@/assets/cohete.png";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -124,8 +125,33 @@ const DTOSSection = () => {
             </div>
           </div>
 
+          {/* Floating rocket image */}
+          <div className="hidden lg:flex items-center justify-center">
+            <div className="relative">
+              <img
+                src={coheteImg}
+                alt="Cohete DT-OS"
+                className="w-[550px] h-auto animate-float drop-shadow-2xl"
+                style={{
+                  animation: 'float 3s ease-in-out infinite',
+                }}
+              />
+            </div>
+          </div>
+
         </div>
       </div>
+
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+      `}</style>
     </section>
   );
 };

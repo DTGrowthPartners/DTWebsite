@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/accordion";
 import { HeroGeometric } from "@/components/ui/shadcn-io/shape-landing-hero";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
-import coheteImage from "@/assets/2cohete.png";
+import coheteImage from "@/assets/cohete.png";
 
 const SistemasAutomatizaciones = () => {
   const [currentSystemIndex, setCurrentSystemIndex] = React.useState(0);
