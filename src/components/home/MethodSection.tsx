@@ -55,7 +55,7 @@ const MethodSection = () => {
                 className="bg-background/50 border-border/50 backdrop-blur-sm animate-fade-in relative overflow-hidden"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="absolute top-0 right-0 text-[120px] font-bold text-primary/5 leading-none">
+                <div className="absolute top-0 right-0 text-[15vw] md:text-[10vw] lg:text-[8vw] font-bold text-primary/5 leading-none">
                   {step.number}
                 </div>
                 <CardContent className="p-8 space-y-6 relative z-10">

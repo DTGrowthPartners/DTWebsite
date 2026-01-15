@@ -128,7 +128,7 @@ const TestimonialsSection = () => {
             {testimonials.map((testimonial, index) => (
               <div
                 key={testimonial.name}
-                className="min-w-[300px] md:min-w-[360px] snap-start"
+                className="min-w-[80vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-[22vw] snap-start"
                 style={{ scrollSnapAlign: "start" }}
               >
                 <Card

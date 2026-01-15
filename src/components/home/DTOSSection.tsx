@@ -131,7 +131,7 @@ const DTOSSection = () => {
               <img
                 src={coheteImg}
                 alt="Cohete DT-OS"
-                className="w-[550px] h-auto animate-float drop-shadow-2xl"
+                className="w-[30vw] min-w-[280px] max-w-[550px] h-auto animate-float drop-shadow-2xl"
                 style={{
                   animation: 'float 3s ease-in-out infinite',
                 }}

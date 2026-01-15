@@ -252,8 +252,8 @@ All colors MUST be HSL.
 .scroll-rocket-separator {
   left: -23em;
   top: 2vh;
-  width: 1000px;
-  height: 600px;
+  width: 52vw;
+  height: 60vh;
 }
 .scroll-rocket-separator .rocket-img {
   width: 100%;
@@ -384,13 +384,13 @@ All colors MUST be HSL.
   .portfolio-iframe {
     transform: scale(0.8) !important;
     width: 100% !important;
-    max-width: 900px !important;
+    max-width: 90vw !important;
   }
-  
+
   .portfolio-sidebar {
     position: static !important;
     width: 100% !important;
-    max-width: 900px !important;
+    max-width: 90vw !important;
     margin-top: 2rem !important;
   }
 }

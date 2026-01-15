@@ -175,7 +175,7 @@ const ImageSlider = () => {
         {images.map((image, index) => (
           <div
             key={index}
-            className="slider-card absolute top-1/2 left-1/2 w-[55%] md:w-1/2 aspect-video md:aspect-auto md:h-[500px] rounded-lg overflow-hidden bg-black cursor-grab active:cursor-grabbing select-none"
+            className="slider-card absolute top-1/2 left-1/2 w-[55%] md:w-1/2 aspect-video md:aspect-auto md:h-[50vh] rounded-lg overflow-hidden bg-black cursor-grab active:cursor-grabbing select-none"
             style={{
               transform: "translate3d(-50%, -50%, 0px)",
               opacity: 0,

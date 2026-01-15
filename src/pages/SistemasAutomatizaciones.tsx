@@ -166,7 +166,7 @@ const SistemasAutomatizaciones = () => {
               </div>
 
               {/* Video Derecha */}
-              <div className="relative h-[700px] lg:h-[800px] -mr-8 lg:-mr-16 hidden md:block">
+              <div className="relative h-[70vh] lg:h-[85vh] -mr-8 lg:-mr-16 hidden md:block">
                 <video
                   autoPlay
                   loop
@@ -305,7 +305,7 @@ const SistemasAutomatizaciones = () => {
             <div className="mb-16 relative">
               <div className="grid gap-0 lg:gap-8 lg:grid-cols-2 lg:items-center">
                 {/* Imagen arriba en mobile, izquierda en desktop */}
-                <div className={`relative h-[500px] order-1 lg:order-1 ${currentSystemIndex === 0 ? '-mt-32 lg:mt-0' : 'mt-6 lg:mt-0'}`}>
+                <div className={`relative h-[50vh] order-1 lg:order-1 ${currentSystemIndex === 0 ? '-mt-32 lg:mt-0' : 'mt-6 lg:mt-0'}`}>
                   <div className="rounded-2xl relative overflow-hidden h-full flex items-center justify-center bg-gradient-to-br from-background/10 to-background/5">
                     <img
                       key={currentSystemIndex}
