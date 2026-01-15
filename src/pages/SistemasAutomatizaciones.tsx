@@ -1,6 +1,7 @@
 import React from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Workflow, Zap, Bot, LineChart, ArrowRight, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
@@ -543,6 +544,8 @@ const SistemasAutomatizaciones = () => {
             </div>
           </div>
         </section>
+
+        <ContactFormSection />
       </main>
 
       <Footer />

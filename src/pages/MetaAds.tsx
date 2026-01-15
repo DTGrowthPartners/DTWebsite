@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, Target, BarChart3, FileCheck, ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
@@ -855,6 +856,8 @@ const MetaAds = () => {
             </div>
           </div>
         </section>
+
+        <ContactFormSection />
       </main>
 
       <Footer />

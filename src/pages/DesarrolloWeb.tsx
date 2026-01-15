@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Code, Smartphone, Package, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
@@ -701,6 +702,8 @@ const DesarrolloWeb = () => {
             </div>
           </div>
         </section>
+
+        <ContactFormSection />
       </main>
 
       <Footer />

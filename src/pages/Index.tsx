@@ -9,6 +9,7 @@ import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import MethodSection from "@/components/home/MethodSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
+import ContactFormSection from "@/components/home/ContactFormSection";
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
         <MethodSection />
         <TestimonialsSection />
         <CTASection />
+        <ContactFormSection />
       </main>
       <Footer />
     </div>

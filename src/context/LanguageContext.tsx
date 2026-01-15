@@ -130,6 +130,24 @@ const translations = {
     "cta.duration": "25 minutes",
     "cta.free": "100% free",
 
+    // Contact Form Section
+    "contact.title": "Let's talk about your",
+    "contact.titleHighlight": "growth",
+    "contact.subtitle": "Fill out the form and we'll contact you shortly to discuss how we can help scale your business.",
+    "contact.firstName": "First Name",
+    "contact.lastName": "Last Name",
+    "contact.email": "Email",
+    "contact.phone": "Phone (optional)",
+    "contact.company": "Company (optional)",
+    "contact.message": "How can we help you?",
+    "contact.messagePlaceholder": "Tell us about your business and goals...",
+    "contact.submit": "Send Message",
+    "contact.sending": "Sending...",
+    "contact.successTitle": "Message sent!",
+    "contact.successMessage": "Thank you for contacting us. We'll get back to you shortly.",
+    "contact.errorTitle": "Error",
+    "contact.errorMessage": "There was a problem sending your message. Please try again.",
+
     // Footer
     "footer.description": "We are a consulting company focused on helping businesses grow and scale through smart marketing, digital optimization and powerful sales channels.",
     "footer.address": "Cartagena de Indias Convention Center, third floor.",
@@ -256,6 +274,24 @@ const translations = {
     "cta.noCommitment": "Sin compromiso",
     "cta.duration": "25 minutos",
     "cta.free": "100% gratis",
+
+    // Contact Form Section
+    "contact.title": "Hablemos de tu",
+    "contact.titleHighlight": "crecimiento",
+    "contact.subtitle": "Completa el formulario y nos pondremos en contacto contigo pronto para hablar sobre cómo podemos ayudarte a escalar tu negocio.",
+    "contact.firstName": "Nombre",
+    "contact.lastName": "Apellido",
+    "contact.email": "Correo electrónico",
+    "contact.phone": "Teléfono (opcional)",
+    "contact.company": "Empresa (opcional)",
+    "contact.message": "¿Cómo podemos ayudarte?",
+    "contact.messagePlaceholder": "Cuéntanos sobre tu negocio y objetivos...",
+    "contact.submit": "Enviar Mensaje",
+    "contact.sending": "Enviando...",
+    "contact.successTitle": "¡Mensaje enviado!",
+    "contact.successMessage": "Gracias por contactarnos. Nos pondremos en contacto contigo en breve.",
+    "contact.errorTitle": "Error",
+    "contact.errorMessage": "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.",
 
     // Footer
     "footer.description": "Somos una empresa de consultoría enfocada en ayudar a las empresas a crecer y escalar a través de marketing inteligente, optimización digital y canales de ventas poderosos.",
