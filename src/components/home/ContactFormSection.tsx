@@ -52,7 +52,7 @@ const ContactFormSection = () => {
   const widgetIdRef = useRef<number | null>(null);
 
   // Site key de reCAPTCHA desde variables de entorno
-  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LdxmjcsAAAAAMEZTZrvQjhRnFH4wsxg8m-mcg3Q";
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6Lfcok8sAAAAAIEAjC1Q56__W7ao4VYxyGOQ6iLD";
 
   useEffect(() => {
     // Cargar el widget de reCAPTCHA cuando el componente se monta
