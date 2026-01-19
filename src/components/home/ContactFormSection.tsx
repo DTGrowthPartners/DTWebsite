@@ -1,9 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/context/LanguageContext";
 import { Send, CheckCircle, XCircle } from "lucide-react";
+
+// Declarar grecaptcha en el scope global
+declare global {
+  interface Window {
+    grecaptcha: {
+      render: (container: string | HTMLElement, parameters: {
+        sitekey: string;
+        theme?: 'light' | 'dark';
+        size?: 'compact' | 'normal';
+        callback?: (response: string) => void;
+        'expired-callback'?: () => void;
+        'error-callback'?: () => void;
+      }) => number;
+      reset: (widgetId?: number) => void;
+      getResponse: (widgetId?: number) => string;
+      ready: (callback: () => void) => void;
+    };
+  }
+}
 
 interface FormData {
   firstName: string;
@@ -27,6 +46,52 @@ const ContactFormSection = () => {
     message: "",
   });
   const [status, setStatus] = useState<FormStatus>("idle");
+  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
+  const [recaptchaError, setRecaptchaError] = useState<string>("");
+  const recaptchaRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<number | null>(null);
+
+  // Site key de reCAPTCHA desde variables de entorno
+  const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6LdxmjcsAAAAAMEZTZrvQjhRnFH4wsxg8m-mcg3Q";
+
+  useEffect(() => {
+    // Cargar el widget de reCAPTCHA cuando el componente se monta
+    const loadRecaptcha = () => {
+      if (window.grecaptcha && recaptchaRef.current && widgetIdRef.current === null) {
+        try {
+          widgetIdRef.current = window.grecaptcha.render(recaptchaRef.current, {
+            sitekey: RECAPTCHA_SITE_KEY,
+            theme: 'light',
+            size: 'normal',
+            callback: (token: string) => {
+              setRecaptchaToken(token);
+              setRecaptchaError("");
+            },
+            'expired-callback': () => {
+              setRecaptchaToken("");
+              setRecaptchaError("El reCAPTCHA ha expirado. Por favor, inténtalo de nuevo.");
+            },
+            'error-callback': () => {
+              setRecaptchaToken("");
+              setRecaptchaError("Error al cargar reCAPTCHA. Verifica tu conexión.");
+            }
+          });
+        } catch (error) {
+          console.error('Error al cargar reCAPTCHA:', error);
+          setRecaptchaError("Error al inicializar reCAPTCHA. Por favor, recarga la página.");
+        }
+      }
+    };
+
+    // Esperar a que grecaptcha esté listo
+    if (window.grecaptcha && window.grecaptcha.ready) {
+      window.grecaptcha.ready(loadRecaptcha);
+    } else {
+      // Si grecaptcha no está disponible, intentar cargar después de un delay
+      const timer = setTimeout(loadRecaptcha, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [RECAPTCHA_SITE_KEY]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,6 +108,13 @@ const ContactFormSection = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validar que el usuario haya completado el reCAPTCHA
+    if (!recaptchaToken) {
+      alert(t("contact.recaptchaError") || "Por favor, completa el reCAPTCHA para continuar.");
+      return;
+    }
+
     setStatus("sending");
 
     const formDataCopy = { ...formData };
@@ -64,6 +136,7 @@ const ContactFormSection = () => {
             message: formData.message || undefined,
             source: "website",
             sourceDetail: "contact-form",
+            recaptchaToken: recaptchaToken, // Enviar el token al backend
           }),
         }
       );
@@ -78,17 +151,38 @@ const ContactFormSection = () => {
           company: "",
           message: "",
         });
+        setRecaptchaToken("");
+        // Resetear el widget de reCAPTCHA
+        if (widgetIdRef.current !== null && window.grecaptcha) {
+          window.grecaptcha.reset(widgetIdRef.current);
+        }
         openWhatsApp(formDataCopy);
       } else {
         setStatus("error");
+        // Resetear el widget de reCAPTCHA en caso de error
+        if (widgetIdRef.current !== null && window.grecaptcha) {
+          window.grecaptcha.reset(widgetIdRef.current);
+        }
+        setRecaptchaToken("");
       }
     } catch {
       setStatus("error");
+      // Resetear el widget de reCAPTCHA en caso de error
+      if (widgetIdRef.current !== null && window.grecaptcha) {
+        window.grecaptcha.reset(widgetIdRef.current);
+      }
+      setRecaptchaToken("");
     }
   };
 
   const resetForm = () => {
     setStatus("idle");
+    setRecaptchaToken("");
+    setRecaptchaError("");
+    // Resetear el widget de reCAPTCHA
+    if (widgetIdRef.current !== null && window.grecaptcha) {
+      window.grecaptcha.reset(widgetIdRef.current);
+    }
   };
 
   if (status === "success") {
@@ -241,6 +335,16 @@ const ContactFormSection = () => {
                   placeholder={t("contact.messagePlaceholder")}
                   className="bg-background/50 border-border/50 resize-none"
                 />
+              </div>
+
+              {/* reCAPTCHA Widget */}
+              <div className="space-y-2">
+                <div className="flex justify-center">
+                  <div ref={recaptchaRef}></div>
+                </div>
+                {recaptchaError && (
+                  <p className="text-sm text-red-500 text-center">{recaptchaError}</p>
+                )}
               </div>
 
               <Button

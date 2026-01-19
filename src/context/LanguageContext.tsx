@@ -147,6 +147,7 @@ const translations = {
     "contact.successMessage": "Thank you for contacting us. We'll get back to you shortly.",
     "contact.errorTitle": "Error",
     "contact.errorMessage": "There was a problem sending your message. Please try again.",
+    "contact.recaptchaError": "Please complete the reCAPTCHA to continue.",
 
     // Footer
     "footer.description": "We are a consulting company focused on helping businesses grow and scale through smart marketing, digital optimization and powerful sales channels.",
@@ -292,6 +293,7 @@ const translations = {
     "contact.successMessage": "Gracias por contactarnos. Nos pondremos en contacto contigo en breve.",
     "contact.errorTitle": "Error",
     "contact.errorMessage": "Hubo un problema al enviar tu mensaje. Por favor, inténtalo de nuevo.",
+    "contact.recaptchaError": "Por favor, completa el reCAPTCHA para continuar.",
 
     // Footer
     "footer.description": "Somos una empresa de consultoría enfocada en ayudar a las empresas a crecer y escalar a través de marketing inteligente, optimización digital y canales de ventas poderosos.",
