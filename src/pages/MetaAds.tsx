@@ -134,7 +134,7 @@ const MetaAds = () => {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{
-              backgroundImage: 'url(/images/3280018.jpg)',
+              backgroundImage: 'url(/images/imagenparaads.png)',
               filter: 'blur(3px)',
               transform: 'scale(1.1)',
               backgroundPosition: 'center 40%'
