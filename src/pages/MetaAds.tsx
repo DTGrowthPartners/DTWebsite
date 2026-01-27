@@ -235,7 +235,7 @@ const MetaAds = () => {
             </div>
 
             {/* Mobile Carousel */}
-            <div className="md:hidden pt-4">
+            <div className="md:hidden pt-4 pb-2">
               <Carousel
                 opts={{
                   align: "center",
