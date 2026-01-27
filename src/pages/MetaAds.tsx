@@ -235,7 +235,7 @@ const MetaAds = () => {
             </div>
 
             {/* Mobile Carousel */}
-            <div className="md:hidden pt-4 pb-2">
+            <div className="md:hidden">
               <Carousel
                 opts={{
                   align: "center",
@@ -292,7 +292,7 @@ const MetaAds = () => {
                       tag: "Más completo"
                     }
                   ].map((plan) => (
-                    <CarouselItem key={plan.name} className="pl-3 pt-4 basis-[70%]">
+                    <CarouselItem key={plan.name} className="pl-3 py-5 basis-[70%]">
                       <Card
                         className={`bg-card border-border/50 relative transition-all duration-300 h-full ${
                           plan.popular ? 'ring-1 ring-primary shadow-md' : ''
