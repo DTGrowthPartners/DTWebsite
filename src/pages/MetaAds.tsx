@@ -225,7 +225,7 @@ const MetaAds = () => {
         {/* Pricing Plans */}
         <section id="pricing-plans" className="py-20">
           <div className="section-container">
-            <div className="text-center mb-16 space-y-4 -mt-16 sm:mt-0">
+            <div className="text-center mb-12 space-y-4">
               <h2 className="text-3xl lg:text-4xl font-bold">
                 Elige el <span className="gradient-text">plan</span> que mejor se adapte a tu negocio
               </h2>
@@ -235,15 +235,15 @@ const MetaAds = () => {
             </div>
 
             {/* Mobile Carousel */}
-            <div className="md:hidden">
+            <div className="md:hidden pt-4">
               <Carousel
                 opts={{
-                  align: "start",
+                  align: "center",
                   loop: true,
                 }}
-                className="w-full"
+                className="w-full overflow-visible"
               >
-                <CarouselContent className="-ml-4">
+                <CarouselContent className="-ml-4 overflow-visible">
                   {[
                     {
                       name: "Plan Starter",
@@ -292,44 +292,44 @@ const MetaAds = () => {
                       tag: "Más completo"
                     }
                   ].map((plan) => (
-                    <CarouselItem key={plan.name} className="pl-4 basis-[85%]">
+                    <CarouselItem key={plan.name} className="pl-3 pt-4 basis-[70%]">
                       <Card
                         className={`bg-card border-border/50 relative transition-all duration-300 h-full ${
-                          plan.popular ? 'ring-2 ring-primary shadow-lg' : ''
+                          plan.popular ? 'ring-1 ring-primary shadow-md' : ''
                         }`}
                       >
                         {plan.popular && plan.tag && (
-                          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                            <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                          <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2 z-10">
+                            <span className="bg-primary text-primary-foreground px-3 py-0.5 rounded-full text-xs font-medium">
                               {plan.tag}
                             </span>
                           </div>
                         )}
-                        <CardContent className="p-6 space-y-4 flex flex-col h-full">
-                          <div className="text-center space-y-2">
-                            <h3 className="text-xl font-bold">{plan.name}</h3>
-                            <p className="text-sm text-muted-foreground">{plan.description}</p>
+                        <CardContent className="p-4 space-y-3 flex flex-col h-full">
+                          <div className="text-center space-y-1">
+                            <h3 className="text-lg font-bold">{plan.name}</h3>
+                            <p className="text-xs text-muted-foreground leading-tight">{plan.description}</p>
                           </div>
 
-                          <ul className="space-y-2 flex-grow">
+                          <ul className="space-y-1.5 flex-grow">
                             {plan.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start space-x-2">
-                                <div className="w-4 h-4 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                  <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                              <li key={featureIndex} className="flex items-start space-x-1.5">
+                                <div className="w-3 h-3 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                  <div className="w-1 h-1 bg-primary rounded-full"></div>
                                 </div>
-                                <span className="text-sm">{feature}</span>
+                                <span className="text-xs leading-tight">{feature}</span>
                               </li>
                             ))}
                           </ul>
 
-                          <div className="text-center space-y-1 pt-4 border-t border-border/50">
-                            <div className="text-2xl font-bold text-primary">{plan.price}</div>
-                            <div className="text-sm text-muted-foreground">{plan.period}</div>
+                          <div className="text-center space-y-0.5 pt-3 border-t border-border/50">
+                            <div className="text-xl font-bold text-primary">{plan.price}</div>
+                            <div className="text-xs text-muted-foreground">{plan.period}</div>
                           </div>
 
                           <Button
                             className={`w-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
-                            size="lg"
+                            size="default"
                             onClick={() => {
                               const messages = {
                                 'Plan Starter': 'Hola DT Growth Partners, estoy interesado en el Plan Starter para comenzar con publicidad digital',
