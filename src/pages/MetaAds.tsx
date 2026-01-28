@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TrendingUp, Target, BarChart3, FileCheck, ArrowRight, ChevronLeft, ChevronRight, Star } from "lucide-react";
@@ -18,7 +19,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const MetaAds = () => {
   useEffect(() => {
@@ -220,249 +221,6 @@ const MetaAds = () => {
             </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-background"></div>
-        </section>
-
-        {/* Pricing Plans */}
-        <section id="pricing-plans" className="py-20">
-          <div className="section-container">
-            <div className="text-center mb-12 space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">
-                Elige el <span className="gradient-text">plan</span> que mejor se adapte a tu negocio
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Ofrecemos planes personalizados para adaptarnos a las necesidades de tu negocio, ya sea que estés comenzando o buscando un crecimiento rápido.
-              </p>
-            </div>
-
-            {/* Mobile Carousel */}
-            <div className="md:hidden">
-              <Carousel
-                opts={{
-                  align: "center",
-                  loop: true,
-                }}
-                className="w-full overflow-visible"
-              >
-                <CarouselContent className="-ml-4 overflow-visible">
-                  {[
-                    {
-                      name: "Plan Starter",
-                      price: "$2.000.000 COP/mes",
-                      period: "+ 10% de la inversión en Ads",
-                      description: "Ideal para negocios que están comenzando con publicidad digital.",
-                      features: [
-                        "1 reunión mensual 1:1.",
-                        "3 reuniones virtuales.",
-                        "Configuración de Portafolio Comercial y Pruebas A/B en anuncios.",
-                        "Análisis y optimización de anuncios.",
-                        "Estrategia de segmentación personalizada.",
-                        "Reporte mensual de resultados."
-                      ],
-                      popular: true
-                    },
-                    {
-                      name: "Plan Growth",
-                      price: "$3.500.000 COP/mes",
-                      period: "+ 10% de la inversión en Ads",
-                      description: "Para negocios en crecimiento que buscan resultados consistentes.",
-                      features: [
-                        "Todo lo incluido en el plan Starter.",
-                        "1 reunión quincenal.",
-                        "Creación de contenido publicitario optimizado.",
-                        "Optimización de embudos de conversión.",
-                        "Análisis de la competencia."
-                      ],
-                      popular: true,
-                      tag: "Más Popular"
-                    },
-                    {
-                      name: "Plan Scale",
-                      price: "$5.000.000 COP/mes",
-                      period: "+ 10% de la inversión en Ads",
-                      description: "Para empresas que buscan escalar agresivamente.",
-                      features: [
-                        "Todo lo incluido en el Plan Growth.",
-                        "1 reunión semanal.",
-                        "Administración total de campañas.",
-                        "Creación de contenido multimedia profesional.",
-                        "Implementación de estrategias avanzadas de remarketing.",
-                        "Consultoría estratégica 1:1."
-                      ],
-                      popular: true,
-                      tag: "Más completo"
-                    }
-                  ].map((plan) => (
-                    <CarouselItem key={plan.name} className="pl-3 py-5 basis-[70%]">
-                      <Card
-                        className={`bg-card border-border/50 relative transition-all duration-300 h-full ${
-                          plan.popular ? 'ring-1 ring-primary shadow-md' : ''
-                        }`}
-                      >
-                        {plan.popular && plan.tag && (
-                          <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2 z-10">
-                            <span className="bg-primary text-primary-foreground px-3 py-0.5 rounded-full text-xs font-medium">
-                              {plan.tag}
-                            </span>
-                          </div>
-                        )}
-                        <CardContent className="p-4 space-y-3 flex flex-col h-full">
-                          <div className="text-center space-y-1">
-                            <h3 className="text-lg font-bold">{plan.name}</h3>
-                            <p className="text-xs text-muted-foreground leading-tight">{plan.description}</p>
-                          </div>
-
-                          <ul className="space-y-1.5 flex-grow">
-                            {plan.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start space-x-1.5">
-                                <div className="w-3 h-3 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                                  <div className="w-1 h-1 bg-primary rounded-full"></div>
-                                </div>
-                                <span className="text-xs leading-tight">{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <div className="text-center space-y-0.5 pt-3 border-t border-border/50">
-                            <div className="text-xl font-bold text-primary">{plan.price}</div>
-                            <div className="text-xs text-muted-foreground">{plan.period}</div>
-                          </div>
-
-                          <Button
-                            className={`w-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
-                            size="default"
-                            onClick={() => {
-                              const messages = {
-                                'Plan Starter': 'Hola DT Growth Partners, estoy interesado en el Plan Starter para comenzar con publicidad digital',
-                                'Plan Growth': 'Hola DT Growth Partners, quiero el Plan Growth para hacer crecer mi negocio de forma consistente',
-                                'Plan Scale': 'Hola DT Growth Partners, necesito el Plan Scale para escalar agresivamente mi negocio'
-                              };
-                              const message = encodeURIComponent(messages[plan.name as keyof typeof messages]);
-                              window.open(`https://wa.me/573007189383?text=${message}`, '_blank');
-                            }}
-                          >
-                            Comenzar Ahora
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <div className="flex justify-center gap-2 mt-6">
-                  <CarouselPrevious className="static translate-y-0" />
-                  <CarouselNext className="static translate-y-0" />
-                </div>
-              </Carousel>
-            </div>
-
-            {/* Desktop Grid */}
-            <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {[
-                {
-                  name: "Plan Starter",
-                  price: "$2.000.000 COP/mes",
-                  period: "+ 10% de la inversión en Ads",
-                  description: "Ideal para negocios que están comenzando con publicidad digital.",
-                  features: [
-                    "1 reunión mensual 1:1.",
-                    "3 reuniones virtuales.",
-                    "Configuración de Portafolio Comercial y Pruebas A/B en anuncios.",
-                    "Análisis y optimización de anuncios.",
-                    "Estrategia de segmentación personalizada.",
-                    "Reporte mensual de resultados."
-                  ],
-                  popular: true
-                },
-                {
-                  name: "Plan Growth",
-                  price: "$3.500.000 COP/mes",
-                  period: "+ 10% de la inversión en Ads",
-                  description: "Para negocios en crecimiento que buscan resultados consistentes.",
-                  features: [
-                    "Todo lo incluido en el plan Starter.",
-                    "1 reunión quincenal.",
-                    "Creación de contenido publicitario optimizado.",
-                    "Optimización de embudos de conversión.",
-                    "Análisis de la competencia."
-                  ],
-                  popular: true,
-                  tag: "Más Popular"
-                },
-                {
-                  name: "Plan Scale",
-                  price: "$5.000.000 COP/mes",
-                  period: "+ 10% de la inversión en Ads",
-                  description: "Para empresas que buscan escalar agresivamente.",
-                  features: [
-                    "Todo lo incluido en el Plan Growth.",
-                    "1 reunión semanal.",
-                    "Administración total de campañas.",
-                    "Creación de contenido multimedia profesional.",
-                    "Implementación de estrategias avanzadas de remarketing.",
-                    "Consultoría estratégica 1:1."
-                  ],
-                  popular: true,
-                  tag: "Más completo"
-                }
-              ].map((plan, index) => (
-                <Card
-                  key={plan.name}
-                  className={`card-hover bg-card border-border/50 animate-fade-in animate-float relative hover:border-t-4 hover:border-t-primary transition-all duration-300 h-full ${
-                    plan.popular ? 'ring-2 ring-primary shadow-lg scale-105' : ''
-                  }`}
-                  style={{
-                    animationDelay: `${index * 0.1}s`,
-                    animationDuration: `${3 + index * 0.5}s`
-                  }}
-                >
-                  {plan.popular && plan.tag && (
-                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                      <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                        {plan.tag}
-                      </span>
-                    </div>
-                  )}
-                  <CardContent className="p-8 space-y-6 flex flex-col h-full">
-                    <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-bold">{plan.name}</h3>
-                      <p className="text-sm text-muted-foreground">{plan.description}</p>
-                    </div>
-
-                    <ul className="space-y-3 flex-grow">
-                      {plan.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-start space-x-3">
-                          <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <div className="w-2 h-2 bg-primary rounded-full"></div>
-                          </div>
-                          <span className="text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="text-center space-y-1 pt-4 border-t border-border/50">
-                      <div className="text-3xl font-bold text-primary">{plan.price}</div>
-                      <div className="text-sm text-muted-foreground">{plan.period}</div>
-                    </div>
-
-                    <Button
-                      className={`w-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
-                      size="lg"
-                      onClick={() => {
-                        const messages = {
-                          'Plan Starter': 'Hola DT Growth Partners, estoy interesado en el Plan Starter para comenzar con publicidad digital',
-                          'Plan Growth': 'Hola DT Growth Partners, quiero el Plan Growth para hacer crecer mi negocio de forma consistente',
-                          'Plan Scale': 'Hola DT Growth Partners, necesito el Plan Scale para escalar agresivamente mi negocio'
-                        };
-                        const message = encodeURIComponent(messages[plan.name as keyof typeof messages]);
-                        window.open(`https://wa.me/573007189383?text=${message}`, '_blank');
-                      }}
-                    >
-                      Comenzar Ahora
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
         </section>
 
         {/* Process */}
@@ -751,186 +509,243 @@ const MetaAds = () => {
         </section>
 
         {/* Testimonials */}
-        <section className="py-20 bg-gradient-card">
+        <TestimonialsSection />
+
+        {/* Pricing Plans */}
+        <section id="pricing-plans" className="py-20">
           <div className="section-container">
-            <div className="text-center mb-16 -mt-8 sm:mt-0">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                Lo que dicen <span className="gradient-text">nuestros clientes</span>
+            <div className="text-center mb-12 space-y-4">
+              <h2 className="text-3xl lg:text-4xl font-bold">
+                Elige el <span className="gradient-text">plan</span> que mejor se adapte a tu negocio
               </h2>
-              <p className="text-xl text-muted-foreground">
-                Reseñas verificadas de Google.
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Ofrecemos planes personalizados para adaptarnos a las necesidades de tu negocio, ya sea que estés comenzando o buscando un crecimiento rápido.
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-3 gap-8 items-start">
-              {/* Panel izquierdo - Información del negocio */}
-              <div className="space-y-6 lg:col-span-1 mb-8 lg:mb-0">
-                <div className="flex items-start space-x-4">
-                  <img
-                    decoding="async"
-                    src="https://dairotraslavina.com/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg"
-                    alt="DT Growth Partners place picture"
-                    className="w-12 h-12 flex-shrink-0"
-                  />
-                  <div className="space-y-2">
-                    <div className="text-lg font-semibold">
-                      <a
-                        href="https://search.google.com/local/reviews?placeid=ChIJy0_O3nkv9o4RcYDpp8cBRaU"
-                        target="_blank"
-                        rel="nofollow noopener"
-                        className="hover:text-primary transition-colors"
+            {/* Mobile Carousel */}
+            <div className="md:hidden">
+              <Carousel
+                opts={{
+                  align: "center",
+                  loop: true,
+                }}
+                className="w-full overflow-visible"
+              >
+                <CarouselContent className="-ml-4 overflow-visible">
+                  {[
+                    {
+                      name: "Plan Starter",
+                      price: "$2.000.000 COP/mes",
+                      period: "+ 10% de la inversión en Ads",
+                      description: "Ideal para negocios que están comenzando con publicidad digital.",
+                      features: [
+                        "1 reunión mensual 1:1.",
+                        "3 reuniones virtuales.",
+                        "Configuración de Portafolio Comercial y Pruebas A/B en anuncios.",
+                        "Análisis y optimización de anuncios.",
+                        "Estrategia de segmentación personalizada.",
+                        "Reporte mensual de resultados."
+                      ],
+                      popular: true
+                    },
+                    {
+                      name: "Plan Growth",
+                      price: "$3.500.000 COP/mes",
+                      period: "+ 10% de la inversión en Ads",
+                      description: "Para negocios en crecimiento que buscan resultados consistentes.",
+                      features: [
+                        "Todo lo incluido en el plan Starter.",
+                        "1 reunión quincenal.",
+                        "Creación de contenido publicitario optimizado.",
+                        "Optimización de embudos de conversión.",
+                        "Análisis de la competencia."
+                      ],
+                      popular: true,
+                      tag: "Más Popular"
+                    },
+                    {
+                      name: "Plan Scale",
+                      price: "$5.000.000 COP/mes",
+                      period: "+ 10% de la inversión en Ads",
+                      description: "Para empresas que buscan escalar agresivamente.",
+                      features: [
+                        "Todo lo incluido en el Plan Growth.",
+                        "1 reunión semanal.",
+                        "Administración total de campañas.",
+                        "Creación de contenido multimedia profesional.",
+                        "Implementación de estrategias avanzadas de remarketing.",
+                        "Consultoría estratégica 1:1."
+                      ],
+                      popular: true,
+                      tag: "Más completo"
+                    }
+                  ].map((plan) => (
+                    <CarouselItem key={plan.name} className="pl-3 py-5 basis-[70%]">
+                      <Card
+                        className={`bg-card border-border/50 relative transition-all duration-300 h-full ${
+                          plan.popular ? 'ring-1 ring-primary shadow-md' : ''
+                        }`}
                       >
-                        DT Growth Partners | Firma Consultora
-                      </a>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-primary">5.0</span>
-                      <div className="flex space-x-1">
-                        {[...Array(5)].map((_, i) => (
-                          <svg key={i} height="18" width="18" className="text-yellow-400 fill-current">
-                            <use href="#grw-star"></use>
-                          </svg>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="text-muted-foreground">Basado en 5 reseñas.</div>
-                    <div className="text-sm text-muted-foreground">
-                      powered by <span className="font-bold text-blue-500">G</span><span className="font-bold text-red-500">o</span><span className="font-bold text-yellow-500">o</span><span className="font-bold text-blue-500">g</span><span className="font-bold text-green-500">l</span><span className="font-bold text-red-500">e</span>
-                    </div>
-                    <Button
-                      variant="outline"
-                      className="mt-4"
-                      onClick={() => window.open('https://search.google.com/local/writereview?placeid=ChIJy0_O3nkv9o4RcYDpp8cBRaU', '_blank')}
-                    >
-                      Valóranos en
-                      <svg className="ml-2 w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                      </svg>
-                    </Button>
-                  </div>
-                </div>
-              </div>
+                        {plan.popular && plan.tag && (
+                          <div className="absolute -top-2.5 left-1/2 transform -translate-x-1/2 z-10">
+                            <span className="bg-primary text-primary-foreground px-3 py-0.5 rounded-full text-xs font-medium">
+                              {plan.tag}
+                            </span>
+                          </div>
+                        )}
+                        <CardContent className="p-4 space-y-3 flex flex-col h-full">
+                          <div className="text-center space-y-1">
+                            <h3 className="text-lg font-bold">{plan.name}</h3>
+                            <div className="text-xl font-bold text-primary">{plan.price}</div>
+                            <div className="text-xs text-muted-foreground">{plan.period}</div>
+                            <p className="text-xs text-muted-foreground leading-tight pt-1">{plan.description}</p>
+                          </div>
 
-              {/* Panel derecho - Carrusel de reseñas */}
-              <div className="lg:col-span-2 w-full overflow-hidden">
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  plugins={[
-                    Autoplay({
-                      delay: 5000,
-                    }),
-                  ]}
-                  className="w-full"
-                >
-                  <CarouselContent className="-ml-4">
-                    {[
-                      {
-                        name: "johana zapateiro",
-                        avatar: "https://lh3.googleusercontent.com/a-/ALV-UjWpFwf5p8TI48NOKCyDkMvn8iTrkkLb7gGZ_vsvDmgkxsrYtio=s56-c-rp-mo-br100",
-                        rating: 5,
-                        review: "Estoy muy feliz con los resultados. Desde que implementamos las estrategias de marketing y pauta, las ventas han crecido notablemente. Invertir en esta área ha valido totalmente la pena. Gracias ser productivos, por su estructura, dirección y enfoque claro, hoy veo mi empresa más organizada y en crecimiento.",
-                        date: "Hace 6 meses",
-                        profileUrl: "https://www.google.com/maps/contrib/109268135115122814760/reviews/@10.4206356,-75.5490378,17z/data=!3m1!4b1!4m3!8m2!3m1!1e1?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D"
-                      },
-                      {
-                        name: "ACB Fit",
-                        avatar: "https://lh3.googleusercontent.com/a-/ALV-UjVmPx7v-FlTPI1tc8NdpdveH6n2OysWtLJeD17GPxesoYcLKc8M=s56-c-rp-mo-br100",
-                        rating: 5,
-                        review: "Recomendado con total confianza, profesional, líder, creativo, realmente trasciende su rol 👌🏼 La calidad de su trabajo es excepcional, cuidando cada detalle como si el proyecto fuera suyo, Siempre va más allá de lo que se le pide, Aporta ideas valiosas, guía con criterio y está constantemente dispuesto a apoyar en cada paso dado, Tiene un ojo estratégico, y siempre va un paso adelante ✅ Pero lo que más destaco es su inteligencia y visión, que lo convierten en una pieza clave para cualquier empresa que valore el crecimiento, la innovación y el compromiso real.",
-                        date: "Hace 6 meses",
-                        profileUrl: "https://www.google.com/maps/contrib/107695276275637663115/reviews?hl=es-419"
-                      },
-                      {
-                        name: "Tennis Cartagena",
-                        avatar: "https://lh3.googleusercontent.com/a-/ALV-UjUCHA2cF3V_kJUnHwYVgDT0YkckM0C09RkDtwojeAH1uel_PQ=s56-c-rp-mo-br100",
-                        rating: 5,
-                        review: "Excelente trabajo, siempre dispuesto a ayudar y encontrar soluciones innovadoras. recomendado 100% me ha ayudado a mejorar mi presencia en linea y a alcanzar mis objetivos de marketing digital.",
-                        date: "Hace 6 meses",
-                        profileUrl: "https://www.google.com/maps/contrib/106589080689960738001/reviews?hl=es-419"
-                      },
-                      {
-                        name: "Carlos Tatis",
-                        avatar: "https://lh3.googleusercontent.com/a/ACg8ocKUCTi_YTX7OCwWXREHf5BXYNh60_wGheWZUY_y4_Cf-Df3=s56-c-rp-mo-br100",
-                        rating: 5,
-                        review: "Realmente brindan mucho conocimiento y facilitan todas las herramientas para que mi empresa obtuviera los buenos resultados",
-                        date: "Hace 8 meses",
-                        profileUrl: "https://www.google.com/maps/contrib/101993737361557621448/reviews?hl=es-419"
-                      },
-                      {
-                        name: "Jonathan Indalecio Alvarez",
-                        avatar: "https://lh3.googleusercontent.com/a-/ALV-UjWiRYo5bUwejSzaoVGTJ17ICXJivC-ZBVvQZAG63mkLPkpXAM6U=s56-c-rp-mo-br100",
-                        rating: 5,
-                        review: "Lo mejor para pautar en las redes sociales",
-                        date: "Hace 6 meses",
-                        profileUrl: "https://www.google.com/maps/contrib/109855523648010683263/reviews?hl=es-419"
-                      }
-                    ].filter(testimonial => testimonial.review).map((testimonial, index) => (
-                      <CarouselItem key={testimonial.name} className="pl-4 basis-full md:basis-1/2 lg:basis-1/3">
-                        <Card className="bg-background/50 border-border/50 backdrop-blur-sm h-full">
-                          <CardContent className="p-6 space-y-4 h-full flex flex-col">
-                          <div className="flex items-center space-x-1">
-                            {[...Array(testimonial.rating)].map((_, i) => (
-                              <svg key={i} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                              </svg>
+                          <ul className="space-y-1.5 flex-grow">
+                            {plan.features.map((feature, featureIndex) => (
+                              <li key={featureIndex} className="flex items-start space-x-1.5">
+                                <div className="w-3 h-3 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                  <div className="w-1 h-1 bg-primary rounded-full"></div>
+                                </div>
+                                <span className="text-xs leading-tight">{feature}</span>
+                              </li>
                             ))}
-                          </div>
+                          </ul>
 
-                          <blockquote className="text-muted-foreground italic flex-grow max-h-32 overflow-y-auto testimonial-scroll">
-                            "{testimonial.review}"
-                          </blockquote>
-
-                          <div className="flex items-center justify-between mt-auto">
-                            <div className="flex items-center space-x-3">
-                              <img
-                                src={testimonial.avatar}
-                                alt={`${testimonial.name} avatar`}
-                                className="w-10 h-10 rounded-full"
-                                onError={(e) => {
-                                  e.currentTarget.src = 'https://dairotraslavina.com/wp-content/plugins/widget-google-reviews/assets/img/guest.png';
-                                }}
-                              />
-                              <div>
-                                {testimonial.profileUrl ? (
-                                  <a
-                                    href={testimonial.profileUrl}
-                                    target="_blank"
-                                    rel="nofollow noopener"
-                                    className="font-semibold text-sm hover:text-primary transition-colors"
-                                  >
-                                    {testimonial.name}
-                                  </a>
-                                ) : (
-                                  <div className="font-semibold text-sm">{testimonial.name}</div>
-                                )}
-                                <div className="text-xs text-muted-foreground">{testimonial.date}</div>
-                              </div>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <svg className="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                              </svg>
-                              <span className="text-xs text-muted-foreground">Google</span>
-                            </div>
-                          </div>
+                          <Button
+                            className={`w-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
+                            size="default"
+                            onClick={() => {
+                              const messages = {
+                                'Plan Starter': 'Hola DT Growth Partners, estoy interesado en el Plan Starter para comenzar con publicidad digital',
+                                'Plan Growth': 'Hola DT Growth Partners, quiero el Plan Growth para hacer crecer mi negocio de forma consistente',
+                                'Plan Scale': 'Hola DT Growth Partners, necesito el Plan Scale para escalar agresivamente mi negocio'
+                              };
+                              const message = encodeURIComponent(messages[plan.name as keyof typeof messages]);
+                              window.open(`https://wa.me/573007189383?text=${message}`, '_blank');
+                            }}
+                          >
+                            Comenzar Ahora
+                          </Button>
                         </CardContent>
                       </Card>
-                      </CarouselItem>
-                    ))}
-                  </CarouselContent>
-                  <CarouselPrevious className="left-0" />
-                  <CarouselNext className="right-0" />
-                </Carousel>
-              </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <div className="flex justify-center gap-2 mt-6">
+                  <CarouselPrevious className="static translate-y-0" />
+                  <CarouselNext className="static translate-y-0" />
+                </div>
+              </Carousel>
+            </div>
+
+            {/* Desktop Grid */}
+            <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {[
+                {
+                  name: "Plan Starter",
+                  price: "$2.000.000 COP/mes",
+                  period: "+ 10% de la inversión en Ads",
+                  description: "Ideal para negocios que están comenzando con publicidad digital.",
+                  features: [
+                    "1 reunión mensual 1:1.",
+                    "3 reuniones virtuales.",
+                    "Configuración de Portafolio Comercial y Pruebas A/B en anuncios.",
+                    "Análisis y optimización de anuncios.",
+                    "Estrategia de segmentación personalizada.",
+                    "Reporte mensual de resultados."
+                  ],
+                  popular: true
+                },
+                {
+                  name: "Plan Growth",
+                  price: "$3.500.000 COP/mes",
+                  period: "+ 10% de la inversión en Ads",
+                  description: "Para negocios en crecimiento que buscan resultados consistentes.",
+                  features: [
+                    "Todo lo incluido en el plan Starter.",
+                    "1 reunión quincenal.",
+                    "Creación de contenido publicitario optimizado.",
+                    "Optimización de embudos de conversión.",
+                    "Análisis de la competencia."
+                  ],
+                  popular: true,
+                  tag: "Más Popular"
+                },
+                {
+                  name: "Plan Scale",
+                  price: "$5.000.000 COP/mes",
+                  period: "+ 10% de la inversión en Ads",
+                  description: "Para empresas que buscan escalar agresivamente.",
+                  features: [
+                    "Todo lo incluido en el Plan Growth.",
+                    "1 reunión semanal.",
+                    "Administración total de campañas.",
+                    "Creación de contenido multimedia profesional.",
+                    "Implementación de estrategias avanzadas de remarketing.",
+                    "Consultoría estratégica 1:1."
+                  ],
+                  popular: true,
+                  tag: "Más completo"
+                }
+              ].map((plan, index) => (
+                <Card
+                  key={plan.name}
+                  className={`card-hover bg-card border-border/50 animate-fade-in animate-float relative hover:border-t-4 hover:border-t-primary transition-all duration-300 h-full ${
+                    plan.popular ? 'ring-2 ring-primary shadow-lg scale-105' : ''
+                  }`}
+                  style={{
+                    animationDelay: `${index * 0.1}s`,
+                    animationDuration: `${3 + index * 0.5}s`
+                  }}
+                >
+                  {plan.popular && plan.tag && (
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                        {plan.tag}
+                      </span>
+                    </div>
+                  )}
+                  <CardContent className="p-8 space-y-6 flex flex-col h-full">
+                    <div className="text-center space-y-2">
+                      <h3 className="text-2xl font-bold">{plan.name}</h3>
+                      <div className="space-y-1">
+                        <div className="text-4xl font-bold text-primary">{plan.price}</div>
+                        <div className="text-muted-foreground">{plan.period}</div>
+                      </div>
+                      <p className="text-sm text-muted-foreground">{plan.description}</p>
+                    </div>
+
+                    <ul className="space-y-3 flex-grow">
+                      {plan.features.map((feature, featureIndex) => (
+                        <li key={featureIndex} className="flex items-start space-x-3">
+                          <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <div className="w-2 h-2 bg-primary rounded-full"></div>
+                          </div>
+                          <span className="text-sm">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <Button
+                      className={`w-full ${plan.popular ? 'btn-primary' : 'btn-secondary'}`}
+                      size="lg"
+                      onClick={() => {
+                        const messages = {
+                          'Plan Starter': 'Hola DT Growth Partners, estoy interesado en el Plan Starter para comenzar con publicidad digital',
+                          'Plan Growth': 'Hola DT Growth Partners, quiero el Plan Growth para hacer crecer mi negocio de forma consistente',
+                          'Plan Scale': 'Hola DT Growth Partners, necesito el Plan Scale para escalar agresivamente mi negocio'
+                        };
+                        const message = encodeURIComponent(messages[plan.name as keyof typeof messages]);
+                        window.open(`https://wa.me/573007189383?text=${message}`, '_blank');
+                      }}
+                    >
+                      Comenzar Ahora
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         </section>
