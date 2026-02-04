@@ -27,10 +27,19 @@ function ScrollToTop() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Dispara el evento PageView del Meta Pixel en cada cambio de ruta
-    if (typeof window.fbq === 'function') {
-      window.fbq('track', 'PageView');
-    }
+  }, [pathname]);
+
+  // Dispara el evento PageView del Meta Pixel
+  useEffect(() => {
+    const trackPageView = () => {
+      if (typeof window.fbq === 'function') {
+        window.fbq('track', 'PageView');
+      }
+    };
+
+    // Pequeño delay para asegurar que el pixel esté cargado
+    const timer = setTimeout(trackPageView, 100);
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;
