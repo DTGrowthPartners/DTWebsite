@@ -16,11 +16,21 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+declare global {
+  interface Window {
+    fbq: (action: string, event: string) => void;
+  }
+}
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    // Dispara el evento PageView del Meta Pixel en cada cambio de ruta
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'PageView');
+    }
   }, [pathname]);
 
   return null;
