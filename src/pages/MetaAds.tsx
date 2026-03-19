@@ -20,6 +20,23 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useRef, useState } from "react";
+import SEO from "@/components/SEO";
+
+const metaAdsServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Meta Ads / Publicidad Digital",
+  "provider": {
+    "@type": "Organization",
+    "name": "DT Growth Partners",
+    "url": "https://dtgrowthpartners.com"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Cartagena"
+  },
+  "description": "Gestión de campañas publicitarias en Meta Ads (Facebook e Instagram) para empresas en Cartagena. Incluye estrategia, creatividades, optimización y reportes."
+};
 
 const MetaAds = () => {
   useEffect(() => {
@@ -126,8 +143,14 @@ const MetaAds = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Meta Ads en Cartagena | Publicidad en Facebook e Instagram | DT Growth Partners"
+        description="Agencia especializada en Meta Ads en Cartagena. Campañas de anuncios en Facebook e Instagram que generan ventas reales. Resultados medibles."
+        canonical="https://dtgrowthpartners.com/servicios/meta-ads"
+        jsonLd={metaAdsServiceSchema}
+      />
       <Navigation />
-      
+
       <main className="pt-16">
         {/* Hero */}
         <section className="py-20 sm:py-24 lg:py-32 relative overflow-hidden">
@@ -160,8 +183,8 @@ const MetaAds = () => {
               </div>
 
               <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                <span className="gradient-text block">Transforma</span>
-                <span className="text-2xl lg:text-4xl block mt-2">tus campañas publicitarias</span>
+                <span className="gradient-text block">Meta Ads en Cartagena</span>
+                <span className="text-2xl lg:text-4xl block mt-2">Publicidad en Facebook e Instagram que vende</span>
               </h1>
 
               <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-normal">

@@ -26,6 +26,110 @@ import {
 
 // Import vanilla-tilt
 import VanillaTilt from "vanilla-tilt";
+import SEO from "@/components/SEO";
+
+const webDevServiceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Desarrollo Web Profesional",
+  "provider": {
+    "@type": "Organization",
+    "name": "DT Growth Partners",
+    "url": "https://dtgrowthpartners.com"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Cartagena"
+  },
+  "description": "Desarrollo web profesional en Cartagena. Landing pages, tiendas online y sitios web optimizados para SEO y conversión."
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Con qué tipo de empresas trabajan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Trabajamos con negocios que buscan crecer con estrategia, tecnología y datos. Idealmente empresas que ya venden y quieren escalar sus procesos digitales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Trabajan con cualquier tipo de proyecto?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Evaluamos cada caso para asegurarnos de que el proyecto tenga sentido a nivel técnico y de negocio antes de avanzar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tiempo toma un proyecto?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende del alcance. Un proyecto estándar suele tomar entre 3 y 8 semanas, según complejidad y validaciones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo solicitar cambios durante el desarrollo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Nuestro proceso es iterativo. Los ajustes se realizan dentro del alcance definido y se validan en cada etapa del proyecto."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué necesito tener listo antes de empezar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Una idea clara del objetivo del proyecto y disponibilidad para validaciones clave. Nosotros guiamos el resto del proceso."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Entregan el proyecto listo para operar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Entregamos la solución funcional, optimizada y lista para usarse, con métricas y configuraciones básicas incluidas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Ofrecen soporte después de la entrega?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. Podemos acompañarte con soporte, mejoras continuas o escalamiento según tus necesidades."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Trabajan solo desarrollo web o también estrategia?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ambos. No desarrollamos sin entender primero el contexto y los objetivos del negocio."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿El proyecto es de pago único o mensual?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El desarrollo es un proyecto puntual. El acompañamiento, optimización o crecimiento se maneja de forma recurrente si el cliente lo requiere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo sé si este servicio es para mí?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En la consulta inicial revisamos tu caso y te decimos con total claridad si podemos ayudarte o no."
+      }
+    }
+  ]
+};
 
 const DesarrolloWeb = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -232,8 +336,14 @@ const DesarrolloWeb = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Desarrollo Web en Cartagena | Sitios que Convierten | DT Growth Partners"
+        description="Desarrollo web profesional en Cartagena. Landing pages, tiendas online y sitios web optimizados para SEO y conversión. Cotiza hoy."
+        canonical="https://dtgrowthpartners.com/servicios/desarrollo-web"
+        jsonLd={[webDevServiceSchema, faqSchema]}
+      />
       <Navigation />
-      
+
       <main>
         {/* Hero */}
         <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black -mt-16 pt-16">
@@ -255,7 +365,7 @@ const DesarrolloWeb = () => {
               </div>
 
               <h1 className="text-5xl lg:text-7xl font-bold text-white">
-                <span className="gradient-text">Desarrollo web</span> que convierte visitantes en clientes
+                <span className="gradient-text">Desarrollo web en Cartagena</span> que convierte visitantes en clientes
               </h1>
 
               <p className="text-xl text-neutral-300 max-w-2xl mx-auto">

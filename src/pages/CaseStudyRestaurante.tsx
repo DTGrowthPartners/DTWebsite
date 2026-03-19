@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, Target, MapPin, Video, Users, CheckCircle2, ArrowLeft, X, BarChart3 } from "lucide-react";
@@ -95,6 +96,11 @@ const CaseStudyRestaurante = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Caso de Éxito: 440K Personas Alcanzadas para Restaurante Local | DT Growth Partners"
+        description="Campaña de reconocimiento local en Cartagena: 440 mil personas alcanzadas, +1,303 seguidores con solo $407 de inversión."
+        canonical="https://dtgrowthpartners.com/casos-exito/reconocimiento-local-restaurante"
+      />
       <Navigation />
 
       <main className="pt-16">

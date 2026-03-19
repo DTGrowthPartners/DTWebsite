@@ -28,6 +28,10 @@ const HeroSection = () => {
             <p className="text-lg text-muted-foreground max-w-xl animate-fade-in-up" style={{animationDelay: "0.6s"}}>
               {t("hero.scaleDescription")}
             </p>
+
+            <p className="text-base text-muted-foreground/80 max-w-xl animate-fade-in-up" style={{animationDelay: "0.7s"}}>
+              Somos una agencia de <strong className="text-foreground">pauta digital</strong> y <strong className="text-foreground">desarrollo web en Cartagena</strong>. Gestionamos <strong className="text-foreground">anuncios en Meta Ads, Google Ads y redes sociales</strong> para empresas que quieren crecer con datos, no suposiciones.
+            </p>
             
             <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up" style={{animationDelay: "0.8s"}}>
               <Button asChild size="lg" className="btn-primary group">

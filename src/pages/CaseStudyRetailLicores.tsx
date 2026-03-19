@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, Target, Zap, BarChart3, CheckCircle2, ArrowLeft, X } from "lucide-react";
@@ -87,6 +88,11 @@ const CaseStudyRetailLicores = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Caso de Éxito: Retail de Bebidas — De ROAS 1.3x a $29.2M en ventas | DT Growth Partners"
+        description="Cómo transformamos las campañas de Meta Ads de un retail de bebidas en Cartagena, logrando $29.2M COP en ventas y un ROAS de 31x."
+        canonical="https://dtgrowthpartners.com/casos-exito/retail-bebidas"
+      />
       <Navigation />
 
       <main className="pt-16">

@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, TrendingUp, Target, Zap, BarChart3, CheckCircle2, ArrowLeft, X, Calendar } from "lucide-react";
@@ -73,6 +74,11 @@ const CaseStudyEscalamientoTrimestral = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Caso de Éxito: +92% en Ventas con Escalamiento Trimestral | DT Growth Partners"
+        description="Estrategia de escalamiento en Meta Ads: de $65.2M a $125.6M en ventas con 41x ROAS. Caso real de e-commerce en Cartagena."
+        canonical="https://dtgrowthpartners.com/casos-exito/escalamiento-trimestral"
+      />
       <Navigation />
 
       <main className="pt-16">

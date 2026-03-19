@@ -14,6 +14,7 @@ import {
 import { HeroGeometric } from "@/components/ui/shadcn-io/shape-landing-hero";
 import { BackgroundGradient } from "@/components/ui/background-gradient";
 import coheteImage from "@/assets/cohete.png";
+import SEO from "@/components/SEO";
 
 const SistemasAutomatizaciones = () => {
   const [currentSystemIndex, setCurrentSystemIndex] = React.useState(0);
@@ -126,8 +127,13 @@ const SistemasAutomatizaciones = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="Automatizaciones e IA para Empresas en Cartagena | DT Growth Partners"
+        description="Automatiza tu negocio con IA. Flujos, chatbots y agentes inteligentes para empresas en Cartagena. Trabaja menos, crece más."
+        canonical="https://dtgrowthpartners.com/servicios/sistemas-automatizaciones"
+      />
       <Navigation />
-      
+
       <main className="pt-16">
         {/* Hero */}
         <section className="relative min-h-screen flex items-center overflow-hidden">
