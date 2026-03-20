@@ -13,6 +13,8 @@ import logo12 from "@/assets/marcas/12-autoexpress.png";
 import logo13 from "@/assets/marcas/experiencia-cartagena.png";
 import logo14 from "@/assets/marcas/logo-roberto-casanova-english-01.svg";
 import logo15 from "@/assets/marcas/bhk.png";
+import logo16 from "@/assets/buzos-removebg-preview.png";
+import logo17 from "@/assets/aventuras-removebg-preview.png";
 import { useLanguage } from "@/context/LanguageContext";
 
 const BrandsSection = () => {
@@ -35,6 +37,8 @@ const BrandsSection = () => {
     { name: "Neuro Carolina", logo: logo8 },
     { name: "Roberto Casanova", logo: logo14 },
     { name: "BHK", logo: logo15 },
+    { name: "Buzos", logo: logo16 },
+    { name: "Aventuras", logo: logo17 },
   ];
 
   return (
@@ -64,7 +68,9 @@ const BrandsSection = () => {
                   ${brand.name === "Tennis Cartagena" ? "max-h-10 md:max-h-14" : ""}
                   ${brand.name === "Roberto Casanova" ? "max-h-8 md:max-h-12 mt-2" : ""}
                   ${brand.name === "BHK" ? "max-h-6 md:max-h-10" : ""}
-                  ${!["verzatille", "Autoexpress", "En Medidas Específicas", "Neuro Carolina", "Equilibrio Clinic", "Tennis Cartagena", "Roberto Casanova", "BHK"].includes(brand.name) ? "max-h-8 md:max-h-12" : ""}
+                  ${brand.name === "Buzos" ? "max-h-10 md:max-h-14" : ""}
+                  ${brand.name === "Aventuras" ? "max-h-10 md:max-h-14" : ""}
+                  ${!["verzatille", "Autoexpress", "En Medidas Específicas", "Neuro Carolina", "Equilibrio Clinic", "Tennis Cartagena", "Roberto Casanova", "BHK", "Buzos", "Aventuras"].includes(brand.name) ? "max-h-8 md:max-h-12" : ""}
                 `}
               />
             </div>
