@@ -18,6 +18,10 @@ const translations = {
     "nav.dt-os": "DT-OS",
     "nav.cases": "Success Cases",
     "nav.consultation": "Schedule a Consultation",
+    "nav.services.metaAds": "Meta Ads",
+    "nav.services.webDev": "Web Development",
+    "nav.services.automation": "Automations & AI",
+    "nav.services.digitalAds": "Digital Advertising",
 
     // Pagination
     "pagination.previous": "Previous",
@@ -164,6 +168,10 @@ const translations = {
     "nav.dt-os": "DT-OS",
     "nav.cases": "Casos de Éxito",
     "nav.consultation": "Agenda una Consultoría",
+    "nav.services.metaAds": "Meta Ads",
+    "nav.services.webDev": "Desarrollo Web",
+    "nav.services.automation": "Automatizaciones & IA",
+    "nav.services.digitalAds": "Publicidad Digital",
 
     // Pagination
     "pagination.previous": "Anterior",

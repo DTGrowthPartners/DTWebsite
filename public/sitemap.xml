@@ -3,11 +3,12 @@
 
   <url>
     <loc>https://dtgrowthpartners.com/</loc>
-    <lastmod>2026-03-19</lastmod>
+    <lastmod>2026-03-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
+  <!-- Servicios existentes -->
   <url>
     <loc>https://dtgrowthpartners.com/servicios/meta-ads</loc>
     <lastmod>2026-03-19</lastmod>
@@ -29,24 +30,96 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Páginas de servicio SEO -->
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/publicidad-digital-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/meta-ads-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/facebook-ads-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/agencia-publicidad-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/pauta-digital-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/instagram-ads-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/publicidad-redes-sociales-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/agencia-marketing-digital-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/campanas-publicitarias-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <url>
+    <loc>https://dtgrowthpartners.com/servicios/whatsapp-marketing-cartagena</loc>
+    <lastmod>2026-03-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Casos de éxito -->
   <url>
     <loc>https://dtgrowthpartners.com/casos-exito/retail-bebidas</loc>
     <lastmod>2026-03-19</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dtgrowthpartners.com/casos-exito/escalamiento-trimestral</loc>
     <lastmod>2026-03-19</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://dtgrowthpartners.com/casos-exito/reconocimiento-local-restaurante</loc>
     <lastmod>2026-03-19</lastmod>
-    <changefreq>monthly</changefreq>
+    <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
