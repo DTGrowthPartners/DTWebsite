@@ -68,8 +68,8 @@ const BrandsSection = () => {
                   ${brand.name === "Tennis Cartagena" ? "max-h-10 md:max-h-14" : ""}
                   ${brand.name === "Roberto Casanova" ? "max-h-8 md:max-h-12 mt-2" : ""}
                   ${brand.name === "BHK" ? "max-h-6 md:max-h-10" : ""}
-                  ${brand.name === "Buzos" ? "max-h-[120px] md:max-h-[120px]" : ""}
-                  ${brand.name === "Aventuras" ? "max-h-[120px] md:max-h-[120px]" : ""}
+                  ${brand.name === "Buzos" ? "max-h-[200px] md:max-h-[200px]" : ""}
+                  ${brand.name === "Aventuras" ? "max-h-[200px] md:max-h-[200px]" : ""}
                   ${!["verzatille", "Autoexpress", "En Medidas Específicas", "Neuro Carolina", "Equilibrio Clinic", "Tennis Cartagena", "Roberto Casanova", "BHK", "Buzos", "Aventuras"].includes(brand.name) ? "max-h-8 md:max-h-12" : ""}
                 `}
               />
