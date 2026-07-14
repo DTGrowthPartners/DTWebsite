@@ -109,8 +109,8 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-transparent backdrop-blur-xl transition-all duration-300 py-2">
-      <div className="section-container">
+    <nav className="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-white/5 transition-all duration-300 py-2">
+      <div className="shell">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-2 py-5">
             <img src={logo} alt="DT Growth" width={120} />
@@ -121,7 +121,7 @@ const Navigation = () => {
             <a
               href="/"
               onClick={(e) => handleNavClick(e, "/")}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
             >
               {t("nav.home")}
             </a>
@@ -134,7 +134,7 @@ const Navigation = () => {
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => setServicesOpen(!servicesOpen)}
               >
                 {t("nav.services")}
@@ -252,26 +252,26 @@ const Navigation = () => {
               </div>
             </div>
 
-            {/* Rest of nav links (DT-OS, Cases) */}
+            {/* Rest of nav links (Cases, Team, Method) */}
             {navLinks.slice(1).map((link) => (
               <a
                 key={link.name}
                 href={link.path}
                 onClick={(e) => handleNavClick(e, link.path)}
-                className={`text-muted-foreground hover:text-foreground transition-colors ${link.name === "DT-OS" ? "relative group text-primary" : ""}`}
+                className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
-                {link.name === "DT-OS" && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0 transform scale-x-100 transition-transform duration-300 ease-in-out" />
-                )}
               </a>
             ))}
 
-            <Button asChild className="btn-primary">
-              <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                {t("common.consultation")}
-              </a>
-            </Button>
+            <a
+              href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-glow transition-transform duration-300 hover:scale-[1.04]"
+            >
+              {t("common.consultation")}
+            </a>
             <div className="ml-4 flex items-center space-x-2">
               <span className="text-sm text-muted-foreground">{t("language.es")}</span>
               <div

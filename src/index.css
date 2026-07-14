@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -29,51 +29,60 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
+    /* Rediseño QClay — ink azul-negro + azul eléctrico DT */
+    --background: 226 52% 4%;      /* ink   #05070F */
+    --foreground: 225 100% 98%;    /* white #F5F8FF */
 
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
+    --card: 219 44% 9%;            /* surface #0B1220 */
+    --card-foreground: 225 100% 98%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 219 46% 7%;
+    --popover-foreground: 225 100% 98%;
 
-    --primary: 210 100% 50%;
-    --accent: 210 85% 45%;
-    --primary-foreground: 0 0% 4%;
+    --primary: 208 87% 45%;        /* electric #0F76D6 */
+    --primary-foreground: 225 100% 98%;
 
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 219 38% 13%;
+    --secondary-foreground: 225 100% 98%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 219 30% 14%;
+    --muted-foreground: 217 18% 64%;  /* fog #8A97AD (algo más claro para lectura) */
 
-    --accent: 210 85% 45%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 197 87% 55%;         /* cyan #26BDF0 */
+    --accent-foreground: 226 52% 4%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 225 100% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 210 85% 45%;
+    --border: 216 32% 15%;
+    --input: 216 32% 15%;
+    --ring: 208 87% 52%;
 
     --radius: 0.75rem;
 
-    /* Custom tokens */
-    --gradient-hero: linear-gradient(90deg, hsl(210 100% 15% / 0.1), hsl(210 85% 45% / 0.05));
-    --gradient-card: linear-gradient(180deg, hsl(0 0% 7%), hsl(0 0% 5%));
+    /* Brand palette (para uso directo) */
+    --ink: 226 52% 4%;
+    --surface: 219 44% 9%;
+    --electric: 208 87% 45%;
+    --cyan: 197 87% 55%;
+    --ice: 184 100% 88%;           /* #C2FBFF */
+    --fog: 217 18% 64%;
 
-    --shadow-glow: 0 0 40px hsl(210 85% 45% / 0.15);
-    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.4);
+    /* Custom tokens */
+    --gradient-brand: linear-gradient(100deg, hsl(208 87% 48%), hsl(197 87% 58%) 55%, hsl(184 100% 88%));
+    --gradient-hero: radial-gradient(120% 120% at 15% 0%, hsl(208 87% 20% / 0.35), transparent 55%);
+    --gradient-card: linear-gradient(180deg, hsl(219 44% 10%), hsl(219 46% 7%));
+
+    --shadow-glow: 0 0 60px hsl(208 87% 50% / 0.25);
+    --shadow-card: 0 8px 40px hsl(226 52% 2% / 0.6);
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     /* Blue electric tones for background boxes */
-    --blue-300: 200 100% 70%;
-    --blue-400: 210 100% 60%;
-    --blue-500: 210 100% 50%;
-    --blue-600: 220 100% 45%;
+    --blue-300: 197 87% 70%;
+    --blue-400: 205 90% 60%;
+    --blue-500: 208 87% 50%;
+    --blue-600: 214 90% 45%;
   }
   .theme {
     --animate-grid: grid 15s linear infinite;
@@ -108,10 +117,29 @@ All colors MUST be HSL.
     @apply max-w-7xl mx-auto px-6 lg:px-8;
   }
 
+  /* Ancho amplio estilo QClay (más aire lateral en pantallas grandes) */
+  .shell {
+    @apply max-w-[1600px] mx-auto px-6 md:px-10 lg:px-16;
+  }
+
   .gradient-text {
     background: #0f76d6;
-    background: linear-gradient(90deg, rgba(15, 118, 214, 1) 0%, rgba(38, 189, 240, 1) 65%, rgba(194, 251, 255, 1) 100%);
+    background: linear-gradient(100deg, rgba(15, 118, 214, 1) 0%, rgba(38, 189, 240, 1) 55%, rgba(194, 251, 255, 1) 100%);
     @apply bg-clip-text text-transparent;
+  }
+
+  /* Etiqueta mono tipo "lectura de datos" (ADN ciencia/datos de DT) */
+  .eyebrow {
+    @apply font-mono text-[11px] md:text-xs uppercase tracking-[0.25em] text-muted-foreground;
+  }
+
+  /* Titular display gigante con tracking negativo (QClay) */
+  .display {
+    @apply font-display font-extrabold leading-[0.92] tracking-tightest;
+  }
+
+  .hairline {
+    @apply border-white/10;
   }
 
   .card-hover {
@@ -346,6 +374,54 @@ All colors MUST be HSL.
 .testimonial-scroll-horizontal {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--primary) / 0.4) hsl(var(--background));
+}
+
+/* ============================================================
+   Rediseño QClay — firma visual y utilidades de movimiento
+   ============================================================ */
+
+/* Marquee infinito para el ticker de marcas (duplicar el contenido en JSX) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 40s) linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Curva de crecimiento que se dibuja sola (firma). El JS/scroll pone --draw. */
+.draw-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.draw-line.is-drawn {
+  stroke-dashoffset: 0;
+}
+
+/* Textura de grano sutil sobre fondos oscuros */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Línea/hairline con degradado de marca */
+.rule-brand {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, hsl(var(--electric) / 0.6), transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+  .draw-line { transition: none; stroke-dashoffset: 0; }
 }
 
 /* Rocket floating animation */
