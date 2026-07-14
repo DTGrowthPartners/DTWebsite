@@ -2,8 +2,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import HeroSection from "@/components/home/HeroSection";
-import BrandsSection from "@/components/home/BrandsSection";
-import ServicesSection from "@/components/home/ServicesSection";
+import ServicesHorizontal from "@/components/home/ServicesHorizontal";
 import WebDevelopmentSection from "@/components/home/WebDevelopmentSection";
 import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import MethodSection from "@/components/home/MethodSection";
@@ -55,9 +54,10 @@ const Index = () => {
         {/* El hero conserva su propia animación de entrada al cargar. */}
         <HeroSection />
 
+        {/* Scroll horizontal pineado (no envolver: gestiona su propio scroll). */}
+        <ServicesHorizontal />
+
         {/* Reveals al hacer scroll (framer-motion, se dispara una vez en viewport). */}
-        <FadeInView><BrandsSection /></FadeInView>
-        <FadeInView><ServicesSection /></FadeInView>
         <FadeInView><CaseStudiesSection /></FadeInView>
         <FadeInView><MethodSection /></FadeInView>
         <FadeInView><TeamSection /></FadeInView>

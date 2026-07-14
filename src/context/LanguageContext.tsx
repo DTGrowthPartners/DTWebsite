@@ -53,6 +53,10 @@ const translations = {
     "hero.scaleDescription": "Strategies, technology and AI applied to companies seeking sustainable and measurable growth.",
     "hero.consultation": "Schedule a Consultation",
     "hero.seeCases": "See Success Cases",
+    "hero.badgeChip": "New",
+    "hero.badgeText": "Free strategic growth consultation — limited spots",
+    "services.kicker": "// Services",
+    "services.scrollHint": "Scroll to explore",
 
     // Services Section
     "services.title": "Growth in all",
@@ -211,6 +215,10 @@ const translations = {
     "hero.scaleDescription": "Estrategias, tecnología e IA aplicadas a empresas que buscan crecimiento sostenible y medible.",
     "hero.consultation": "Agendar Consulta",
     "hero.seeCases": "Ver Casos de Éxito",
+    "hero.badgeChip": "Nuevo",
+    "hero.badgeText": "Consultoría estratégica de crecimiento gratis — cupos limitados",
+    "services.kicker": "// Servicios",
+    "services.scrollHint": "Desplázate para explorar",
 
     // Services Section
     "services.title": "Crecimiento en todas las",

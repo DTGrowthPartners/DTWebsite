@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTarget } from "@/lib/smooth-scroll";
@@ -109,19 +109,19 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/60 backdrop-blur-xl border-b border-white/5 transition-all duration-300 py-2">
-      <div className="shell">
-        <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2 py-5">
-            <img src={logo} alt="DT Growth" width={120} />
+    <nav className="fixed top-4 w-full z-50 px-4 md:px-8 lg:px-16">
+      <div className="max-w-[1600px] mx-auto">
+        <div className="flex items-center justify-between gap-4">
+          <Link to="/" className="flex items-center shrink-0">
+            <img src={logo} alt="DT Growth" width={110} />
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          {/* Desktop Navigation — pill de cristal */}
+          <div className="hidden md:flex items-center liquid-glass rounded-full px-1.5 py-1.5">
             <a
               href="/"
               onClick={(e) => handleNavClick(e, "/")}
-              className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
+              className="px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors"
             >
               {t("nav.home")}
             </a>
@@ -134,7 +134,7 @@ const Navigation = () => {
               onMouseLeave={handleMouseLeave}
             >
               <button
-                className="flex items-center gap-1 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors"
                 onClick={() => setServicesOpen(!servicesOpen)}
               >
                 {t("nav.services")}
@@ -258,7 +258,7 @@ const Navigation = () => {
                 key={link.name}
                 href={link.path}
                 onClick={(e) => handleNavClick(e, link.path)}
-                className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors"
+                className="px-3 py-2 text-sm font-medium text-white/90 font-body hover:text-white transition-colors whitespace-nowrap"
               >
                 {link.name}
               </a>
@@ -268,37 +268,38 @@ const Navigation = () => {
               href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground shadow-glow transition-transform duration-300 hover:scale-[1.04]"
+              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-medium text-black font-body whitespace-nowrap transition-transform duration-300 hover:scale-[1.04]"
             >
               {t("common.consultation")}
+              <ArrowUpRight className="h-4 w-4" />
             </a>
-            <div className="ml-4 flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground">{t("language.es")}</span>
+            <div className="mx-2 flex items-center space-x-1.5">
+              <span className="text-xs text-white/70 font-body">{t("language.es")}</span>
               <div
-                className="relative inline-block w-10 h-5 bg-primary/20 rounded-full cursor-pointer"
+                className="relative inline-block w-8 h-4 bg-white/20 rounded-full cursor-pointer"
                 onClick={toggleLanguage}
               >
                 <div
-                  className={`absolute w-4 h-4 bg-primary rounded-full top-0.5 transition-transform duration-300 ${language === "es" ? "left-0.5" : "right-0.5"}`}
+                  className={`absolute w-3 h-3 bg-white rounded-full top-0.5 transition-transform duration-300 ${language === "es" ? "left-0.5" : "right-0.5"}`}
                 />
               </div>
-              <span className="text-sm text-muted-foreground">{t("language.en")}</span>
+              <span className="text-xs text-white/70 font-body">{t("language.en")}</span>
             </div>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="md:hidden liquid-glass rounded-full w-11 h-11 flex items-center justify-center text-white"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-border/50 animate-fade-in">
+          <div className="md:hidden mt-3 rounded-[1.5rem] bg-black/70 backdrop-blur-2xl border border-white/10 p-6 animate-fade-in">
             <div className="flex flex-col space-y-4">
               {/* Home */}
               <a
