@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/context/LanguageContext";
+import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 import { Send, CheckCircle, XCircle } from "lucide-react";
 
@@ -251,7 +252,7 @@ const ContactFormSection = () => {
           <div className="text-center mb-12">
             <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
             <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl leading-[0.95] tracking-[-0.024em]">
-              {t("contact.title")} <span className="font-semibold">{t("contact.titleHighlight")}</span>
+              {t("contact.title")} <RotatingWord words={t("contact.rotating").split("|")} interval={3300} className="font-semibold" />
             </h2>
             <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
               {t("contact.subtitle")}

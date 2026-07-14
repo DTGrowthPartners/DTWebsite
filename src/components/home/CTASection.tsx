@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import BlurText from "@/components/effects/BlurText";
+import RotatingWord from "@/components/effects/RotatingWord";
 import fondoVideo from "@/assets/fondo-video.mp4";
 
 const WHATSAPP =
@@ -18,10 +19,10 @@ const CTASection = () => {
       <FadingVideo src={fondoVideo} className="absolute inset-0 w-full h-full object-cover z-0" />
 
       <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
-        <BlurText
-          text={`${t("cta.title")} ${t("cta.titleHighlight")}`}
-          className="font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-0.024em] max-w-5xl"
-        />
+        <h2 className="flex flex-wrap items-baseline justify-center gap-x-[0.28em] font-heading font-normal text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em] max-w-5xl">
+          <BlurText text={t("cta.title")} />
+          <RotatingWord words={t("cta.rotating").split("|")} interval={2900} className="font-semibold" innerClassName="gradient-text" />
+        </h2>
 
         <p className="mt-8 text-sm md:text-base text-white/90 font-body font-light max-w-xl">
           {t("cta.subtitle")}

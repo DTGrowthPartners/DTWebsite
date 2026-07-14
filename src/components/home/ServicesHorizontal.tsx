@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } f
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
+import RotatingWord from "@/components/effects/RotatingWord";
 import fondoHorizontal from "@/assets/fondo-horizontal.mp4";
 
 const WHATSAPP =
@@ -256,7 +257,7 @@ const ServicesHorizontal = () => {
       <h2 className="font-heading font-normal text-white text-6xl md:text-7xl lg:text-[7rem] leading-[1.02] tracking-[-0.024em]">
         {t("services.title")}
         <br />
-        <span className="font-semibold">{t("services.titleHighlight")}</span>
+        <RotatingWord words={t("services.rotating").split("|")} interval={3100} className="font-semibold" />
       </h2>
       <p className="mt-6 text-base md:text-lg text-white/90 font-body font-light max-w-md">
         {t("services.subtitle")}

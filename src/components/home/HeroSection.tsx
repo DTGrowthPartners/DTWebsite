@@ -69,7 +69,7 @@ const HeroSection = () => {
             </motion.span>
           ))}
           <motion.span {...wordEnter(beforeWords.length)} className="inline-block mr-[0.26em]">
-            <RotatingWord words={rotatingWords} className="font-semibold gradient-text" />,
+            <RotatingWord words={rotatingWords} className="font-semibold" innerClassName="gradient-text" />,
           </motion.span>
           {afterWords.map((word, i) => (
             <motion.span

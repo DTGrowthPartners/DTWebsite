@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TrendingUp, ShoppingCart, Users, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 
 const CaseStudiesSection = () => {
@@ -61,7 +62,7 @@ const CaseStudiesSection = () => {
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("nav.cases")}`}</span>
         <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
-          {t("cases.title")} <span className="font-semibold">{t("cases.titleHighlight")}</span>
+          {t("cases.title")} <RotatingWord words={t("cases.rotating").split("|")} interval={3000} className="font-semibold" />
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
           {t("cases.subtitle")}
