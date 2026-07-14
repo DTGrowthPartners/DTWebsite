@@ -33,7 +33,7 @@ const MethodSection = () => {
     <section id="metodo" className="relative bg-black py-24 md:py-32 overflow-hidden">
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("method.label")}`}</span>
-        <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-4xl">
+        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("method.title")} {t("method.titleHighlight")}
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
@@ -52,7 +52,7 @@ const MethodSection = () => {
                 {/* Número gigante de fondo */}
                 <span
                   aria-hidden
-                  className="absolute -top-6 right-2 font-heading italic text-white/[0.06] text-[9rem] leading-none select-none"
+                  className="absolute -top-6 right-2 font-heading text-white/[0.06] text-[9rem] leading-none select-none"
                 >
                   {step.number}
                 </span>
@@ -65,7 +65,7 @@ const MethodSection = () => {
 
                 <div className="mt-8 relative z-10">
                   <span className="font-mono text-xs text-white/50">{`Paso ${step.number}`}</span>
-                  <h3 className="mt-2 font-heading italic text-white text-3xl md:text-4xl tracking-[-1px] leading-none">
+                  <h3 className="mt-2 font-heading text-white text-3xl md:text-4xl tracking-[-0.02em] leading-none">
                     {t(step.titleKey)}
                   </h3>
                   <p className="mt-3 text-sm text-white/80 font-body font-light leading-snug">

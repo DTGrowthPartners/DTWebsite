@@ -194,7 +194,7 @@ const ContactFormSection = () => {
               <div className="liquid-glass w-20 h-20 mx-auto rounded-full flex items-center justify-center">
                 <CheckCircle className="w-10 h-10 text-white" strokeWidth={1.5} />
               </div>
-              <h3 className="font-heading italic text-white text-4xl tracking-[-1px]">{t("contact.successTitle")}</h3>
+              <h3 className="font-heading text-white text-4xl tracking-[-0.02em]">{t("contact.successTitle")}</h3>
               <p className="text-sm md:text-base text-white/80 font-body font-light">
                 {t("contact.successMessage")}
               </p>
@@ -220,7 +220,7 @@ const ContactFormSection = () => {
               <div className="liquid-glass w-20 h-20 mx-auto rounded-full flex items-center justify-center">
                 <XCircle className="w-10 h-10 text-white" strokeWidth={1.5} />
               </div>
-              <h3 className="font-heading italic text-white text-4xl tracking-[-1px]">{t("contact.errorTitle")}</h3>
+              <h3 className="font-heading text-white text-4xl tracking-[-0.02em]">{t("contact.errorTitle")}</h3>
               <p className="text-sm md:text-base text-white/80 font-body font-light">
                 {t("contact.errorMessage")}
               </p>
@@ -248,7 +248,7 @@ const ContactFormSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
-            <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl leading-[0.9] tracking-[-2px]">
+            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl leading-[0.9] tracking-[-0.024em]">
               {t("contact.title")} {t("contact.titleHighlight")}
             </h2>
             <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">

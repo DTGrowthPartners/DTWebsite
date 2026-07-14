@@ -52,8 +52,8 @@ export default {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Syne', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"Space Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        heading: ['"Instrument Serif"', 'serif'],
-        body: ['Barlow', 'system-ui', 'sans-serif'],
+        heading: ['"General Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        body: ['Geist', 'Inter', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
         tightest: '-0.045em',

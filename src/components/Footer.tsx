@@ -125,7 +125,7 @@ const Footer = () => {
         {/* Firma serif gigante, muy tenue — remate de página */}
         <div
           aria-hidden
-          className="mt-16 font-heading italic text-white/[0.06] text-[16vw] md:text-[10vw] leading-none select-none whitespace-nowrap overflow-hidden"
+          className="mt-16 font-heading text-white/[0.06] text-[16vw] md:text-[10vw] leading-none select-none whitespace-nowrap overflow-hidden"
         >
           DT Growth Partners
         </div>

@@ -20,7 +20,7 @@ const CTASection = () => {
       <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
         <BlurText
           text={`${t("cta.title")} ${t("cta.titleHighlight")}`}
-          className="font-heading italic text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-2px] lg:tracking-[-4px] max-w-5xl"
+          className="font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-0.024em] max-w-5xl"
         />
 
         <p className="mt-8 text-sm md:text-base text-white/90 font-body font-light max-w-xl">

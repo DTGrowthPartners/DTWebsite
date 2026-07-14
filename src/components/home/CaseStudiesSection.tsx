@@ -58,7 +58,7 @@ const CaseStudiesSection = () => {
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("nav.cases")}`}</span>
-        <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-4xl">
+        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("cases.title")} {t("cases.titleHighlight")}
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
@@ -87,7 +87,7 @@ const CaseStudiesSection = () => {
                 {/* Métrica protagonista */}
                 <div className="mt-8">
                   <span className="font-mono text-xs text-white/50">{caseStudy.num}</span>
-                  <div className="mt-1 font-heading italic text-white text-5xl md:text-6xl tracking-[-1px] leading-none">
+                  <div className="mt-1 font-heading text-white text-5xl md:text-6xl tracking-[-0.02em] leading-none">
                     {caseStudy.metric}
                   </div>
                   <div className="text-xs text-white font-body font-light mt-2">{caseStudy.metricLabel}</div>

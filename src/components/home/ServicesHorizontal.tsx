@@ -1,27 +1,51 @@
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
-import fondoTech from "@/assets/fondo-seccion-DT-OS2.mp4";
+import fondoHorizontal from "@/assets/fondo-horizontal.mp4";
 
 const WHATSAPP =
   "https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0";
 
+const PANELS = 5; // intro + 4 servicios
+
 /**
- * Sección "pineada": ocupa 500vh de scroll vertical; un viewport sticky
- * traduce ese progreso a desplazamiento horizontal de 5 paneles (intro + 4 servicios).
- * Con prefers-reduced-motion cae a un stack vertical normal.
+ * Panel con animación propia ligada al progreso del scroll: la tarjeta
+ * escala, aparece y rota levemente cuando su panel pasa por el centro.
  */
+const Panel = ({
+  progress,
+  index,
+  children,
+}: {
+  progress: MotionValue<number>;
+  index: number;
+  children: ReactNode;
+}) => {
+  const center = index / (PANELS - 1);
+  const range = 0.16;
+  const scale = useTransform(progress, [center - range, center, center + range], [0.82, 1, 0.82]);
+  const opacity = useTransform(progress, [center - range, center, center + range], [0.25, 1, 0.25]);
+  const rotate = useTransform(progress, [center - range, center + range], [2, -2]);
+
+  return (
+    <div className="w-screen h-full shrink-0 flex items-center justify-center px-5 md:px-16">
+      <motion.div style={{ scale, opacity, rotate }} className="w-full flex justify-center will-change-transform">
+        {children}
+      </motion.div>
+    </div>
+  );
+};
+
 const ServicesHorizontal = () => {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({ target: targetRef, offset: ["start start", "end end"] });
-  // 5 paneles de 100vw → recorrido de -400vw
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-400vw"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0vw", `-${(PANELS - 1) * 100}vw`]);
   const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   const services = [
@@ -63,21 +87,21 @@ const ServicesHorizontal = () => {
     },
   ];
 
-  // Tarjeta glass de un servicio (compartida entre ambos layouts)
+  // Tarjeta de servicio — grande, con blur fuerte (liquid-glass-strong)
   const ServiceCard = ({ s }: { s: (typeof services)[number] }) => {
     const Icon = s.icon;
     const tags = t(s.highlightsKey).split(",").map((x) => x.trim()).filter(Boolean).slice(0, 4);
     const inner = (
-      <div className="liquid-glass rounded-[1.25rem] p-6 md:p-8 w-full max-w-xl flex flex-col min-h-[340px] md:min-h-[380px] text-left">
+      <div className="liquid-glass-strong rounded-[2rem] p-7 md:p-14 w-full max-w-4xl flex flex-col min-h-[440px] md:min-h-[560px] text-left">
         <div className="flex items-start justify-between gap-4">
-          <div className="liquid-glass rounded-[0.75rem] w-11 h-11 flex items-center justify-center shrink-0">
-            <Icon className="h-6 w-6 text-white" strokeWidth={1.5} />
+          <div className="liquid-glass rounded-[1rem] w-12 h-12 md:w-14 md:h-14 flex items-center justify-center shrink-0">
+            <Icon className="h-6 w-6 md:h-7 md:w-7 text-white" strokeWidth={1.5} />
           </div>
-          <div className="flex flex-wrap justify-end gap-1.5 max-w-[70%]">
+          <div className="flex flex-wrap justify-end gap-2 max-w-[70%]">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap"
+                className="liquid-glass rounded-full px-4 py-1.5 text-xs text-white/90 font-body whitespace-nowrap"
               >
                 {tag}
               </span>
@@ -87,28 +111,28 @@ const ServicesHorizontal = () => {
 
         <div className="flex-1" />
 
-        <div className="mt-6">
-          <span className="font-mono text-xs text-white/50">{s.num}</span>
-          <h3 className="mt-1 font-heading italic text-white text-3xl md:text-5xl tracking-[-1px] leading-none">
+        <div className="mt-8">
+          <span className="font-mono text-sm text-white/50">{s.num}</span>
+          <h3 className="mt-2 font-heading font-medium text-white text-4xl md:text-6xl lg:text-7xl tracking-[-0.024em] leading-[1.02]">
             {t(s.titleKey)}
           </h3>
-          <p className="mt-3 text-sm text-white/90 font-body font-light leading-snug max-w-[38ch]">
+          <p className="mt-5 text-base md:text-lg text-white/90 font-body font-light leading-snug max-w-[46ch]">
             {t(s.descKey)}
           </p>
-          <span className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-white font-body group-hover:gap-3 transition-all">
+          <span className="mt-7 inline-flex items-center gap-2 text-base font-medium text-white font-body group-hover:gap-3 transition-all">
             {t("services.seeMore")}
-            <ArrowUpRight className="h-4 w-4" />
+            <ArrowUpRight className="h-5 w-5" />
           </span>
         </div>
       </div>
     );
 
     return s.external ? (
-      <a href={s.path} target="_blank" rel="noopener noreferrer" className="group">
+      <a href={s.path} target="_blank" rel="noopener noreferrer" className="group w-full flex justify-center">
         {inner}
       </a>
     ) : (
-      <Link to={s.path} className="group">
+      <Link to={s.path} className="group w-full flex justify-center">
         {inner}
       </Link>
     );
@@ -116,14 +140,14 @@ const ServicesHorizontal = () => {
 
   // Panel intro (título de la sección)
   const IntroPanel = (
-    <div className="flex flex-col items-start justify-center h-full px-8 md:px-20 max-w-4xl">
+    <div className="flex flex-col items-start justify-center max-w-4xl w-full">
       <span className="text-sm font-body text-white/80 mb-6">{t("services.kicker")}</span>
-      <h2 className="font-heading italic text-white text-6xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-3px]">
+      <h2 className="font-heading font-medium text-white text-6xl md:text-7xl lg:text-[7rem] leading-[1.02] tracking-[-0.024em]">
         {t("services.title")}
         <br />
         {t("services.titleHighlight")}
       </h2>
-      <p className="mt-6 text-sm md:text-base text-white/90 font-body font-light max-w-md">
+      <p className="mt-6 text-base md:text-lg text-white/90 font-body font-light max-w-md">
         {t("services.subtitle")}
       </p>
       <div className="mt-10 inline-flex items-center gap-3 text-sm text-white/70 font-body">
@@ -133,14 +157,24 @@ const ServicesHorizontal = () => {
     </div>
   );
 
+  // Capas de fondo compartidas (azul-púrpura profundo + video + mancha blur)
+  const Background = (
+    <>
+      <div className="absolute inset-0 z-0" style={{ background: "hsl(260 87% 3%)" }} />
+      <FadingVideo src={fondoHorizontal} className="absolute inset-0 w-full h-full object-cover z-0" />
+      {/* Mancha desenfocada tras el contenido: asienta las tarjetas sobre el video */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[984px] max-w-none h-[527px] bg-gray-950 opacity-90 blur-[82px] z-[1]" />
+    </>
+  );
+
   // Fallback accesible: stack vertical sin pin
   if (reduced) {
     return (
-      <section id="servicios" className="relative bg-black py-24">
-        <FadingVideo src={fondoTech} className="absolute inset-0 w-full h-full object-cover z-0" />
+      <section id="servicios" className="relative py-24 overflow-hidden" style={{ background: "hsl(260 87% 3%)" }}>
+        {Background}
         <div className="relative z-10 px-8 md:px-16">
           <div className="mb-16">{IntroPanel}</div>
-          <div className="grid gap-8 md:grid-cols-2">
+          <div className="grid gap-8 lg:grid-cols-2">
             {services.map((s) => (
               <ServiceCard key={s.num} s={s} />
             ))}
@@ -151,18 +185,19 @@ const ServicesHorizontal = () => {
   }
 
   return (
-    <section id="servicios" ref={targetRef} className="relative h-[500vh] bg-black">
+    <section id="servicios" ref={targetRef} className="relative h-[500vh]" style={{ background: "hsl(260 87% 3%)" }}>
       <div className="sticky top-0 h-screen overflow-hidden">
-        {/* Video de fondo del viewport pineado */}
-        <FadingVideo src={fondoTech} className="absolute inset-0 w-full h-full object-cover z-0" />
+        {Background}
 
         {/* Pista horizontal */}
         <motion.div style={{ x }} className="relative z-10 flex h-full w-[500vw]">
-          <div className="w-screen h-full shrink-0">{IntroPanel}</div>
-          {services.map((s) => (
-            <div key={s.num} className="w-screen h-full shrink-0 flex items-center justify-center px-6 md:px-20">
+          <Panel progress={scrollYProgress} index={0}>
+            {IntroPanel}
+          </Panel>
+          {services.map((s, i) => (
+            <Panel key={s.num} progress={scrollYProgress} index={i + 1}>
               <ServiceCard s={s} />
-            </div>
+            </Panel>
           ))}
         </motion.div>
 

@@ -53,7 +53,7 @@ const HeroSection = () => {
           <BlurText
             text={headline}
             delay={0.5}
-            className="font-heading italic text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-2px] lg:tracking-[-4px]"
+            className="font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-0.024em]"
           />
         </div>
 
@@ -95,7 +95,7 @@ const HeroSection = () => {
                 className="liquid-glass rounded-[1.25rem] p-4 md:p-5 flex-1 md:flex-none md:w-[220px] min-w-0 flex flex-col items-start text-left"
               >
                 <Icon className="h-7 w-7 text-white" strokeWidth={1.5} />
-                <div className="mt-4 font-heading italic text-white text-3xl md:text-4xl tracking-[-1px] leading-none">
+                <div className="mt-4 font-heading text-white text-3xl md:text-4xl tracking-[-0.02em] leading-none">
                   {s.value}
                 </div>
                 <div className="text-xs text-white font-body font-light mt-2">{s.label}</div>
@@ -112,7 +112,7 @@ const HeroSection = () => {
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 md:gap-x-16">
           {partners.map((name) => (
-            <span key={name} className="font-heading italic text-white text-xl md:text-3xl tracking-tight whitespace-nowrap">
+            <span key={name} className="font-heading text-white text-xl md:text-3xl tracking-tight whitespace-nowrap">
               {name}
             </span>
           ))}

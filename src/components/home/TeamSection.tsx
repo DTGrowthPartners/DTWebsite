@@ -28,7 +28,7 @@ const TeamSection = () => {
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("team.label")}`}</span>
-        <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-4xl">
+        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("team.title")} {t("team.titleHighlight")}
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
@@ -46,7 +46,7 @@ const TeamSection = () => {
                   loading="lazy"
                 />
               </div>
-              <h3 className="mt-5 font-heading italic text-white text-2xl md:text-3xl tracking-[-1px] leading-none">
+              <h3 className="mt-5 font-heading text-white text-2xl md:text-3xl tracking-[-0.02em] leading-none">
                 {member.name}
               </h3>
               <p className="mt-2 text-xs text-white/70 font-body font-light">{member.role}</p>
@@ -58,7 +58,7 @@ const TeamSection = () => {
         <div className="mt-16 pt-10 border-t border-white/10 flex flex-wrap gap-x-16 gap-y-8">
           {stats.map((stat) => (
             <div key={stat.value}>
-              <div className="font-heading italic text-white text-4xl md:text-5xl tracking-[-1px] leading-none">
+              <div className="font-heading text-white text-4xl md:text-5xl tracking-[-0.02em] leading-none">
                 {stat.value}
               </div>
               <div className="text-xs text-white/70 font-body font-light mt-2">{t(stat.labelKey)}</div>

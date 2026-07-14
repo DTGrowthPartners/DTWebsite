@@ -87,7 +87,7 @@ const TestimonialsSection = () => {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <span className="text-sm font-body text-white/80">{`// ${t("testimonials.label")}`}</span>
-            <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-3xl">
+            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-3xl">
               {t("testimonials.title")} {t("testimonials.titleHighlight")}
             </h2>
           </div>
@@ -136,7 +136,7 @@ const TestimonialsSection = () => {
                 </p>
 
                 <div className="mt-6 pt-5 border-t border-white/10">
-                  <div className="font-heading italic text-white text-xl tracking-[-0.5px]">
+                  <div className="font-heading text-white text-xl tracking-[-0.01em]">
                     {testimonial.name}
                   </div>
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mt-1.5">
