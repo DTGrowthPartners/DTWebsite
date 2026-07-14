@@ -1,5 +1,6 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Aurora from "@/components/effects/Aurora";
 import { useRef, useState, useEffect } from "react";
 
 const TestimonialsSection = () => {
@@ -82,12 +83,18 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="relative bg-black py-24 md:py-32 overflow-hidden">
+    <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+      <Aurora
+        blobs={[
+          { color: "blue", className: "top-[-120px] left-[-120px] w-[540px] h-[540px] opacity-25" },
+          { color: "magenta", className: "bottom-[-160px] right-[-100px] w-[560px] h-[560px] opacity-20", delay: "-7s" },
+        ]}
+      />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>
             <span className="text-sm font-body text-white/80">{`// ${t("testimonials.label")}`}</span>
-            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-3xl">
+            <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-3xl">
               {t("testimonials.title")} <span className="font-semibold">{t("testimonials.titleHighlight")}</span>
             </h2>
           </div>

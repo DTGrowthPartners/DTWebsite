@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/context/LanguageContext";
+import Aurora from "@/components/effects/Aurora";
 import { Send, CheckCircle, XCircle } from "lucide-react";
 
 // Declarar grecaptcha en el scope global
@@ -238,17 +239,18 @@ const ContactFormSection = () => {
   }
 
   return (
-    <section id="contacto" className="relative bg-black py-24 md:py-32 overflow-hidden">
-      {/* Glow azul sutil */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(50% 40% at 20% 100%, rgba(15,118,214,0.10), transparent 70%)" }}
+    <section id="contacto" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+      <Aurora
+        blobs={[
+          { color: "blue", className: "bottom-[-140px] left-[20%] w-[600px] h-[600px] opacity-25" },
+          { color: "purple", className: "top-[-120px] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-5s" },
+        ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
-            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl leading-[0.95] tracking-[-0.024em]">
+            <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl leading-[0.95] tracking-[-0.024em]">
               {t("contact.title")} <span className="font-semibold">{t("contact.titleHighlight")}</span>
             </h2>
             <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">

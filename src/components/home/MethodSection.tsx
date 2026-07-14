@@ -1,5 +1,6 @@
 import { Search, Target, Rocket } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Aurora from "@/components/effects/Aurora";
 
 const MethodSection = () => {
   const { t } = useLanguage();
@@ -30,10 +31,16 @@ const MethodSection = () => {
   ];
 
   return (
-    <section id="metodo" className="relative bg-black py-24 md:py-32 overflow-hidden">
+    <section id="metodo" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+      <Aurora
+        blobs={[
+          { color: "purple", className: "top-[10%] left-[-140px] w-[520px] h-[520px] opacity-25" },
+          { color: "cyan", className: "bottom-[-120px] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-6s" },
+        ]}
+      />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("method.label")}`}</span>
-        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
+        <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("method.title")} <span className="font-semibold">{t("method.titleHighlight")}</span>
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">

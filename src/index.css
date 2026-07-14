@@ -420,9 +420,58 @@ All colors MUST be HSL.
   background: linear-gradient(90deg, transparent, hsl(var(--electric) / 0.6), transparent);
 }
 
+/* ── Animaciones de motivos (cards de servicios) ── */
+
+/* Barras tipo ecualizador (Meta Ads) */
+@keyframes equalize {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.55); }
+}
+.motif-bar {
+  transform-origin: bottom;
+  animation: equalize 2.4s ease-in-out infinite;
+}
+
+/* Líneas punteadas en marcha (circuito de automatización) */
+@keyframes dash-move {
+  to { stroke-dashoffset: -20; }
+}
+.motif-dash {
+  animation: dash-move 1.4s linear infinite;
+}
+
+/* Nodo activo pulsando */
+@keyframes node-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.motif-node {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+/* Parpadeo del robot */
+@keyframes bot-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  94% { transform: scaleY(0.1); }
+}
+.motif-eye {
+  transform-origin: center;
+  animation: bot-blink 3.6s ease-in-out infinite;
+}
+
+/* ── Auroras de color para secciones oscuras ── */
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, -35px) scale(1.18); }
+}
+.animate-drift {
+  animation: drift 16s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee { animation: none; }
   .draw-line { transition: none; stroke-dashoffset: 0; }
+  .motif-bar, .motif-dash, .motif-node, .motif-eye, .animate-drift { animation: none; }
 }
 
 /* ============================================================

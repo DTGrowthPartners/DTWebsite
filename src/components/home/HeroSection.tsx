@@ -60,7 +60,7 @@ const HeroSection = () => {
 
         {/* Titular — entrada palabra por palabra + palabra rotativa en bold/degradado */}
         <h1
-          className="mt-8 max-w-5xl font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em]"
+          className="mt-8 max-w-5xl font-heading font-normal text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em]"
           style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.08em" }}
         >
           {beforeWords.map((word, i) => (

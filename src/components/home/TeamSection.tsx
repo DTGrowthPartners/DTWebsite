@@ -1,4 +1,5 @@
 import { useLanguage } from "@/context/LanguageContext";
+import Aurora from "@/components/effects/Aurora";
 import dairoImg from "@/assets/equipo/dairo.png";
 import edgardoImg from "@/assets/equipo/edgardo.png";
 import stivenImg from "@/assets/equipo/stiven.png";
@@ -19,16 +20,17 @@ const TeamSection = () => {
   ];
 
   return (
-    <section id="nosotros" className="relative bg-black py-24 md:py-32 overflow-hidden">
-      {/* Glow azul sutil */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(50% 40% at 80% 20%, rgba(38,189,240,0.10), transparent 70%)" }}
+    <section id="nosotros" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+      <Aurora
+        blobs={[
+          { color: "cyan", className: "top-[-100px] right-[15%] w-[520px] h-[520px] opacity-25" },
+          { color: "blue", className: "bottom-[-140px] left-[-100px] w-[560px] h-[560px] opacity-25", delay: "-9s" },
+        ]}
       />
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("team.label")}`}</span>
-        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
+        <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("team.title")} <span className="font-semibold">{t("team.titleHighlight")}</span>
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">

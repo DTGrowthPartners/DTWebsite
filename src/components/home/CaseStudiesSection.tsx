@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { TrendingUp, ShoppingCart, Users, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import Aurora from "@/components/effects/Aurora";
 
 const CaseStudiesSection = () => {
   const { t } = useLanguage();
@@ -49,16 +50,17 @@ const CaseStudiesSection = () => {
   ];
 
   return (
-    <section id="casos" className="relative bg-black py-24 md:py-32 overflow-hidden">
-      {/* Glow azul sutil de atmósfera */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(15,118,214,0.14), transparent 70%)" }}
+    <section id="casos" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+      <Aurora
+        blobs={[
+          { color: "blue", className: "-top-32 left-[15%] w-[560px] h-[560px] opacity-30" },
+          { color: "purple", className: "bottom-[-160px] right-[-80px] w-[520px] h-[520px] opacity-25", delay: "-8s" },
+        ]}
       />
 
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("nav.cases")}`}</span>
-        <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
+        <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
           {t("cases.title")} <span className="font-semibold">{t("cases.titleHighlight")}</span>
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">

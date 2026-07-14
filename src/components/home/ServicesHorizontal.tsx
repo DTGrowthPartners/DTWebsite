@@ -19,8 +19,8 @@ const MotifAds = () => (
     {[36, 60, 84, 116].map((h, i) => (
       <div
         key={i}
-        className="w-7 md:w-9 rounded-t-md bg-gradient-to-t from-[#0F76D6]/40 to-[#26BDF0]/75"
-        style={{ height: h }}
+        className="motif-bar w-7 md:w-9 rounded-t-md bg-gradient-to-t from-[#0F76D6]/40 to-[#26BDF0]/75"
+        style={{ height: h, animationDelay: `${i * 0.22}s` }}
       />
     ))}
     <div className="liquid-glass rounded-full px-3 py-1 text-xs text-white font-body mb-24 -ml-6">
@@ -39,13 +39,13 @@ const MotifBrowser = () => (
       <span className="ml-2 h-3.5 flex-1 max-w-[110px] rounded-full bg-white/10" />
     </div>
     <div className="p-4">
-      <div className="h-2.5 w-3/4 rounded-full bg-white/20" />
-      <div className="mt-2 h-2.5 w-1/2 rounded-full bg-white/10" />
+      <div className="h-2.5 w-3/4 rounded-full bg-white/20 animate-pulse" style={{ animationDuration: "2.4s" }} />
+      <div className="mt-2 h-2.5 w-1/2 rounded-full bg-white/10 animate-pulse" style={{ animationDuration: "2.4s", animationDelay: "0.3s" }} />
       <div className="mt-3 grid grid-cols-2 gap-2">
-        <div className="h-12 rounded-lg bg-white/[0.07]" />
-        <div className="h-12 rounded-lg bg-white/[0.07]" />
+        <div className="h-12 rounded-lg bg-white/[0.07] animate-pulse" style={{ animationDuration: "3s", animationDelay: "0.5s" }} />
+        <div className="h-12 rounded-lg bg-white/[0.07] animate-pulse" style={{ animationDuration: "3s", animationDelay: "0.8s" }} />
       </div>
-      <div className="mt-3 h-7 w-24 rounded-full bg-gradient-to-r from-[#0F76D6]/70 to-[#26BDF0]/70" />
+      <div className="mt-3 h-7 w-24 rounded-full bg-gradient-to-r from-[#0F76D6]/70 to-[#26BDF0]/70 animate-pulse" style={{ animationDuration: "2s" }} />
     </div>
   </div>
 );
@@ -61,8 +61,8 @@ const MotifFlow = () => (
     style={{ animationDuration: "7s" }}
     aria-hidden
   >
-    <path d="M52 46 H125 V124 H198" stroke="rgba(255,255,255,0.28)" strokeWidth="1.5" strokeDasharray="4 6" />
-    <path d="M52 124 H90 V46 H198" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" strokeDasharray="4 6" />
+    <path className="motif-dash" d="M52 46 H125 V124 H198" stroke="rgba(255,255,255,0.28)" strokeWidth="1.5" strokeDasharray="4 6" />
+    <path className="motif-dash" style={{ animationDuration: "2s" }} d="M52 124 H90 V46 H198" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" strokeDasharray="4 6" />
     {[
       { x: 28, y: 24, active: false },
       { x: 28, y: 102, active: false },
@@ -80,7 +80,13 @@ const MotifFlow = () => (
           stroke={n.active ? "rgba(38,189,240,0.9)" : "rgba(255,255,255,0.25)"}
           strokeWidth="1.4"
         />
-        <circle cx={n.x + 23} cy={n.y + 22} r="4.5" fill={n.active ? "#26BDF0" : "rgba(255,255,255,0.45)"} />
+        <circle
+          className={n.active ? "motif-node" : undefined}
+          cx={n.x + 23}
+          cy={n.y + 22}
+          r="4.5"
+          fill={n.active ? "#26BDF0" : "rgba(255,255,255,0.45)"}
+        />
       </g>
     ))}
   </svg>
@@ -92,8 +98,8 @@ const MotifBot = () => (
     <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-px h-5 bg-white/30" />
     <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#26BDF0]" />
     <div className="liquid-glass rounded-2xl w-28 h-24 md:w-32 md:h-28 flex items-center justify-center gap-5">
-      <span className="w-3 h-6 rounded-full bg-white/85" />
-      <span className="w-3 h-6 rounded-full bg-white/85" />
+      <span className="motif-eye w-3 h-6 rounded-full bg-white/85" />
+      <span className="motif-eye w-3 h-6 rounded-full bg-white/85" />
     </div>
     <div className="absolute -right-14 -top-8 liquid-glass rounded-2xl rounded-bl-sm px-3.5 py-2.5 flex gap-1.5">
       <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />

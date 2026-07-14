@@ -26,15 +26,18 @@ const RotatingWord = ({ words, interval = 2600, className = "" }: Props) => {
   }
 
   return (
-    <span className={`inline-grid overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em] ${className}`}>
+    <span
+      className={`inline-grid align-bottom pb-[0.08em] -mb-[0.08em] ${className}`}
+      style={{ perspective: "600px" }}
+    >
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={words[index]}
-          style={{ gridArea: "1 / 1" }}
-          initial={{ y: "85%", opacity: 0, filter: "blur(8px)" }}
-          animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
-          exit={{ y: "-85%", opacity: 0, filter: "blur(8px)" }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          style={{ gridArea: "1 / 1", transformOrigin: "center 60%", backfaceVisibility: "hidden" }}
+          initial={{ rotateX: 90, y: "35%", opacity: 0, scale: 0.85, filter: "blur(10px)" }}
+          animate={{ rotateX: 0, y: "0%", opacity: 1, scale: 1, filter: "blur(0px)" }}
+          exit={{ rotateX: -90, y: "-35%", opacity: 0, scale: 0.85, filter: "blur(10px)" }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
           className="inline-block whitespace-nowrap"
         >
           {words[index]}
