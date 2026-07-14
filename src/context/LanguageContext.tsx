@@ -63,6 +63,8 @@ const translations = {
     "testimonials.rotating": "clients say|partners say|allies say",
     "cta.rotating": "scale?|grow?|take off?",
     "contact.rotating": "growth|business|project",
+    "contact.responseTime": "We reply in under 24 hours",
+    "contact.directChannels": "Prefer a direct channel?",
     "services.kicker": "// Services",
     "services.scrollHint": "Scroll to explore",
 
@@ -233,6 +235,8 @@ const translations = {
     "testimonials.rotating": "clientes|aliados|partners",
     "cta.rotating": "escalar?|crecer?|despegar?",
     "contact.rotating": "crecimiento|negocio|proyecto",
+    "contact.responseTime": "Respondemos en menos de 24 horas",
+    "contact.directChannels": "¿Prefieres un canal directo?",
     "services.kicker": "// Servicios",
     "services.scrollHint": "Desplázate para explorar",
 

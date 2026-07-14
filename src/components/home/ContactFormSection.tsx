@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
-import { Send, CheckCircle, XCircle } from "lucide-react";
+import { Send, CheckCircle, XCircle, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
 
 // Declarar grecaptcha en el scope global
 declare global {
@@ -248,22 +248,80 @@ const ContactFormSection = () => {
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl leading-[0.95] tracking-[-0.024em]">
-              {t("contact.title")} <RotatingWord words={t("contact.rotating").split("|")} interval={3300} className="font-semibold" />
-            </h2>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
+        {/* Encabezado alineado a la izquierda, como el resto de secciones */}
+        <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
+        <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+          {t("contact.title")} <RotatingWord words={t("contact.rotating").split("|")} interval={3300} className="font-semibold" />
+        </h2>
+
+        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.7fr] items-start">
+          {/* Panel izquierdo: canales directos */}
+          <div className="flex flex-col gap-6">
+            <p className="text-sm md:text-base text-white/80 font-body font-light max-w-sm">
               {t("contact.subtitle")}
             </p>
+
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50">
+              {t("contact.directChannels")}
+            </span>
+
+            <div className="flex flex-col gap-3">
+              <a
+                href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group liquid-glass rounded-2xl p-4 flex items-center gap-4 transition-transform duration-300 hover:-translate-y-1"
+              >
+                <span className="liquid-glass rounded-xl w-11 h-11 flex items-center justify-center shrink-0">
+                  <MessageCircle className="h-5 w-5 text-white" strokeWidth={1.5} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-medium text-white font-body">WhatsApp</span>
+                  <span className="block text-xs text-white/60 font-body truncate">+57 300 718 9383</span>
+                </span>
+              </a>
+
+              <a
+                href="mailto:info@dtgrowthpartners.com"
+                className="group liquid-glass rounded-2xl p-4 flex items-center gap-4 transition-transform duration-300 hover:-translate-y-1"
+              >
+                <span className="liquid-glass rounded-xl w-11 h-11 flex items-center justify-center shrink-0">
+                  <Mail className="h-5 w-5 text-white" strokeWidth={1.5} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-sm font-medium text-white font-body">Email</span>
+                  <span className="block text-xs text-white/60 font-body truncate">info@dtgrowthpartners.com</span>
+                </span>
+              </a>
+            </div>
+
+            <div className="space-y-2.5 pt-2">
+              <div className="flex items-start gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45 leading-relaxed">
+                <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" strokeWidth={1.5} />
+                {t("footer.address")}
+              </div>
+              <div className="flex items-start gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45 leading-relaxed">
+                <Clock className="h-3.5 w-3.5 shrink-0 mt-0.5" strokeWidth={1.5} />
+                {t("footer.hours")}
+              </div>
+            </div>
+
+            {/* Disponibilidad: punto pulsante */}
+            <div className="liquid-glass rounded-full self-start px-4 py-2 flex items-center gap-2.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#26BDF0] opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#26BDF0]" />
+              </span>
+              <span className="text-xs text-white/80 font-body">{t("contact.responseTime")}</span>
+            </div>
           </div>
 
-          <div className="liquid-glass rounded-[1.25rem] p-8 lg:p-12">
+          {/* Formulario */}
+          <div className="liquid-glass rounded-[1.5rem] p-7 md:p-10">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="firstName" className="text-sm font-body font-medium text-white/85">
+                <div className="space-y-2.5">
+                  <label htmlFor="firstName" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                     {t("contact.firstName")} *
                   </label>
                   <Input
@@ -273,11 +331,11 @@ const ContactFormSection = () => {
                     required
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
+                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="lastName" className="text-sm font-body font-medium text-white/85">
+                <div className="space-y-2.5">
+                  <label htmlFor="lastName" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                     {t("contact.lastName")} *
                   </label>
                   <Input
@@ -287,14 +345,14 @@ const ContactFormSection = () => {
                     required
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
+                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-body font-medium text-white/85">
+                <div className="space-y-2.5">
+                  <label htmlFor="email" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                     {t("contact.email")} *
                   </label>
                   <Input
@@ -304,11 +362,11 @@ const ContactFormSection = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
+                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                   />
                 </div>
-                <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-body font-medium text-white/85">
+                <div className="space-y-2.5">
+                  <label htmlFor="phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                     {t("contact.phone")}
                   </label>
                   <Input
@@ -317,13 +375,13 @@ const ContactFormSection = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
+                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="company" className="text-sm font-body font-medium text-white/85">
+              <div className="space-y-2.5">
+                <label htmlFor="company" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                   {t("contact.company")}
                 </label>
                 <Input
@@ -332,12 +390,12 @@ const ContactFormSection = () => {
                   type="text"
                   value={formData.company}
                   onChange={handleChange}
-                  className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
+                  className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                 />
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-body font-medium text-white/85">
+              <div className="space-y-2.5">
+                <label htmlFor="message" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                   {t("contact.message")}
                 </label>
                 <Textarea
@@ -347,7 +405,7 @@ const ContactFormSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder={t("contact.messagePlaceholder")}
-                  className="bg-white/5 border-white/10 text-white font-body rounded-xl resize-none focus-visible:ring-white/30"
+                  className="bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 py-3 placeholder:text-white/30 resize-none transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
                 />
               </div>
 
@@ -364,18 +422,22 @@ const ContactFormSection = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full rounded-full bg-white text-black font-body font-medium hover:bg-white/90 transition-transform duration-300 hover:scale-[1.01]"
+                className="w-full h-13 rounded-full bg-white text-black font-body font-medium hover:bg-white/90 transition-transform duration-300 hover:scale-[1.01] group"
                 disabled={status === "sending"}
               >
                 {status === "sending" ? (
                   t("contact.sending")
                 ) : (
                   <>
-                    <Send className="mr-2 h-5 w-5" />
+                    <Send className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     {t("contact.submit")}
                   </>
                 )}
               </Button>
+
+              <p className="text-center font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+                {t("cta.noCommitment")} · {t("cta.free")}
+              </p>
             </form>
           </div>
         </div>
