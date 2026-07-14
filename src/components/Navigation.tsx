@@ -116,8 +116,9 @@ const Navigation = () => {
             <img src={logo} alt="DT Growth" width={110} />
           </Link>
 
-          {/* Desktop Navigation — pill de cristal */}
-          <div className="hidden md:flex items-center liquid-glass rounded-full px-1.5 py-1.5">
+          {/* Desktop Navigation — pill de cristal (overflow visible para que
+              el dropdown de Servicios no quede recortado por .liquid-glass) */}
+          <div className="hidden md:flex items-center liquid-glass rounded-full px-1.5 py-1.5" style={{ overflow: "visible" }}>
             <a
               href="/"
               onClick={(e) => handleNavClick(e, "/")}

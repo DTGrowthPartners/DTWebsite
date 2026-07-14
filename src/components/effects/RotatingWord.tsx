@@ -68,7 +68,7 @@ const RotatingWord = ({ words, interval = 2600, className = "", innerClassName =
           animate={{ rotateX: 0, y: "0em", opacity: 1 }}
           exit={{ rotateX: -88, y: "-0.28em", opacity: 0 }}
           transition={{ duration: 0.38, ease: [0.3, 0.9, 0.4, 1] }}
-          className={`inline-block whitespace-nowrap ${innerClassName}`}
+          className={`inline-block whitespace-nowrap pb-[0.14em] -mb-[0.14em] ${innerClassName}`}
         >
           {words[index]}
         </motion.span>
