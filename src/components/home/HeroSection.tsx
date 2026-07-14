@@ -3,6 +3,7 @@ import { ArrowUpRight, Play, BarChart3, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import RotatingWord from "@/components/effects/RotatingWord";
+import PartnersMarquee from "@/components/home/PartnersMarquee";
 import fondoVideo from "@/assets/fondo-video.mp4";
 
 const WHATSAPP =
@@ -34,8 +35,6 @@ const HeroSection = () => {
     { icon: BarChart3, value: "$250K", label: t("common.managedAds") },
     { icon: TrendingUp, value: "+5M USD", label: t("common.salesGenerated") },
   ];
-
-  const partners = ["Arismendy", "Tradición", "Tennis Cartagena", "ACB Fit", "Verzatille"];
 
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden bg-black">
@@ -130,18 +129,12 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Partners — marcas reales en serif itálica */}
-      <motion.div {...enter(1.4)} className="relative z-10 flex flex-col items-center gap-4 pb-8 px-4">
+      {/* Partners — logos reales de clientes en marquee */}
+      <motion.div {...enter(1.4)} className="relative z-10 flex flex-col items-center gap-5 pb-8 px-4">
         <div className="liquid-glass rounded-full px-3.5 py-1 text-xs font-medium text-white font-body">
           {t("brands.trustedBy")}
         </div>
-        <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-2 md:gap-x-16">
-          {partners.map((name) => (
-            <span key={name} className="font-heading text-white text-xl md:text-3xl tracking-tight whitespace-nowrap">
-              {name}
-            </span>
-          ))}
-        </div>
+        <PartnersMarquee />
       </motion.div>
     </section>
   );
