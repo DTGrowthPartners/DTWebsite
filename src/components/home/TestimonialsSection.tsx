@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { useRef, useState, useEffect } from "react";
@@ -8,10 +7,6 @@ const TestimonialsSection = () => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
-  // Alto para que en presentación los testimonios se lean completos sin hacer clic.
-  const CHARACTER_LIMIT = 2000;
 
   const testimonials = [
     {
@@ -35,7 +30,6 @@ const TestimonialsSection = () => {
         "Excelente trabajo, siempre dispuesto a ayudar y encontrar soluciones innovadoras. Recomendado 100% — me ha ayudado a mejorar mi presencia en línea y a alcanzar mis objetivos de marketing digital.",
       rating: 5,
     },
-    // Tradición Caribe should appear fourth (index 3)
     {
       name: "Tradición Caribe",
       role: "Cliente",
@@ -82,90 +76,76 @@ const TestimonialsSection = () => {
     const firstChild = el.firstElementChild as HTMLElement | null;
     if (!firstChild) return;
 
-    const gap = 32; // Tailwind gap-8 = 2rem = 32px
+    const gap = 24; // gap-6
     const step = Math.round(firstChild.getBoundingClientRect().width + gap);
-    const delta = direction === "next" ? step : -step;
-    el.scrollBy({ left: delta, behavior: "smooth" });
+    el.scrollBy({ left: direction === "next" ? step : -step, behavior: "smooth" });
   };
 
   return (
-    <section className="py-12 md:py-16">
-      <div className="section-container">
-        <div className="text-center mb-8 md:mb-16 space-y-4">
-          <span className="text-primary text-sm font-medium uppercase tracking-wider">
-            {t("testimonials.label")}
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            {t("testimonials.title")} <span className="gradient-text">{t("testimonials.titleHighlight")}</span>
-          </h2>
+    <section className="relative bg-black py-24 md:py-32 overflow-hidden">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <span className="text-sm font-body text-white/80">{`// ${t("testimonials.label")}`}</span>
+            <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-3xl">
+              {t("testimonials.title")} {t("testimonials.titleHighlight")}
+            </h2>
+          </div>
+
+          {/* Controles */}
+          <div className="flex gap-3">
+            <button
+              aria-label="Testimonios anteriores"
+              onClick={() => scrollByCard("prev")}
+              disabled={!canScrollPrev}
+              className="liquid-glass rounded-full w-12 h-12 flex items-center justify-center text-white disabled:opacity-30 transition-opacity"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              aria-label="Testimonios siguientes"
+              onClick={() => scrollByCard("next")}
+              disabled={!canScrollNext}
+              className="liquid-glass rounded-full w-12 h-12 flex items-center justify-center text-white disabled:opacity-30 transition-opacity"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
-        <div className="relative">
-          {/* Nav buttons */}
-          <button
-            aria-label="Previous testimonials"
-            onClick={() => scrollByCard("prev")}
-            className="absolute -left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-card transition-opacity"
-            style={{ display: canScrollPrev ? "flex" : "none" }}
-          >
-            <ChevronLeft className="w-5 h-5 text-primary" />
-          </button>
+        {/* Slider — testimonios completos, sin recortes (modo presentación) */}
+        <div
+          ref={containerRef}
+          className="mt-14 flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 slider-scrollbar"
+          style={{ scrollBehavior: "smooth" }}
+        >
+          {testimonials.map((testimonial) => (
+            <div
+              key={testimonial.name}
+              className="min-w-[85vw] sm:min-w-[420px] max-w-[420px] snap-start"
+            >
+              <div className="liquid-glass rounded-[1.25rem] p-6 md:p-7 h-full flex flex-col">
+                <div className="flex gap-1">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-white text-white" />
+                  ))}
+                </div>
 
-          <button
-            aria-label="Next testimonials"
-            onClick={() => scrollByCard("next")}
-            className="absolute -right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-card/80 backdrop-blur-sm flex items-center justify-center shadow-md hover:bg-card transition-opacity"
-            style={{ display: canScrollNext ? "flex" : "none" }}
-          >
-            <ChevronRight className="w-5 h-5 text-primary" />
-          </button>
+                <p className="mt-5 text-sm text-white/85 font-body font-light leading-relaxed flex-grow">
+                  “{testimonial.content}”
+                </p>
 
-          {/* Slider container */}
-          <div
-            ref={containerRef}
-            className="flex gap-8 overflow-x-auto snap-x snap-mandatory py-4 px-2 slider-scrollbar"
-            style={{ scrollBehavior: "smooth" }}
-          >
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={testimonial.name}
-                className="min-w-[80vw] sm:min-w-[45vw] md:min-w-[30vw] lg:min-w-[22vw] snap-start"
-                style={{ scrollSnapAlign: "start" }}
-              >
-                <Card
-                  className="card-hover bg-card border-border/50 animate-fade-in h-full"
-                  style={{ animationDelay: `${index * 0.06}s` }}
-                >
-                  <CardContent className="p-6 space-y-4 h-full flex flex-col">
-                    <div className="flex gap-1">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                      ))}
-                    </div>
-
-                    <p className="text-muted-foreground italic flex-grow">
-                      "{expandedIndex === index ? testimonial.content : testimonial.content.substring(0, CHARACTER_LIMIT) + (testimonial.content.length > CHARACTER_LIMIT ? "..." : "")}"
-                    </p>
-
-                    <div className="pt-4 border-t border-border/50 mt-auto">
-                      {testimonial.content.length > CHARACTER_LIMIT && (
-                        <button
-                          onClick={() =>
-                            setExpandedIndex(expandedIndex === index ? null : index)
-                          }
-                          className="text-primary text-sm font-medium hover:text-primary/80 transition-colors mb-3"
-                        >
-                          {expandedIndex === index ? "Ver menos" : "Ver más"}
-                        </button>
-                      )}
-                      <div className="font-semibold">{testimonial.name}</div>
-                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="mt-6 pt-5 border-t border-white/10">
+                  <div className="font-heading italic text-white text-xl tracking-[-0.5px]">
+                    {testimonial.name}
+                  </div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mt-1.5">
+                    {testimonial.role}
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

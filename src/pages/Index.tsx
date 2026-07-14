@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import HeroSection from "@/components/home/HeroSection";
 import ServicesHorizontal from "@/components/home/ServicesHorizontal";
-import WebDevelopmentSection from "@/components/home/WebDevelopmentSection";
 import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import MethodSection from "@/components/home/MethodSection";
 import TeamSection from "@/components/home/TeamSection";

@@ -1,59 +1,53 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
+import FadingVideo from "@/components/effects/FadingVideo";
+import BlurText from "@/components/effects/BlurText";
+import fondoVideo from "@/assets/fondo-video.mp4";
+
+const WHATSAPP =
+  "https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0";
 
 const CTASection = () => {
   const { t } = useLanguage();
 
+  const bullets = [t("cta.noCommitment"), t("cta.duration"), t("cta.free")];
+
   return (
-    <section className="py-12 md:py-16">
-      <div className="section-container">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-card border border-border/50 p-12 lg:p-20">
-          <video
-            className="absolute inset-0 w-full h-full object-cover rounded-3xl opacity-50"
-            autoPlay
-            loop
-            muted
-            playsInline
-          >
-            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-hero opacity-30" />
-          
-          <div className="relative z-10 max-w-3xl mx-auto text-center space-y-8">
-            <h2 className="text-4xl lg:text-6xl font-bold">
-              {t("cta.title")} <span className="gradient-text">{t("cta.titleHighlight")}</span>
-            </h2>
-            
-            <p className="text-xl text-muted-foreground">
-              {t("cta.subtitle")}
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button asChild size="lg" className="btn-primary group text-base sm:text-lg px-6 sm:px-8">
-                <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                  <Calendar className="mr-2 h-5 w-5" />
-                  {t("cta.buttonText")}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-            </div>
-            
-            <div className="flex flex-nowrap items-center justify-center gap-4 sm:gap-8 pt-8 text-sm text-muted-foreground overflow-x-auto">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                {t("cta.noCommitment")}
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                {t("cta.duration")}
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-primary rounded-full" />
-                {t("cta.free")}
-              </div>
-            </div>
-          </div>
+    <section className="relative min-h-[90vh] bg-black overflow-hidden flex items-center">
+      {/* Mismo video del hero: cierra el círculo visual de la página */}
+      <FadingVideo src={fondoVideo} className="absolute inset-0 w-full h-full object-cover z-0" />
+
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
+        <BlurText
+          text={`${t("cta.title")} ${t("cta.titleHighlight")}`}
+          className="font-heading italic text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-2px] lg:tracking-[-4px] max-w-5xl"
+        />
+
+        <p className="mt-8 text-sm md:text-base text-white/90 font-body font-light max-w-xl">
+          {t("cta.subtitle")}
+        </p>
+
+        {/* CTA más fuerte de la página: píldora blanca */}
+        <a
+          href={WHATSAPP}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-medium text-black font-body transition-transform duration-300 hover:scale-[1.04]"
+        >
+          {t("cta.buttonText")}
+          <ArrowUpRight className="h-5 w-5" />
+        </a>
+
+        {/* Bullets de confianza */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
+          {bullets.map((b) => (
+            <span
+              key={b}
+              className="liquid-glass rounded-full px-4 py-1.5 text-xs text-white/90 font-body whitespace-nowrap"
+            >
+              {b}
+            </span>
+          ))}
         </div>
       </div>
     </section>

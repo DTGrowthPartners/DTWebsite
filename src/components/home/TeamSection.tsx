@@ -6,23 +6,10 @@ import stivenImg from "@/assets/equipo/stiven.png";
 const TeamSection = () => {
   const { t } = useLanguage();
 
-  // NOTA: los cargos son editables. Ajusta `role` con el título real de cada persona.
   const team = [
-    {
-      name: "Dairo Traslaviña",
-      role: "Fundador & CEO",
-      image: dairoImg,
-    },
-    {
-      name: "Edgardo Meza",
-      role: "Desarrollador Web",
-      image: edgardoImg,
-    },
-    {
-      name: "Stiven Antequera",
-      role: "Desarrollo & Tecnología",
-      image: stivenImg,
-    },
+    { name: "Dairo Traslaviña", role: "Fundador & CEO", image: dairoImg },
+    { name: "Edgardo Meza", role: "Desarrollador Web", image: edgardoImg },
+    { name: "Stiven Antequera", role: "Desarrollo & Tecnología", image: stivenImg },
   ];
 
   const stats = [
@@ -32,50 +19,49 @@ const TeamSection = () => {
   ];
 
   return (
-    <section id="nosotros" className="py-12 md:py-16 relative overflow-hidden">
-      <div className="section-container relative z-10">
-        <div className="text-center mb-8 md:mb-12 space-y-4">
-          <span className="relative inline-block text-sm font-medium uppercase tracking-wider">
-            <span className="gradient-text">{t("team.label")}</span>
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0" />
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            {t("team.title")} <span className="gradient-text">{t("team.titleHighlight")}</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {t("team.subtitle")}
-          </p>
-        </div>
+    <section id="nosotros" className="relative bg-black py-24 md:py-32 overflow-hidden">
+      {/* Glow azul sutil */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(50% 40% at 80% 20%, rgba(38,189,240,0.10), transparent 70%)" }}
+      />
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {team.map((member, index) => (
-            <div
-              key={member.name}
-              className="group flex flex-col items-center text-center animate-fade-in"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="relative mb-5">
-                <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full scale-90 group-hover:scale-100 transition-transform duration-500" />
-                <div className="relative w-40 h-40 md:w-44 md:h-44 rounded-full overflow-hidden border-2 border-primary/30 group-hover:border-primary/60 transition-colors duration-300 shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-                  <img
-                    src={member.image}
-                    alt={`${member.name} - ${member.role}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+      <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+        <span className="text-sm font-body text-white/80">{`// ${t("team.label")}`}</span>
+        <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-4xl">
+          {t("team.title")} {t("team.titleHighlight")}
+        </h2>
+        <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+          {t("team.subtitle")}
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 max-w-4xl">
+          {team.map((member) => (
+            <div key={member.name} className="liquid-glass rounded-[1.25rem] p-5 flex flex-col items-center text-center">
+              <div className="w-full aspect-square rounded-[0.9rem] overflow-hidden">
+                <img
+                  src={member.image}
+                  alt={`${member.name} — ${member.role}`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
               </div>
-              <h3 className="text-xl font-semibold">{member.name}</h3>
-              <p className="text-sm text-primary font-medium mt-1">{member.role}</p>
+              <h3 className="mt-5 font-heading italic text-white text-2xl md:text-3xl tracking-[-1px] leading-none">
+                {member.name}
+              </h3>
+              <p className="mt-2 text-xs text-white/70 font-body font-light">{member.role}</p>
             </div>
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 mt-12 md:mt-16 pt-10 border-t border-border/40">
+        {/* Lectura de datos */}
+        <div className="mt-16 pt-10 border-t border-white/10 flex flex-wrap gap-x-16 gap-y-8">
           {stats.map((stat) => (
-            <div key={stat.value} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold gradient-text">{stat.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{t(stat.labelKey)}</div>
+            <div key={stat.value}>
+              <div className="font-heading italic text-white text-4xl md:text-5xl tracking-[-1px] leading-none">
+                {stat.value}
+              </div>
+              <div className="text-xs text-white/70 font-body font-light mt-2">{t(stat.labelKey)}</div>
             </div>
           ))}
         </div>

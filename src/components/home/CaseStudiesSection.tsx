@@ -1,16 +1,15 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp, ShoppingCart, Users, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import { TrendingUp, ShoppingCart, Users, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
-import ScrollRocketSeparator from "./ScrollRocketSeparator";
 
 const CaseStudiesSection = () => {
   const { t } = useLanguage();
-  const [expandedCase, setExpandedCase] = useState(null);
+  const [expandedCase, setExpandedCase] = useState<number | null>(null);
 
   const cases = [
     {
       icon: ShoppingCart,
+      num: "01",
       clientKey: "cases.ecommerce",
       industryKey: "cases.fashionIndustry",
       metric: "$250K",
@@ -18,16 +17,12 @@ const CaseStudiesSection = () => {
       improvement: "ROI 4.2x",
       descKey: "cases.ecommerceDesc",
       tags: ["Meta Ads", "E-commerce", "Performance"],
-      details: {
-        industry: t("cases.ecommerce"),
-        whatWeDidKey: "cases.ecommerceDesc",
-        mainMetric: "$250K USD en ventas",
-        secondaryMetric: "ROI 4.2x",
-        tags: ["Meta Ads", "E-commerce", "Performance"]
-      }
+      mainMetric: "$250K USD en ventas",
+      secondaryMetric: "ROI 4.2x",
     },
     {
       icon: Users,
+      num: "02",
       clientKey: "cases.clinic",
       industryKey: "cases.healthIndustry",
       metric: "$350M",
@@ -35,16 +30,12 @@ const CaseStudiesSection = () => {
       improvement: "ROAS 5.2x",
       descKey: "cases.clinicDesc",
       tags: ["Meta Ads", "WhatsApp", "Leads"],
-      details: {
-        industry: t("cases.clinic"),
-        whatWeDidKey: "cases.clinicDesc",
-        mainMetric: "350M COP en ventas generadas",
-        secondaryMetric: "ROAS 5.2x",
-        tags: ["Meta Ads", "WhatsApp", "Leads"]
-      }
+      mainMetric: "350M COP en ventas generadas",
+      secondaryMetric: "ROAS 5.2x",
     },
     {
       icon: TrendingUp,
+      num: "03",
       clientKey: "cases.localRetail",
       industryKey: "cases.webIndustry",
       metric: "+320%",
@@ -52,120 +43,110 @@ const CaseStudiesSection = () => {
       improvement: "3.1x conversión",
       descKey: "cases.localRetailDesc",
       tags: ["Web Development", "B2B", "SEO"],
-      details: {
-        industry: t("cases.localRetail"),
-        whatWeDidKey: "cases.localRetailDesc",
-        mainMetric: t("cases.webMetric1"),
-        secondaryMetric: t("cases.webMetric2"),
-        tags: ["Web Development", "B2B", "SEO"]
-      }
+      mainMetric: "+320% cotizaciones",
+      secondaryMetric: "3.1x conversión",
     },
   ];
 
   return (
-    <section id="casos" className="py-12 md:py-16 relative">
-      <ScrollRocketSeparator />
-      <div className="section-container relative z-10">
-        <div className="text-center mb-8 md:mb-16 space-y-4">
-          <span className="text-primary text-sm font-medium uppercase tracking-wider">
-            {t("nav.cases")}
-          </span>
-          <h2 className="text-4xl lg:text-5xl font-bold">
-            {t("cases.title")} <span className="gradient-text">{t("cases.titleHighlight")}</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {t("cases.subtitle")}
-          </p>
-        </div>
+    <section id="casos" className="relative bg-black py-24 md:py-32 overflow-hidden">
+      {/* Glow azul sutil de atmósfera */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(60% 45% at 50% 0%, rgba(15,118,214,0.14), transparent 70%)" }}
+      />
 
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+        <span className="text-sm font-body text-white/80">{`// ${t("nav.cases")}`}</span>
+        <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-2px] md:tracking-[-3px] max-w-4xl">
+          {t("cases.title")} {t("cases.titleHighlight")}
+        </h2>
+        <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+          {t("cases.subtitle")}
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
           {cases.map((caseStudy, index) => {
             const Icon = caseStudy.icon;
             const isExpanded = expandedCase === index;
             return (
-              <Card
-                key={t(caseStudy.clientKey)}
-                className="card-hover bg-gradient-card border-border/50 animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
+              <div
+                key={caseStudy.num}
+                className="liquid-glass rounded-[1.25rem] p-6 md:p-7 flex flex-col min-h-[380px]"
               >
-                <CardContent className="p-6 space-y-4">
-                  <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <span className="text-xs text-muted-foreground">{t(caseStudy.industryKey)}</span>
+                {/* Cabecera: icono + industria */}
+                <div className="flex items-start justify-between gap-4">
+                  <div className="liquid-glass rounded-[0.75rem] w-11 h-11 flex items-center justify-center shrink-0">
+                    <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
                   </div>
+                  <span className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
+                    {t(caseStudy.industryKey)}
+                  </span>
+                </div>
 
-                  <div>
-                    <h3 className="text-lg font-semibold mb-1">{t(caseStudy.clientKey)}</h3>
-                    <p className="text-sm text-muted-foreground">{t(caseStudy.descKey)}</p>
+                {/* Métrica protagonista */}
+                <div className="mt-8">
+                  <span className="font-mono text-xs text-white/50">{caseStudy.num}</span>
+                  <div className="mt-1 font-heading italic text-white text-5xl md:text-6xl tracking-[-1px] leading-none">
+                    {caseStudy.metric}
                   </div>
+                  <div className="text-xs text-white font-body font-light mt-2">{caseStudy.metricLabel}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mt-1">
+                    {caseStudy.improvement}
+                  </div>
+                </div>
 
-                  <div className="space-y-2 pt-3 border-t border-border/50">
+                <div className="flex-1" />
+
+                {/* Cliente + descripción */}
+                <div className="mt-6">
+                  <h3 className="text-white font-body font-medium">{t(caseStudy.clientKey)}</h3>
+                  <p className="mt-2 text-sm text-white/80 font-body font-light leading-snug">
+                    {t(caseStudy.descKey)}
+                  </p>
+                </div>
+
+                {/* Detalle expandible (útil en presentaciones) */}
+                <button
+                  onClick={() => setExpandedCase(isExpanded ? null : index)}
+                  className="mt-5 flex items-center justify-between w-full text-sm font-medium text-white font-body hover:opacity-80 transition-opacity"
+                >
+                  <span>{isExpanded ? "Ocultar detalles" : "Ver detalles completos"}</span>
+                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+
+                {isExpanded && (
+                  <div className="mt-4 space-y-2 text-sm text-white/80 font-body font-light border-t border-white/10 pt-4">
                     <div>
-                      <div className="text-2xl font-bold text-primary">{caseStudy.metric}</div>
-                      <div className="text-xs text-muted-foreground">{caseStudy.metricLabel}</div>
+                      <span className="text-white font-medium">Industria: </span>
+                      {t(caseStudy.industryKey)}
                     </div>
-                    <div className="text-xs font-medium text-foreground">
-                      {caseStudy.improvement}
+                    <div>
+                      <span className="text-white font-medium">Qué hicimos: </span>
+                      {t(caseStudy.descKey)}
+                    </div>
+                    <div>
+                      <span className="text-white font-medium">Métrica principal: </span>
+                      {caseStudy.mainMetric}
+                    </div>
+                    <div>
+                      <span className="text-white font-medium">Métrica secundaria: </span>
+                      {caseStudy.secondaryMetric}
                     </div>
                   </div>
+                )}
 
-                  <button
-                    onClick={() => setExpandedCase(isExpanded ? null : index)}
-                    className="flex items-center justify-between w-full text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-                  >
-                    <span>{isExpanded ? "Ocultar detalles" : "Ver detalles completos"}</span>
-                    {isExpanded ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
-
-                  {isExpanded && (
-                    <div className="space-y-3 pt-3 text-sm">
-                      <div>
-                        <span className="font-medium">Industria: </span>
-                        <span>{t(caseStudy.industryKey)}</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Qué hicimos: </span>
-                        <span>{t(caseStudy.details.whatWeDidKey)}</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Métrica principal: </span>
-                        <span>{caseStudy.details.mainMetric}</span>
-                      </div>
-                      <div>
-                        <span className="font-medium">Métrica secundaria: </span>
-                        <span>{caseStudy.details.secondaryMetric}</span>
-                      </div>
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {caseStudy.details.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-1 bg-secondary text-xs rounded-full text-muted-foreground"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {caseStudy.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-secondary text-xs rounded-full text-muted-foreground"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                <div className="flex flex-wrap gap-1.5 mt-5">
+                  {caseStudy.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
             );
           })}
         </div>

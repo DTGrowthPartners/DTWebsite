@@ -37,40 +37,37 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className=" bg-card" style={{background: "linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%)"}}>
-      <div className="section-container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="relative bg-black border-t border-white/10">
+      <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-                   <Link to="/" className="flex items-center space-x-2 py-2" id="logito">
-                       <img src={logo} alt="DT Growth" width={170} />
-
-                 </Link>
-            </div>
-            <p className="text-sm text-muted-foreground">
+            <Link to="/" className="inline-flex py-2" id="logito">
+              <img src={logo} alt="DT Growth" width={150} />
+            </Link>
+            <p className="text-sm text-white/70 font-body font-light leading-relaxed">
               {t("footer.description")}
             </p>
-            <div className="text-xs text-muted-foreground space-y-1">
+            <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40 space-y-1">
               <p>{t("footer.address")}</p>
               <p>{t("footer.hours")}</p>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">{t("nav.services")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 mb-5">{t("nav.services")}</h4>
+            <ul className="space-y-2.5 text-sm text-white/70 font-body font-light">
               <li>
-                <Link to="/servicios/meta-ads" className="hover:text-primary transition-colors">
+                <Link to="/servicios/meta-ads" className="hover:text-white transition-colors">
                   Meta Ads Performance
                 </Link>
               </li>
               <li>
-                <Link to="/servicios/desarrollo-web" className="hover:text-primary transition-colors">
+                <Link to="/servicios/desarrollo-web" className="hover:text-white transition-colors">
                   {t("services.webDev")}
                 </Link>
               </li>
               <li>
-                <Link to="/servicios/sistemas-automatizaciones" className="hover:text-primary transition-colors">
+                <Link to="/servicios/sistemas-automatizaciones" className="hover:text-white transition-colors">
                   {t("services.automation")}
                 </Link>
               </li>
@@ -78,20 +75,20 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">{t("footer.company")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 mb-5">{t("footer.company")}</h4>
+            <ul className="space-y-2.5 text-sm text-white/70 font-body font-light">
               <li>
-                <a href="/#casos" className="hover:text-primary transition-colors">
+                <a href="/#casos" className="hover:text-white transition-colors">
                   {t("nav.cases")}
                 </a>
               </li>
               <li>
-                <a href="/#nosotros" className="hover:text-primary transition-colors">
+                <a href="/#nosotros" className="hover:text-white transition-colors">
                   {t("nav.team")}
                 </a>
               </li>
               <li>
-                <a href="/#metodo" className="hover:text-primary transition-colors">
+                <a href="/#metodo" className="hover:text-white transition-colors">
                   {t("method.label")}
                 </a>
               </li>
@@ -99,36 +96,41 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-semibold mb-4">{t("footer.contact")}</h4>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-             <li>
-                <a href="https://www.linkedin.com/company/dtgrowth" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+            <h4 className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 mb-5">{t("footer.contact")}</h4>
+            <ul className="space-y-2.5 text-sm text-white/70 font-body font-light">
+              <li>
+                <a href="https://www.linkedin.com/company/dtgrowth" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com/dairotraslav" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                <a href="https://www.facebook.com/dairotraslav" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Facebook
                 </a>
               </li>
-              
               <li>
-                <a href="https://www.instagram.com/dtgrowthpartners/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                <a href="https://www.instagram.com/dtgrowthpartners/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                   Instagram
                 </a>
-               </li>
-                <li>
-                <a href="mailto:dtgrowthpartners.com" className="hover:text-primary transition-colors">
-                 info@dtgrowthpartners.com
+              </li>
+              <li>
+                <a href="mailto:info@dtgrowthpartners.com" className="hover:text-white transition-colors">
+                  info@dtgrowthpartners.com
                 </a>
               </li>
             </ul>
           </div>
-
-         
         </div>
 
-        <div className="mt-12 pt-8 text-center text-sm text-muted-foreground">
+        {/* Firma serif gigante, muy tenue — remate de página */}
+        <div
+          aria-hidden
+          className="mt-16 font-heading italic text-white/[0.06] text-[16vw] md:text-[10vw] leading-none select-none whitespace-nowrap overflow-hidden"
+        >
+          DT Growth Partners
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-white/10 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
           <p>© {new Date().getFullYear()} DT Growth Partners. {t("footer.copyright")}</p>
         </div>
         {!presentationMode && (

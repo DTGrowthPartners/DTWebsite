@@ -187,20 +187,23 @@ const ContactFormSection = () => {
 
   if (status === "success") {
     return (
-      <section id="contacto" className="py-12 md:py-24">
-        <div className="section-container">
+      <section id="contacto" className="relative bg-black py-24 md:py-32">
+        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="bg-gradient-card border border-border/50 rounded-3xl p-12 space-y-6">
-              <div className="w-20 h-20 mx-auto bg-green-500/20 rounded-full flex items-center justify-center">
-                <CheckCircle className="w-10 h-10 text-green-500" />
+            <div className="liquid-glass rounded-[1.25rem] p-12 space-y-6">
+              <div className="liquid-glass w-20 h-20 mx-auto rounded-full flex items-center justify-center">
+                <CheckCircle className="w-10 h-10 text-white" strokeWidth={1.5} />
               </div>
-              <h3 className="text-3xl font-bold">{t("contact.successTitle")}</h3>
-              <p className="text-lg text-muted-foreground">
+              <h3 className="font-heading italic text-white text-4xl tracking-[-1px]">{t("contact.successTitle")}</h3>
+              <p className="text-sm md:text-base text-white/80 font-body font-light">
                 {t("contact.successMessage")}
               </p>
-              <Button onClick={resetForm} variant="outline" className="mt-4">
+              <button
+                onClick={resetForm}
+                className="liquid-glass rounded-full px-6 py-3 text-sm font-medium text-white font-body"
+              >
                 {t("contact.submit")}
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -210,20 +213,23 @@ const ContactFormSection = () => {
 
   if (status === "error") {
     return (
-      <section id="contacto" className="py-12 md:py-24">
-        <div className="section-container">
+      <section id="contacto" className="relative bg-black py-24 md:py-32">
+        <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
           <div className="max-w-2xl mx-auto text-center">
-            <div className="bg-gradient-card border border-border/50 rounded-3xl p-12 space-y-6">
-              <div className="w-20 h-20 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
-                <XCircle className="w-10 h-10 text-red-500" />
+            <div className="liquid-glass rounded-[1.25rem] p-12 space-y-6">
+              <div className="liquid-glass w-20 h-20 mx-auto rounded-full flex items-center justify-center">
+                <XCircle className="w-10 h-10 text-white" strokeWidth={1.5} />
               </div>
-              <h3 className="text-3xl font-bold">{t("contact.errorTitle")}</h3>
-              <p className="text-lg text-muted-foreground">
+              <h3 className="font-heading italic text-white text-4xl tracking-[-1px]">{t("contact.errorTitle")}</h3>
+              <p className="text-sm md:text-base text-white/80 font-body font-light">
                 {t("contact.errorMessage")}
               </p>
-              <Button onClick={resetForm} variant="outline" className="mt-4">
+              <button
+                onClick={resetForm}
+                className="liquid-glass rounded-full px-6 py-3 text-sm font-medium text-white font-body"
+              >
                 {t("contact.submit")}
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -232,24 +238,29 @@ const ContactFormSection = () => {
   }
 
   return (
-    <section id="contacto" className="py-12 md:py-24">
-      <div className="section-container">
+    <section id="contacto" className="relative bg-black py-24 md:py-32 overflow-hidden">
+      {/* Glow azul sutil */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(50% 40% at 20% 100%, rgba(15,118,214,0.10), transparent 70%)" }}
+      />
+      <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-              {t("contact.title")}{" "}
-              <span className="gradient-text">{t("contact.titleHighlight")}</span>
+            <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
+            <h2 className="mt-6 font-heading italic text-white text-5xl md:text-6xl leading-[0.9] tracking-[-2px]">
+              {t("contact.title")} {t("contact.titleHighlight")}
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
               {t("contact.subtitle")}
             </p>
           </div>
 
-          <div className="bg-gradient-card border border-border/50 rounded-3xl p-8 lg:p-12">
+          <div className="liquid-glass rounded-[1.25rem] p-8 lg:p-12">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="firstName" className="text-sm font-medium">
+                  <label htmlFor="firstName" className="text-sm font-body font-medium text-white/85">
                     {t("contact.firstName")} *
                   </label>
                   <Input
@@ -259,11 +270,11 @@ const ContactFormSection = () => {
                     required
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="bg-background/50 border-border/50"
+                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="lastName" className="text-sm font-medium">
+                  <label htmlFor="lastName" className="text-sm font-body font-medium text-white/85">
                     {t("contact.lastName")} *
                   </label>
                   <Input
@@ -273,14 +284,14 @@ const ContactFormSection = () => {
                     required
                     value={formData.lastName}
                     onChange={handleChange}
-                    className="bg-background/50 border-border/50"
+                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
+                  <label htmlFor="email" className="text-sm font-body font-medium text-white/85">
                     {t("contact.email")} *
                   </label>
                   <Input
@@ -290,11 +301,11 @@ const ContactFormSection = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="bg-background/50 border-border/50"
+                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-medium">
+                  <label htmlFor="phone" className="text-sm font-body font-medium text-white/85">
                     {t("contact.phone")}
                   </label>
                   <Input
@@ -303,13 +314,13 @@ const ContactFormSection = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="bg-background/50 border-border/50"
+                    className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="company" className="text-sm font-medium">
+                <label htmlFor="company" className="text-sm font-body font-medium text-white/85">
                   {t("contact.company")}
                 </label>
                 <Input
@@ -318,12 +329,12 @@ const ContactFormSection = () => {
                   type="text"
                   value={formData.company}
                   onChange={handleChange}
-                  className="bg-background/50 border-border/50"
+                  className="bg-white/5 border-white/10 text-white font-body rounded-xl focus-visible:ring-white/30"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">
+                <label htmlFor="message" className="text-sm font-body font-medium text-white/85">
                   {t("contact.message")}
                 </label>
                 <Textarea
@@ -333,7 +344,7 @@ const ContactFormSection = () => {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder={t("contact.messagePlaceholder")}
-                  className="bg-background/50 border-border/50 resize-none"
+                  className="bg-white/5 border-white/10 text-white font-body rounded-xl resize-none focus-visible:ring-white/30"
                 />
               </div>
 
@@ -350,7 +361,7 @@ const ContactFormSection = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="btn-primary w-full group"
+                className="w-full rounded-full bg-white text-black font-body font-medium hover:bg-white/90 transition-transform duration-300 hover:scale-[1.01]"
                 disabled={status === "sending"}
               >
                 {status === "sending" ? (
