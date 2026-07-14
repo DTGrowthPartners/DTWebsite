@@ -14,7 +14,7 @@ const CaseStudiesSection = () => {
       clientKey: "cases.ecommerce",
       industryKey: "cases.fashionIndustry",
       metric: "$250K",
-      metricLabel: "en ventas generadas",
+      metricLabel: "USD en ventas generadas",
       improvement: "ROI 4.2x",
       descKey: "cases.ecommerceDesc",
       tags: ["Meta Ads", "E-commerce", "Performance"],
@@ -30,8 +30,8 @@ const CaseStudiesSection = () => {
       icon: Users,
       clientKey: "cases.clinic",
       industryKey: "cases.healthIndustry",
-      metric: "350M",
-      metricLabel: "en ventas generadas",
+      metric: "$350M",
+      metricLabel: "COP en ventas generadas",
       improvement: "ROAS 5.2x",
       descKey: "cases.clinicDesc",
       tags: ["Meta Ads", "WhatsApp", "Leads"],
@@ -63,7 +63,7 @@ const CaseStudiesSection = () => {
   ];
 
   return (
-    <section id="casos" className="py-12 md:py-24 relative">
+    <section id="casos" className="py-12 md:py-16 relative">
       <ScrollRocketSeparator />
       <div className="section-container relative z-10">
         <div className="text-center mb-8 md:mb-16 space-y-4">

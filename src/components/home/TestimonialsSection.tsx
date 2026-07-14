@@ -10,11 +10,12 @@ const TestimonialsSection = () => {
   const [canScrollNext, setCanScrollNext] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  const CHARACTER_LIMIT = 200;
+  // Alto para que en presentación los testimonios se lean completos sin hacer clic.
+  const CHARACTER_LIMIT = 2000;
 
   const testimonials = [
     {
-      name: "johana zapateiro",
+      name: "Johana Zapateiro",
       role: "Cliente · Hace 5 meses",
       content:
         "Estoy muy feliz con los resultados. Desde que implementamos las estrategias de marketing y pauta, las ventas han crecido notablemente. Invertir en esta área ha valido totalmente la pena. Gracias ser productivos, por su estructura, dirección y enfoque claro, hoy veo mi empresa más organizada y en crecimiento.",
@@ -88,7 +89,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-12 md:py-24">
+    <section className="py-12 md:py-16">
       <div className="section-container">
         <div className="text-center mb-8 md:mb-16 space-y-4">
           <span className="text-primary text-sm font-medium uppercase tracking-wider">

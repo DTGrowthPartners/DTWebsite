@@ -54,8 +54,8 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/#dt-os" className="hover:text-primary transition-colors">
-                  DT-OS
+                <a href="/#nosotros" className="hover:text-primary transition-colors">
+                  {t("nav.team")}
                 </a>
               </li>
               <li>

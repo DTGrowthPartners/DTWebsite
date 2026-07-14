@@ -32,8 +32,9 @@ const Navigation = () => {
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
-    { name: t("nav.dt-os"), path: "/#dt-os" },
     { name: t("nav.cases"), path: "/#casos" },
+    { name: t("nav.team"), path: "/#nosotros" },
+    { name: t("nav.method"), path: "/#metodo" },
   ];
 
   // Close dropdown when clicking outside
@@ -116,19 +117,6 @@ const Navigation = () => {
           <Link to="/" className="flex items-center space-x-2 py-5">
             <img src={logo} alt="DT Growth" width={120} />
           </Link>
-
-          {/* DT-OS Mobile Icon */}
-          <div className="md:hidden">
-            {!isOpen && (
-              <a
-                href="/#dt-os"
-                onClick={(e) => handleNavClick(e, "/#dt-os")}
-                className="px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
-              >
-                DT-OS
-              </a>
-            )}
-          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">

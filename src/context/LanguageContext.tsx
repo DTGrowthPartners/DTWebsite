@@ -17,6 +17,8 @@ const translations = {
     "nav.services": "Services",
     "nav.dt-os": "DT-OS",
     "nav.cases": "Success Cases",
+    "nav.team": "About Us",
+    "nav.method": "Method",
     "nav.consultation": "Schedule a Consultation",
     "nav.services.metaAds": "Meta Ads",
     "nav.services.webDev": "Web Development",
@@ -84,6 +86,12 @@ const translations = {
     "dtos.calendarDesc": "See what is being worked on, delivery dates and upcoming planned actions.",
     "dtos.resources": "Resource Center",
     "dtos.resourcesDesc": "Access reports, approved creativities and all your brand assets.",
+
+    // Team Section
+    "team.label": "Who we are",
+    "team.title": "The team behind",
+    "team.titleHighlight": "DT Growth",
+    "team.subtitle": "People obsessed with growth. We combine strategy, technology and data to scale brands with measurable results.",
 
     // Method Section
     "method.label": "The DT Method",
@@ -167,6 +175,8 @@ const translations = {
     "nav.services": "Servicios",
     "nav.dt-os": "DT-OS",
     "nav.cases": "Casos de Éxito",
+    "nav.team": "Nosotros",
+    "nav.method": "Método",
     "nav.consultation": "Agenda una Consultoría",
     "nav.services.metaAds": "Meta Ads",
     "nav.services.webDev": "Desarrollo Web",
@@ -210,7 +220,7 @@ const translations = {
     "services.metaAdsDesc": "Campañas de publicidad en Facebook e Instagram que generan leads y ventas reales, con optimización continua y reportes claros.",
     "services.metaAdsHighlights": "ROI medible,Testing estructurado,Escalamiento inteligente",
     "services.webDev": "Desarrollo Web",
-    "services.webDevDesc": "Sitios web, landing pages y tiendas online diseñadas para convertir visitante en clientes.",
+    "services.webDevDesc": "Sitios web, landing pages y tiendas online diseñadas para convertir visitantes en clientes.",
     "services.webDevHighlights": "Next.js & React,Shopify stores,Optimizados para conversión",
     "services.automation": "Automatizaciones & IA",
     "services.automationDesc": "Flujos automatizados y agentes de IA que trabajan 24/7 para que tu equipo se enfoque en lo importante.",
@@ -234,6 +244,12 @@ const translations = {
     "dtos.calendarDesc": "Ve qué se está trabajando, fechas de entrega y próximas acciones planificadas.",
     "dtos.resources": "Centro de Recursos",
     "dtos.resourcesDesc": "Accede a reportes, creatividades aprobadas y todos los assets de tu marca.",
+
+    // Team Section
+    "team.label": "Quiénes somos",
+    "team.title": "El equipo detrás de",
+    "team.titleHighlight": "DT Growth",
+    "team.subtitle": "Personas obsesionadas con el crecimiento. Combinamos estrategia, tecnología y datos para escalar marcas con resultados medibles.",
 
     // Method Section
     "method.label": "El Método DT",

@@ -6,7 +6,7 @@ const CTASection = () => {
   const { t } = useLanguage();
 
   return (
-    <section className="py-12 md:py-24">
+    <section className="py-12 md:py-16">
       <div className="section-container">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-card border border-border/50 p-12 lg:p-20">
           <video

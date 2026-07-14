@@ -52,14 +52,14 @@ const BrandsSection = () => {
           {brands.map((brand, index) => (
             <div
               key={brand.name}
-              className="flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300 w-full"
+              className="flex items-center justify-center opacity-90 hover:opacity-100 transition-opacity duration-300 w-full"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               <img
                 src={brand.logo}
                 alt={`${brand.name} logo`}
                 className={`
-                  object-contain grayscale hover:grayscale-0 transition-all duration-300 mx-auto
+                  object-contain transition-all duration-300 mx-auto
                   ${brand.name === "verzatille" ? "max-h-6 md:max-h-8" : ""}
                   ${brand.name === "Autoexpress" ? "max-h-16 md:max-h-20" : ""}
                   ${brand.name === "En Medidas Específicas" ? "max-h-12 md:max-h-16" : ""}

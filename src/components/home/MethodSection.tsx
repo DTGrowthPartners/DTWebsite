@@ -30,7 +30,7 @@ const MethodSection = () => {
   ];
 
   return (
-    <section id="metodo" className="py-12 md:py-24 bg-gradient-card">
+    <section id="metodo" className="py-12 md:py-16 bg-gradient-card">
       <div className="section-container">
         <div className="text-center mb-8 md:mb-16 space-y-4">
           <span className="relative inline-block text-sm font-medium uppercase tracking-wider">
