@@ -1,7 +1,8 @@
 import { useRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
-import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle } from "lucide-react";
+import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
+import heroVisual from "@/assets/hero-visual.jpg";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import RotatingWord from "@/components/effects/RotatingWord";
@@ -14,18 +15,114 @@ const PANELS = 5; // intro + 4 servicios
 
 /* ─── Motivos decorativos por servicio ─────────────────────────── */
 
-// 01 · Meta Ads — barras de crecimiento + chip de ROAS
+// 01 · Meta Ads — preview real de campaña: anuncio en Instagram → lead en WhatsApp
+const PhoneFrame = ({ children }: { children: ReactNode }) => (
+  <div className="relative rounded-[1.3rem] bg-black/85 border border-white/20 p-[6px] shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
+    <div className="relative rounded-[0.95rem] overflow-hidden bg-black aspect-[9/16]">
+      {children}
+      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 z-10 h-1.5 w-1.5 rounded-full bg-black ring-1 ring-white/25" />
+    </div>
+  </div>
+);
+
+const InstagramAdPreview = () => (
+  <div className="absolute inset-0 bg-white flex flex-col font-body">
+    <div className="flex items-center justify-between px-2.5 pt-3 pb-1.5">
+      <span className="text-[11px] font-semibold tracking-tight text-neutral-900">Instagram</span>
+      <div className="flex items-center gap-2 text-neutral-900">
+        <Heart className="h-3 w-3" strokeWidth={1.7} />
+        <Send className="h-3 w-3" strokeWidth={1.7} />
+      </div>
+    </div>
+    <div className="flex items-center gap-1.5 px-2 pb-1.5">
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0F76D6] text-white text-[7px] font-semibold">
+        DT
+      </span>
+      <div className="leading-tight">
+        <div className="text-[8px] font-semibold text-neutral-900">dtgrowthpartners</div>
+        <div className="text-[6.5px] text-neutral-500">Publicidad</div>
+      </div>
+      <MoreHorizontal className="ml-auto h-3 w-3 text-neutral-500" />
+    </div>
+    <div className="relative flex-1 min-h-0 overflow-hidden">
+      <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-x-0 bottom-0 p-1.5">
+        <span className="text-[7.5px] font-medium text-white leading-tight block">
+          Escala tu negocio con datos
+        </span>
+      </div>
+    </div>
+    <div className="flex items-center justify-between bg-[#0F76D6] px-2.5 py-1.5">
+      <span className="text-[8px] font-medium text-white">Enviar mensaje</span>
+      <span className="text-[8px] text-white">›</span>
+    </div>
+    <div className="px-2 py-1.5 leading-tight">
+      <div className="flex items-center gap-1.5 text-neutral-900 pb-0.5">
+        <Heart className="h-2.5 w-2.5" strokeWidth={1.7} />
+        <MessageCircle className="h-2.5 w-2.5" strokeWidth={1.7} />
+        <Send className="h-2.5 w-2.5" strokeWidth={1.7} />
+      </div>
+      <span className="text-[7px] font-semibold text-neutral-900">1.284 Me gusta</span>
+    </div>
+  </div>
+);
+
+const WhatsAppLeadPreview = () => (
+  <div className="absolute inset-0 bg-[#EFE7DC] flex flex-col font-body">
+    <div className="flex items-center gap-1.5 bg-[#075E54] px-2 pt-3 pb-1.5 text-white">
+      <span aria-hidden className="text-[11px] leading-none">‹</span>
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-white/90 text-[#075E54] text-[7px] font-semibold">
+        L
+      </span>
+      <div className="flex-1 leading-tight min-w-0">
+        <div className="text-[8px] font-medium truncate">Laura G.</div>
+        <div className="text-[6.5px] text-white/70">en línea</div>
+      </div>
+      <MoreHorizontal className="h-3 w-3" />
+    </div>
+    <div className="mx-auto mt-2 rounded-[5px] bg-white/90 px-1.5 py-0.5 text-[6px] text-neutral-500">
+      Lead desde tu anuncio en Meta
+    </div>
+    <div className="flex-1 flex flex-col px-2 pt-2 gap-1 overflow-hidden">
+      <div className="max-w-[88%] self-start rounded-[7px] rounded-tl-[2px] bg-white p-1.5 text-[7.5px] text-neutral-800 leading-snug">
+        Hola, vi su anuncio en Instagram 👋 ¿Aún está la promo?
+        <span className="block text-right text-[5.5px] text-neutral-400 mt-0.5">10:24</span>
+      </div>
+      <div className="max-w-[88%] self-start rounded-[7px] bg-white p-1.5 text-[7.5px] text-neutral-800 leading-snug">
+        ¿Cómo puedo agendar?
+        <span className="block text-right text-[5.5px] text-neutral-400 mt-0.5">10:25</span>
+      </div>
+      <div className="max-w-[88%] self-end rounded-[7px] rounded-tr-[2px] bg-[#DCF8C6] p-1.5 text-[7.5px] text-neutral-800 leading-snug">
+        ¡Claro! ¿Te sirve mañana a las 3 p.m.?
+        <span className="block text-right text-[5.5px] text-neutral-400 mt-0.5">10:26 ✓✓</span>
+      </div>
+    </div>
+    <div className="flex items-center gap-1 p-1.5">
+      <div className="flex-1 rounded-full bg-white px-2 py-1 text-[7px] text-neutral-400">Mensaje</div>
+      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#25D366] text-white">
+        <Send className="h-2.5 w-2.5" strokeWidth={1.8} />
+      </span>
+    </div>
+  </div>
+);
+
 const MotifAds = () => (
-  <div className="flex items-end gap-2.5 animate-float" style={{ animationDuration: "5s" }}>
-    {[36, 60, 84, 116].map((h, i) => (
-      <div
-        key={i}
-        className="motif-bar w-7 md:w-9 rounded-t-md bg-gradient-to-t from-[#0F76D6]/40 to-[#26BDF0]/75"
-        style={{ height: h, animationDelay: `${i * 0.22}s` }}
-      />
-    ))}
-    <div className="liquid-glass rounded-full px-3 py-1 text-xs text-white font-body mb-24 -ml-6">
-      ROAS 5.2x
+  <div className="relative w-[290px] h-[330px]">
+    {/* Anuncio en Instagram */}
+    <div className="absolute left-0 top-0 w-[150px] -rotate-6 animate-float" style={{ animationDuration: "6s" }}>
+      <PhoneFrame>
+        <InstagramAdPreview />
+      </PhoneFrame>
+    </div>
+    {/* Conversación del lead en WhatsApp */}
+    <div className="absolute right-0 top-10 w-[150px] rotate-6 animate-float" style={{ animationDuration: "5s", animationDelay: "0.9s" }}>
+      <PhoneFrame>
+        <WhatsAppLeadPreview />
+      </PhoneFrame>
+    </div>
+    {/* Conector: del anuncio al lead */}
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass rounded-full px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-white/90 z-10">
+      Lead →
     </div>
   </div>
 );
@@ -201,7 +298,7 @@ const ServicesHorizontal = () => {
     const inner = (
       <div className="liquid-glass-strong rounded-[2rem] p-7 md:p-14 w-full max-w-4xl flex flex-col min-h-[440px] md:min-h-[560px] text-left">
         {/* Motivo decorativo del servicio */}
-        <div className="pointer-events-none absolute right-8 md:right-16 top-[38%] -translate-y-1/2 hidden sm:block opacity-90">
+        <div className="pointer-events-none absolute right-8 md:right-16 top-[46%] -translate-y-1/2 hidden sm:block opacity-90">
           <Motif />
         </div>
 
