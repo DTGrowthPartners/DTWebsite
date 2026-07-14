@@ -59,7 +59,7 @@ const CaseStudiesSection = () => {
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("nav.cases")}`}</span>
         <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
-          {t("cases.title")} {t("cases.titleHighlight")}
+          {t("cases.title")} <span className="font-semibold">{t("cases.titleHighlight")}</span>
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
           {t("cases.subtitle")}

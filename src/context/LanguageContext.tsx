@@ -55,6 +55,7 @@ const translations = {
     "hero.seeCases": "See Success Cases",
     "hero.badgeChip": "New",
     "hero.badgeText": "Free strategic growth consultation — limited spots",
+    "hero.rotatingWords": "science|data|AI|strategy",
     "services.kicker": "// Services",
     "services.scrollHint": "Scroll to explore",
 
@@ -217,6 +218,7 @@ const translations = {
     "hero.seeCases": "Ver Casos de Éxito",
     "hero.badgeChip": "Nuevo",
     "hero.badgeText": "Consultoría estratégica de crecimiento gratis — cupos limitados",
+    "hero.rotatingWords": "ciencia|datos|IA|estrategia",
     "services.kicker": "// Servicios",
     "services.scrollHint": "Desplázate para explorar",
 

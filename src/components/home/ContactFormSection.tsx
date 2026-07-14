@@ -248,8 +248,8 @@ const ContactFormSection = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
-            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl leading-[0.9] tracking-[-0.024em]">
-              {t("contact.title")} {t("contact.titleHighlight")}
+            <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl leading-[0.95] tracking-[-0.024em]">
+              {t("contact.title")} <span className="font-semibold">{t("contact.titleHighlight")}</span>
             </h2>
             <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
               {t("contact.subtitle")}

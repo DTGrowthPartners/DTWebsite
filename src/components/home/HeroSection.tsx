@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Play, BarChart3, TrendingUp } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
-import BlurText from "@/components/effects/BlurText";
+import RotatingWord from "@/components/effects/RotatingWord";
 import fondoVideo from "@/assets/fondo-video.mp4";
 
 const WHATSAPP =
@@ -17,8 +17,18 @@ const enter = (delay: number) => ({
 
 const HeroSection = () => {
   const { t } = useLanguage();
+  const reduced = useReducedMotion();
 
-  const headline = `${t("hero.scaleWithScience.before")}${t("hero.scaleWithScience.highlight")}${t("hero.scaleWithScience.after")}`;
+  // Titular compuesto: palabras estáticas + slot rotativo (ciencia|datos|IA|estrategia)
+  const beforeWords = t("hero.scaleWithScience.before").trim().split(" ");
+  const afterWords = t("hero.scaleWithScience.after").replace(/^[,\s]+/, "").split(" ");
+  const rotatingWords = t("hero.rotatingWords").split("|");
+
+  const wordEnter = (i: number) => ({
+    initial: reduced ? undefined : { filter: "blur(10px)", opacity: 0, y: 40 },
+    animate: { filter: "blur(0px)", opacity: 1, y: 0 },
+    transition: { duration: 0.7, delay: 0.5 + i * 0.09, ease: [0.16, 1, 0.3, 1] as const },
+  });
 
   const stats = [
     { icon: BarChart3, value: "$250K", label: t("common.managedAds") },
@@ -48,14 +58,29 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* Titular — serif itálica gigante, palabra por palabra */}
-        <div className="mt-8 max-w-5xl">
-          <BlurText
-            text={headline}
-            delay={0.5}
-            className="font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[0.9] tracking-[-0.024em]"
-          />
-        </div>
+        {/* Titular — entrada palabra por palabra + palabra rotativa en bold/degradado */}
+        <h1
+          className="mt-8 max-w-5xl font-heading text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em]"
+          style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.08em" }}
+        >
+          {beforeWords.map((word, i) => (
+            <motion.span key={`b-${i}`} {...wordEnter(i)} className="inline-block mr-[0.26em]">
+              {word}
+            </motion.span>
+          ))}
+          <motion.span {...wordEnter(beforeWords.length)} className="inline-block mr-[0.26em]">
+            <RotatingWord words={rotatingWords} className="font-semibold gradient-text" />,
+          </motion.span>
+          {afterWords.map((word, i) => (
+            <motion.span
+              key={`a-${i}`}
+              {...wordEnter(beforeWords.length + 1 + i)}
+              className="inline-block mr-[0.26em]"
+            >
+              {word}
+            </motion.span>
+          ))}
+        </h1>
 
         {/* Subtítulo */}
         <motion.p

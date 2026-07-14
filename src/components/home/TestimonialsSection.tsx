@@ -88,7 +88,7 @@ const TestimonialsSection = () => {
           <div>
             <span className="text-sm font-body text-white/80">{`// ${t("testimonials.label")}`}</span>
             <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-3xl">
-              {t("testimonials.title")} {t("testimonials.titleHighlight")}
+              {t("testimonials.title")} <span className="font-semibold">{t("testimonials.titleHighlight")}</span>
             </h2>
           </div>
 

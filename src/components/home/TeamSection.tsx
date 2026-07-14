@@ -29,7 +29,7 @@ const TeamSection = () => {
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
         <span className="text-sm font-body text-white/80">{`// ${t("team.label")}`}</span>
         <h2 className="mt-6 font-heading text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.9] tracking-[-0.024em] max-w-4xl">
-          {t("team.title")} {t("team.titleHighlight")}
+          {t("team.title")} <span className="font-semibold">{t("team.titleHighlight")}</span>
         </h2>
         <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
           {t("team.subtitle")}
