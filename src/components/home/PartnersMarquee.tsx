@@ -17,9 +17,10 @@ import logoBuzos from "@/assets/buzos-removebg-preview.png";
 import logoAventuras from "@/assets/aventuras-removebg-preview.png";
 
 /**
- * Marquee infinito con los logos reales de clientes, en blanco uniforme
- * (brightness-0 + invert) para integrarse al look cinemático sobre video.
- * El contenido se duplica para que el bucle sea continuo.
+ * Marquee infinito con los logos reales de clientes en su color original
+ * (los assets ya están curados para fondo oscuro; filtros de silueta
+ * aplastan los logos con detalle interno). El contenido se duplica para
+ * que el bucle sea continuo.
  */
 const BRANDS = [
   { name: "Arismendy", logo: logoArismendy },
@@ -53,7 +54,7 @@ const PartnersMarquee = () => (
           src={brand.logo}
           alt={`${brand.name} logo`}
           loading="lazy"
-          className="h-8 md:h-10 w-auto max-w-[130px] object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
+          className="h-8 md:h-10 w-auto max-w-[130px] object-contain opacity-85 hover:opacity-100 transition-opacity"
         />
       ))}
     </div>
