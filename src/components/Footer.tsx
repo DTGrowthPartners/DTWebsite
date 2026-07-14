@@ -1,9 +1,41 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { useLanguage } from "@/context/LanguageContext";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 
 const Footer = () => {
   const { t } = useLanguage();
+
+  // Modo presentación: oculta el botón flotante de WhatsApp durante reuniones.
+  // Se activa/desactiva con la tecla "P" y se recuerda mientras dure la sesión.
+  const [presentationMode, setPresentationMode] = useState(
+    () => typeof window !== "undefined" && sessionStorage.getItem("dt-presentation") === "1"
+  );
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key.toLowerCase() !== "p" || e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target?.isContentEditable) return;
+
+      setPresentationMode((prev) => {
+        const next = !prev;
+        sessionStorage.setItem("dt-presentation", next ? "1" : "0");
+        toast(next ? "Modo presentación activado" : "Modo presentación desactivado", {
+          description: next
+            ? "Botón de WhatsApp oculto. Pulsa \"P\" para mostrarlo."
+            : "Botón de WhatsApp visible de nuevo.",
+        });
+        return next;
+      });
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
+
   return (
     <footer className=" bg-card" style={{background: "linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%)"}}>
       <div className="section-container py-12">
@@ -99,18 +131,20 @@ const Footer = () => {
         <div className="mt-12 pt-8 text-center text-sm text-muted-foreground">
           <p>© {new Date().getFullYear()} DT Growth Partners. {t("footer.copyright")}</p>
         </div>
-        <a
-          href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-[#012b80] via-[#0D89D6] to-[#40F2FF] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in"
-        >
-          <img
-            src="https://img.icons8.com/ios11/512/FFFFFF/whatsapp.png"
-            alt="WhatsApp"
-            className="w-10 h-10"
-          />
-        </a>
+        {!presentationMode && (
+          <a
+            href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-[#012b80] via-[#0D89D6] to-[#40F2FF] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in"
+          >
+            <img
+              src="https://img.icons8.com/ios11/512/FFFFFF/whatsapp.png"
+              alt="WhatsApp"
+              className="w-10 h-10"
+            />
+          </a>
+        )}
       </div>
     </footer>
   );
