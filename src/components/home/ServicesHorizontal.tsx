@@ -276,6 +276,9 @@ const ServicesHorizontal = () => {
       <FadingVideo src={fondoHorizontal} className="absolute inset-0 w-full h-full object-cover z-0" />
       {/* Mancha desenfocada tras el contenido: asienta las tarjetas sobre el video */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[984px] max-w-none h-[527px] bg-gray-950 opacity-90 blur-[82px] z-[1]" />
+      {/* Franjas de fundido: entra desde negro (hero) y sale hacia la sección de casos */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black to-transparent z-[2]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
     </>
   );
 

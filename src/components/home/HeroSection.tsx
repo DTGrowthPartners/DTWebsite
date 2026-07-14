@@ -45,6 +45,9 @@ const HeroSection = () => {
         style={{ width: "120%", height: "120%" }}
       />
 
+      {/* Franja de fundido a negro: elimina el corte con la sección siguiente */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-b from-transparent to-black z-[5]" />
+
       {/* Contenido */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pt-32 pb-10 text-center">
         {/* Badge */}
