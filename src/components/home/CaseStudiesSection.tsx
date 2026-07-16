@@ -5,13 +5,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
-import Tilt from "@/components/effects/Tilt";
-import webVcc from "@/assets/webs/vcc.webp";
-import webBhk from "@/assets/webs/bhk.webp";
-import webAya from "@/assets/webs/aya.webp";
-import webVccLg from "@/assets/webs/vcc-lg.webp";
-import webBhkLg from "@/assets/webs/bhk-lg.webp";
-import webAyaLg from "@/assets/webs/aya-lg.webp";
 
 /**
  * Casos como filas editoriales (no tarjetas): métrica gigante con contador,
@@ -20,7 +13,6 @@ import webAyaLg from "@/assets/webs/aya-lg.webp";
 const CaseStudiesSection = () => {
   const { t } = useLanguage();
   const [expanded, setExpanded] = useState<number | null>(null);
-  const [lightbox, setLightbox] = useState<{ img: string; name: string } | null>(null);
 
   const cases = [
     {
@@ -61,11 +53,6 @@ const CaseStudiesSection = () => {
       tags: ["Web Development", "B2B", "SEO"],
       mainMetric: "+320% cotizaciones",
       secondaryMetric: "3.1x conversión",
-      gallery: [
-        { img: webBhk, imgLg: webBhkLg, name: "BHK" },
-        { img: webVcc, imgLg: webVccLg, name: "VCC" },
-        { img: webAya, imgLg: webAyaLg, name: "Arismendy" },
-      ],
     },
   ];
 
@@ -137,35 +124,6 @@ const CaseStudiesSection = () => {
                         </span>
                       ))}
                     </div>
-
-                    {/* Webs construidas: thumbnails con tilt 3D (transitions.dev #19)
-                        que abren lightbox con zoom-bend al hacer clic */}
-                    {"gallery" in c && c.gallery && (
-                      <div className="mt-6 flex flex-wrap items-center gap-3">
-                        {c.gallery.map((site) => (
-                          <Tilt
-                            key={site.name}
-                            className="cursor-zoom-in"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setLightbox({ img: site.imgLg, name: site.name });
-                            }}
-                          >
-                            <div className="liquid-glass rounded-xl p-1.5">
-                              <img
-                                src={site.img}
-                                alt={`Sitio web ${site.name} desarrollado por DT Growth Partners`}
-                                className="w-40 md:w-52 aspect-video object-cover object-top rounded-lg"
-                                loading="lazy"
-                              />
-                              <span className="block px-1 pt-1 pb-0.5 font-mono text-[8px] uppercase tracking-[0.15em] text-white/60">
-                                {site.name}
-                              </span>
-                            </div>
-                          </Tilt>
-                        ))}
-                      </div>
-                    )}
                   </div>
 
                   {/* Expansor */}
@@ -210,44 +168,6 @@ const CaseStudiesSection = () => {
           })}
         </div>
       </div>
-
-      {/* Lightbox: apertura estilo iPadOS — zoom con inclinación 3D y "bend" */}
-      <AnimatePresence>
-        {lightbox && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onClick={() => setLightbox(null)}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-5 md:p-16 cursor-zoom-out"
-            style={{ background: "rgba(3, 4, 12, 0.82)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}
-          >
-            <motion.div style={{ perspective: 1200 }} className="w-full max-w-5xl">
-              <motion.img
-                src={lightbox.img}
-                alt={`Sitio web ${lightbox.name} desarrollado por DT Growth Partners`}
-                initial={{ scale: 0.55, rotateX: 18, y: 90, opacity: 0, filter: "blur(10px)" }}
-                animate={{ scale: 1, rotateX: 0, y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ scale: 0.6, rotateX: -12, y: 50, opacity: 0, filter: "blur(8px)" }}
-                transition={{ type: "spring", stiffness: 200, damping: 24 }}
-                className="w-full rounded-2xl border border-white/15 shadow-[0_40px_120px_rgba(0,0,0,0.7)]"
-                style={{ transformOrigin: "center 70%" }}
-              />
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mt-4 flex items-center justify-between"
-              >
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/70">{lightbox.name}</span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">Clic para cerrar</span>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

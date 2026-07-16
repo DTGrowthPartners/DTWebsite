@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Target, MessageCircle, BarChart3, Sparkles, Search, Workflow, Bot } from "lucide-react";
+import { Target, MessageCircle, BarChart3, Sparkles, Search, Workflow } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
@@ -29,7 +29,7 @@ const AGENT_SLOTS: Array<[number, number]> = [
 const ORBIT_RADII = [145, 240];
 const ORBIT_DURATIONS = ["70s", "70s"];
 
-const AgentsOrbit = ({ names }: { names: string[] }) => {
+const AgentsOrbit = ({ names, humans }: { names: string[]; humans: { img: string; name: string }[] }) => {
   const { t } = useLanguage();
   return (
     <div className="relative flex items-center justify-center h-[400px] sm:h-[560px] overflow-visible">
@@ -99,14 +99,25 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="liquid-glass-strong rounded-full w-32 h-32 flex flex-col items-center justify-center text-center"
+          className="liquid-glass-strong rounded-full w-36 h-36 flex flex-col items-center justify-center text-center"
         >
-          <Bot className="h-4 w-4 text-[#26BDF0] mb-0.5" strokeWidth={1.5} />
-          <div className="font-heading font-medium text-white text-4xl leading-none">
-            <AnimatedCounter value={6} duration={1.4} />
+          {/* Núcleo humano: los agentes orbitan alrededor del equipo */}
+          <div className="flex -space-x-2.5">
+            {humans.map((h) => (
+              <img
+                key={h.name}
+                src={h.img}
+                alt={h.name}
+                className="w-9 h-9 rounded-full object-cover border-2 border-[#0a0918]"
+                loading="lazy"
+              />
+            ))}
           </div>
-          <div className="text-[11px] text-white font-body mt-1">{t("team.agentsCenter")}</div>
-          <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/50 mt-0.5">
+          <div className="mt-1.5 font-heading font-medium text-white text-2xl leading-none flex items-baseline justify-center gap-0.5">
+            +<AnimatedCounter value={6} duration={1.4} />
+          </div>
+          <div className="text-[10px] text-white font-body mt-0.5">{t("team.agentsCenter")}</div>
+          <div className="font-mono text-[7px] uppercase tracking-[0.16em] text-white/50 mt-0.5">
             {t("team.agentsCenterSub")}
           </div>
         </motion.div>
@@ -151,8 +162,12 @@ const TeamSection = () => {
           {t("team.subtitle")}
         </p>
 
+        {/* Un solo bloque: humanos (izquierda) + agentes IA orbitando (derecha).
+            El núcleo de la órbita son las caras del equipo: un solo equipo. */}
+        <div className="mt-14 grid gap-4 lg:grid-cols-2 lg:items-center">
+        <div>
         {/* Móvil: abanico de cartas (superpuestas y rotadas). Desktop: grilla de 3. */}
-        <div className="mt-16 max-w-4xl flex items-end justify-center sm:grid sm:grid-cols-3 sm:gap-6 sm:items-stretch">
+        <div className="mt-2 flex items-end justify-center sm:grid sm:grid-cols-3 sm:gap-5 sm:items-stretch">
           {team.map((member, i) => (
             <div
               key={member.name}
@@ -196,7 +211,7 @@ const TeamSection = () => {
         </div>
 
         {/* Lectura de datos — contadores que cuentan al entrar en viewport */}
-        <div className="mt-16 pt-10 border-t border-white/10 flex flex-wrap gap-x-16 gap-y-8">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap gap-x-14 gap-y-8">
           {stats.map((stat) => (
             <div key={stat.labelKey}>
               <div className="font-heading font-medium text-white text-4xl md:text-5xl tracking-[-0.02em] leading-none">
@@ -206,17 +221,22 @@ const TeamSection = () => {
             </div>
           ))}
         </div>
+        </div>
 
-        {/* Agentes IA: la otra mitad del equipo */}
-        <div className="mt-24 text-center">
-          <h3 className="font-heading font-normal text-white text-3xl md:text-5xl tracking-[-0.024em]">
-            {t("team.agentsTitle")} <span className="font-semibold gradient-text">{t("team.agentsHighlight")}</span>
-          </h3>
-          <p className="mt-4 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
+        {/* Órbita: los agentes IA giran alrededor del núcleo humano */}
+        <div className="flex flex-col items-center">
+          <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50 text-center">
+            {t("team.agentsTitle")} <span className="text-[#26BDF0]">{t("team.agentsHighlight")}</span>
+          </span>
+          <AgentsOrbit
+            names={t("team.agents").split("|")}
+            humans={team.map((m) => ({ img: m.image, name: m.name }))}
+          />
+          <p className="mt-6 text-xs md:text-sm text-white/60 font-body font-light max-w-sm text-center">
             {t("team.agentsSubtitle")}
           </p>
         </div>
-        <AgentsOrbit names={t("team.agents").split("|")} />
+        </div>
       </div>
     </section>
   );
