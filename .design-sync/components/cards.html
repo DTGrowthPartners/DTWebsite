@@ -1,0 +1,58 @@
+<!-- @dsCard group="Components" name="Cards" subtitle="Servicio glass, equipo, stat" -->
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/pp-neue-montreal');
+@import url('https://fonts.cdnfonts.com/css/neue-machina');
+* { margin: 0; box-sizing: border-box; }
+body { background: #07060F; color: #F5F8FF; font-family: Manrope, Inter, sans-serif; padding: 28px; min-height: 100vh; }
+.heading { font-family: 'PP Neue Montreal', Inter, sans-serif; }
+.mono { font-family: 'Neue Machina', 'Space Mono', monospace; }
+.kicker { font-family: 'Neue Machina', 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.grid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.liquid-glass {
+  background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); position: relative; overflow: hidden;
+}
+.liquid-glass::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.liquid-glass-strong {
+  background: rgba(8,8,22,0.5); backdrop-filter: blur(50px) saturate(140%); -webkit-backdrop-filter: blur(50px) saturate(140%);
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15); position: relative; overflow: hidden;
+}
+.liquid-glass-strong::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.5) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.gradient-text { background: linear-gradient(100deg, #0F76D6 0%, #26BDF0 55%, #C2FBFF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+body { background: radial-gradient(70% 60% at 70% 30%, rgba(124,58,237,0.35), transparent 60%), #05060f; }
+</style></head><body>
+<div class="kicker">// Cards</div>
+<div class="grid">
+  <div class="liquid-glass-strong" style="border-radius:26px;padding:26px;width:330px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <span class="liquid-glass" style="border-radius:14px;width:46px;height:46px;display:flex;align-items:center;justify-content:center">⚡</span>
+      <span class="liquid-glass" style="border-radius:999px;padding:5px 12px;font-size:10px">ROI medible</span>
+    </div>
+    <div class="mono" style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:44px">01</div>
+    <div class="heading" style="font-size:34px;font-weight:500;letter-spacing:-0.024em;margin-top:4px">Meta Ads</div>
+    <p style="font-size:12px;font-weight:300;color:rgba(255,255,255,0.8);margin-top:8px">Campa&ntilde;as que generan leads y ventas reales.</p>
+    <div style="font-size:12px;font-weight:500;margin-top:14px">Ver servicio completo ↗</div>
+  </div>
+  <div class="liquid-glass" style="border-radius:20px;padding:16px;width:190px;text-align:center;background-color:rgba(10,9,24,0.8)">
+    <div style="width:100%;aspect-ratio:1;border-radius:12px;background:linear-gradient(135deg,#0F76D6,#26BDF0);display:flex;align-items:center;justify-content:center;font-size:40px">👤</div>
+    <div class="heading" style="font-size:18px;font-weight:500;margin-top:12px">Dairo Traslavi&ntilde;a</div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.6);margin-top:4px">Fundador &amp; CEO</div>
+  </div>
+  <div style="width:170px">
+    <div class="heading" style="font-size:40px;font-weight:500">+5M USD</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:6px">Ventas generadas</div>
+    <div style="height:1px;margin-top:12px;background:linear-gradient(90deg,transparent,rgba(15,118,214,0.6),transparent)"></div>
+  </div>
+</div>
+</body></html>

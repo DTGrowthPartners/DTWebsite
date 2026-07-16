@@ -1,0 +1,50 @@
+<!-- @dsCard group="Colors" name="Paleta de marca" subtitle="Azules DT, fondos y secundarios" -->
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/pp-neue-montreal');
+@import url('https://fonts.cdnfonts.com/css/neue-machina');
+* { margin: 0; box-sizing: border-box; }
+body { background: #07060F; color: #F5F8FF; font-family: Manrope, Inter, sans-serif; padding: 28px; min-height: 100vh; }
+.heading { font-family: 'PP Neue Montreal', Inter, sans-serif; }
+.mono { font-family: 'Neue Machina', 'Space Mono', monospace; }
+.kicker { font-family: 'Neue Machina', 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.grid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.liquid-glass {
+  background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); position: relative; overflow: hidden;
+}
+.liquid-glass::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.liquid-glass-strong {
+  background: rgba(8,8,22,0.5); backdrop-filter: blur(50px) saturate(140%); -webkit-backdrop-filter: blur(50px) saturate(140%);
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15); position: relative; overflow: hidden;
+}
+.liquid-glass-strong::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.5) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.gradient-text { background: linear-gradient(100deg, #0F76D6 0%, #26BDF0 55%, #C2FBFF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.swatch { width: 148px; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+.swatch .c { height: 76px; } .swatch .l { padding: 10px 12px; font-size: 11px; }
+.swatch .l b { display: block; font-size: 12px; } .swatch .l span { color: rgba(255,255,255,0.55); font-size: 10px; font-family: 'Space Mono', monospace; }
+</style></head><body>
+<div class="kicker">// Colores · DT Growth Partners</div>
+<div class="grid">
+  <div class="swatch"><div class="c" style="background:#0F76D6"></div><div class="l"><b>Electric</b><span>#0F76D6 · primary</span></div></div>
+  <div class="swatch"><div class="c" style="background:#26BDF0"></div><div class="l"><b>Cyan</b><span>#26BDF0 · accent</span></div></div>
+  <div class="swatch"><div class="c" style="background:#C2FBFF"></div><div class="l"><b>Ice</b><span>#C2FBFF</span></div></div>
+  <div class="swatch"><div class="c" style="background:#8A97AD"></div><div class="l"><b>Fog</b><span>#8A97AD · muted</span></div></div>
+  <div class="swatch"><div class="c" style="background:#7C3AED"></div><div class="l"><b>Purple</b><span>#7C3AED · aurora</span></div></div>
+  <div class="swatch"><div class="c" style="background:#A855F7"></div><div class="l"><b>Magenta</b><span>#A855F7 · aurora</span></div></div>
+  <div class="swatch"><div class="c" style="background:#000000"></div><div class="l"><b>Negro puro</b><span>#000 · hero/video</span></div></div>
+  <div class="swatch"><div class="c" style="background:#07060F"></div><div class="l"><b>Ink</b><span>#07060F · secciones</span></div></div>
+  <div class="swatch"><div class="c" style="background:hsl(260 87% 3%)"></div><div class="l"><b>P. profundo</b><span>hsl(260 87% 3%)</span></div></div>
+  <div class="swatch"><div class="c" style="background:#0B1220"></div><div class="l"><b>Surface</b><span>#0B1220 · cards</span></div></div>
+</div>
+</body></html>

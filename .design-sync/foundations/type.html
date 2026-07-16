@@ -1,0 +1,47 @@
+<!-- @dsCard group="Type" name="Tipografía" subtitle="PP Neue Montreal · Neue Machina · Manrope" -->
+<!doctype html><html><head><meta charset="utf-8"><style>@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.cdnfonts.com/css/pp-neue-montreal');
+@import url('https://fonts.cdnfonts.com/css/neue-machina');
+* { margin: 0; box-sizing: border-box; }
+body { background: #07060F; color: #F5F8FF; font-family: Manrope, Inter, sans-serif; padding: 28px; min-height: 100vh; }
+.heading { font-family: 'PP Neue Montreal', Inter, sans-serif; }
+.mono { font-family: 'Neue Machina', 'Space Mono', monospace; }
+.kicker { font-family: 'Neue Machina', 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+.grid { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 18px; }
+.liquid-glass {
+  background: rgba(255,255,255,0.01); background-blend-mode: luminosity;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); position: relative; overflow: hidden;
+}
+.liquid-glass::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.liquid-glass-strong {
+  background: rgba(8,8,22,0.5); backdrop-filter: blur(50px) saturate(140%); -webkit-backdrop-filter: blur(50px) saturate(140%);
+  box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15); position: relative; overflow: hidden;
+}
+.liquid-glass-strong::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 80%, rgba(255,255,255,0.5) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.gradient-text { background: linear-gradient(100deg, #0F76D6 0%, #26BDF0 55%, #C2FBFF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }</style></head><body>
+<div class="kicker">// Tipograf&iacute;a — tr&iacute;o Pangram</div>
+<div style="margin-top:22px">
+  <div class="kicker" style="color:#26BDF0">Principal · PP Neue Montreal (400 base + 600 bold selectivo, tracking -0.024em)</div>
+  <div class="heading" style="font-size:52px;font-weight:400;letter-spacing:-0.024em;line-height:1.02;margin-top:8px">Escalamos negocios<br>con <b style="font-weight:600" class="gradient-text">datos</b>, no suposiciones</div>
+</div>
+<div style="margin-top:26px">
+  <div class="kicker" style="color:#26BDF0">Acento · Neue Machina (kickers, labels, números)</div>
+  <div class="mono" style="font-size:12px;letter-spacing:0.25em;text-transform:uppercase;margin-top:8px;color:rgba(255,255,255,0.7)">// Servicios &nbsp;·&nbsp; 01 — 04 &nbsp;·&nbsp; ROAS 5.2X &nbsp;·&nbsp; TRABAJANDO 24/7</div>
+</div>
+<div style="margin-top:26px">
+  <div class="kicker" style="color:#26BDF0">Soporte · Manrope (300–600)</div>
+  <p style="font-size:15px;font-weight:300;max-width:520px;margin-top:8px;color:rgba(255,255,255,0.8)">Estrategias, tecnolog&iacute;a e IA aplicadas a empresas que buscan crecimiento sostenible y medible.</p>
+</div>
+<div class="kicker" style="margin-top:24px;color:rgba(255,255,255,0.35)">⚠ PP Neue Montreal y Neue Machina son comerciales (Pangram Pangram) — requieren licencia web en producción</div>
+</body></html>
