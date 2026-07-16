@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
 import heroVisual from "@/assets/hero-visual.jpg";
-import webVcc from "@/assets/webs/vcc.webp";
-import webBhk from "@/assets/webs/bhk.webp";
-import webAya from "@/assets/webs/aya.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import RotatingWord from "@/components/effects/RotatingWord";
@@ -130,29 +127,30 @@ const MotifAds = () => (
   </div>
 );
 
-// 02 · Desarrollo Web — abanico de mini-cards con webs reales que construimos
-const WEB_CARDS = [
-  { name: "BHK", tag: "E-commerce", img: webBhk, color: "#7C3AED", pos: "-rotate-[12deg] translate-y-5 -mr-9 z-0", dur: "6.5s", delay: "0s" },
-  { name: "VCC", tag: "Inmobiliaria", img: webVcc, color: "#0F76D6", pos: "z-10 -translate-y-1", dur: "5.5s", delay: "0.4s" },
-  { name: "Arismendy", tag: "Maquinaria", img: webAya, color: "#26BDF0", pos: "rotate-[10deg] translate-y-4 -ml-9 z-0", dur: "7s", delay: "0.8s" },
+// 02 · Desarrollo Web — constelación de tecnologías (tiles glass flotando)
+const TECH_LOGOS = [
+  { name: "React", src: "https://cdn.simpleicons.org/react/61DAFB" },
+  { name: "Python", src: "https://cdn.simpleicons.org/python/3776AB" },
+  { name: "Shopify", src: "https://cdn.simpleicons.org/shopify/7AB55C" },
+  { name: "WooCommerce", src: "https://cdn.simpleicons.org/woocommerce/96588A" },
+  { name: "Express.js", src: "https://cdn.simpleicons.org/express/FFFFFF" },
+  { name: "Node.js", src: "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
 ];
 
 const MotifBrowser = () => (
-  <div className="flex items-center justify-center -mt-10 md:-mt-16">
-    {WEB_CARDS.map((card) => (
-      <div key={card.name} className={`relative ${card.pos}`}>
-        <div
-          className="w-[118px] md:w-[136px] rounded-2xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.55)] animate-float"
-          style={{ animationDuration: card.dur, animationDelay: card.delay, background: card.color }}
-        >
-          <div className="px-3 pt-2 pb-1.5 leading-tight">
-            <span className="block text-[11px] font-semibold text-white font-body">{card.name}</span>
-            <span className="block text-[8px] text-white/80 font-body">{card.tag}</span>
-          </div>
-          <div className="m-1.5 mt-0.5 rounded-xl overflow-hidden bg-black/20">
-            <img src={card.img} alt={`Sitio web ${card.name} desarrollado por DT Growth Partners`} className="w-full h-[104px] md:h-[120px] object-cover object-top" loading="lazy" />
-          </div>
-        </div>
+  <div className="grid grid-cols-3 gap-4 md:gap-5 w-[240px] md:w-[280px]">
+    {TECH_LOGOS.map((tech, i) => (
+      <div
+        key={tech.name}
+        className={`flex flex-col items-center gap-1.5 animate-float ${i % 2 === 1 ? "translate-y-4" : ""}`}
+        style={{ animationDuration: `${5 + (i % 3)}s`, animationDelay: `${i * 0.35}s` }}
+      >
+        <span className="liquid-glass rounded-2xl w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
+          <img src={tech.src} alt={tech.name} className="w-7 h-7 md:w-8 md:h-8" loading="lazy" />
+        </span>
+        <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-white/60 whitespace-nowrap">
+          {tech.name}
+        </span>
       </div>
     ))}
   </div>

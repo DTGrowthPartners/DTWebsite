@@ -5,6 +5,9 @@ import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
+import webVcc from "@/assets/webs/vcc.webp";
+import webBhk from "@/assets/webs/bhk.webp";
+import webAya from "@/assets/webs/aya.webp";
 
 /**
  * Casos como filas editoriales (no tarjetas): métrica gigante con contador,
@@ -53,6 +56,11 @@ const CaseStudiesSection = () => {
       tags: ["Web Development", "B2B", "SEO"],
       mainMetric: "+320% cotizaciones",
       secondaryMetric: "3.1x conversión",
+      gallery: [
+        { img: webBhk, name: "BHK" },
+        { img: webVcc, name: "VCC" },
+        { img: webAya, name: "Arismendy" },
+      ],
     },
   ];
 
@@ -124,6 +132,25 @@ const CaseStudiesSection = () => {
                         </span>
                       ))}
                     </div>
+
+                    {/* Webs construidas: thumbnails horizontales en marco de cristal */}
+                    {"gallery" in c && c.gallery && (
+                      <div className="mt-6 flex flex-wrap items-center gap-3">
+                        {c.gallery.map((site) => (
+                          <div key={site.name} className="liquid-glass rounded-xl p-1.5 transition-transform duration-300 hover:-translate-y-1">
+                            <img
+                              src={site.img}
+                              alt={`Sitio web ${site.name} desarrollado por DT Growth Partners`}
+                              className="w-40 md:w-52 aspect-video object-cover object-top rounded-lg"
+                              loading="lazy"
+                            />
+                            <span className="block px-1 pt-1 pb-0.5 font-mono text-[8px] uppercase tracking-[0.15em] text-white/60">
+                              {site.name}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Expansor */}

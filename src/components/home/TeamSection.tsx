@@ -34,7 +34,7 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
         {ORBIT_RADII.map((r, orbit) => (
           <div
             key={`ring-${orbit}`}
-            className="absolute left-1/2 top-1/2 rounded-full border border-[#26BDF0]/20 animate-spin"
+            className="absolute left-1/2 top-1/2 rounded-full border border-[#26BDF0]/20 animate-spin z-20"
             style={{
               width: r * 2,
               height: r * 2,
@@ -88,13 +88,15 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
           </div>
         ))}
 
-        {/* Centro: contador de agentes */}
+        {/* Centro: contador de agentes. El wrapper centra (framer pisa los
+            translate del hijo con su transform inline, por eso van separados). */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.7 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass-strong rounded-full w-32 h-32 flex flex-col items-center justify-center text-center z-10"
+          className="liquid-glass-strong rounded-full w-32 h-32 flex flex-col items-center justify-center text-center"
         >
           <Bot className="h-4 w-4 text-[#26BDF0] mb-0.5" strokeWidth={1.5} />
           <div className="font-heading font-medium text-white text-4xl leading-none">
@@ -105,6 +107,7 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
             {t("team.agentsCenterSub")}
           </div>
         </motion.div>
+        </div>
       </div>
     </div>
   );
