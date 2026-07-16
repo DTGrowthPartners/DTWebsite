@@ -10,9 +10,10 @@ import stivenImg from "@/assets/equipo/stiven.png";
 const TeamSection = () => {
   const { t } = useLanguage();
 
+  // Dairo al centro: en móvil el abanico lo pone al frente; en desktop queda protagonista.
   const team = [
-    { name: "Dairo Traslaviña", role: "Fundador & CEO", image: dairoImg },
     { name: "Edgardo Meza", role: "Desarrollador Web", image: edgardoImg },
+    { name: "Dairo Traslaviña", role: "Fundador & CEO", image: dairoImg },
     { name: "Stiven Antequera", role: "Desarrollo & Tecnología", image: stivenImg },
   ];
 
@@ -41,31 +42,44 @@ const TeamSection = () => {
           {t("team.subtitle")}
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-16 max-w-4xl">
+        {/* Móvil: abanico de cartas (superpuestas y rotadas). Desktop: grilla de 3. */}
+        <div className="mt-16 max-w-4xl flex items-end justify-center sm:grid sm:grid-cols-3 sm:gap-6 sm:items-stretch">
           {team.map((member, i) => (
-            <motion.div
+            <div
               key={member.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -12, rotate: i === 1 ? 0 : i === 0 ? -1.5 : 1.5, scale: 1.02 }}
-              className="group liquid-glass rounded-[1.25rem] p-5 flex flex-col items-center text-center cursor-default transition-shadow duration-500 hover:shadow-[0_24px_70px_rgba(15,118,214,0.3)]"
+              className={`sm:w-auto sm:max-w-none ${
+                i === 0
+                  ? "w-[34vw] max-w-[135px] -rotate-[8deg] translate-y-4 -mr-10 z-0"
+                  : i === 2
+                    ? "w-[34vw] max-w-[135px] rotate-[8deg] translate-y-4 -ml-10 z-0"
+                    : "w-[42vw] max-w-[165px] z-10"
+              } sm:rotate-0 sm:translate-y-0 sm:mx-0 sm:z-auto`}
             >
-              <div className="w-full aspect-square rounded-[0.9rem] overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={`${member.name} — ${member.role}`}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
-                  loading="lazy"
-                />
-              </div>
-              <h3 className="mt-5 font-heading text-white text-2xl md:text-3xl tracking-[-0.02em] leading-none">
-                {member.name}
-              </h3>
-              <p className="mt-2 text-xs text-white/70 font-body font-light">{member.role}</p>
-              <span className="mt-3 h-px w-0 group-hover:w-16 transition-all duration-500 bg-gradient-to-r from-[#0F76D6] to-[#26BDF0]" />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                whileHover={{ y: -12, rotate: i === 1 ? 0 : i === 0 ? -1.5 : 1.5, scale: 1.02 }}
+                className="group liquid-glass rounded-[1rem] sm:rounded-[1.25rem] p-2.5 sm:p-5 flex flex-col items-center text-center cursor-default transition-shadow duration-500 hover:shadow-[0_24px_70px_rgba(15,118,214,0.3)] bg-[#0a0918]/80"
+              >
+                <div className="w-full aspect-square rounded-[0.7rem] sm:rounded-[0.9rem] overflow-hidden">
+                  <img
+                    src={member.image}
+                    alt={`${member.name} — ${member.role}`}
+                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.07]"
+                    loading="lazy"
+                  />
+                </div>
+                <h3 className="mt-2.5 sm:mt-5 font-heading text-white text-xs sm:text-2xl md:text-3xl tracking-[-0.02em] leading-tight sm:leading-none">
+                  {member.name}
+                </h3>
+                <p className="mt-1 sm:mt-2 text-[9px] sm:text-xs text-white/70 font-body font-light leading-tight">
+                  {member.role}
+                </p>
+                <span className="hidden sm:block mt-3 h-px w-0 group-hover:w-16 transition-all duration-500 bg-gradient-to-r from-[#0F76D6] to-[#26BDF0]" />
+              </motion.div>
+            </div>
           ))}
         </div>
 

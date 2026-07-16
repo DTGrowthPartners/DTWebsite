@@ -60,9 +60,14 @@ const HeroSection = () => {
               {word}
             </motion.span>
           ))}
+          {/* En móvil, la palabra rotativa vive sola en su renglón: los saltos
+              forzados evitan que el resto del titular se reacomode al cambiar
+              entre palabras cortas y largas. */}
+          <span aria-hidden className="basis-full h-0 sm:hidden" />
           <motion.span {...wordEnter(beforeWords.length)} className="inline-block mr-[0.26em]">
             <RotatingWord words={rotatingWords} className="font-semibold" innerClassName="gradient-text" />,
           </motion.span>
+          <span aria-hidden className="basis-full h-0 sm:hidden" />
           {afterWords.map((word, i) => (
             <motion.span
               key={`a-${i}`}
