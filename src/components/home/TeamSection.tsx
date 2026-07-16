@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Target, MessageCircle, BarChart3, Sparkles, Search, Workflow, Bot } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
@@ -6,6 +7,108 @@ import AnimatedCounter from "@/components/animations/AnimatedCounter";
 import dairoImg from "@/assets/equipo/dairo.png";
 import edgardoImg from "@/assets/equipo/edgardo.png";
 import stivenImg from "@/assets/equipo/stiven.png";
+
+/**
+ * Órbita de agentes IA: dos anillos girando en sentidos opuestos con 6 nodos
+ * (contra-rotados para mantenerse derechos) alrededor de un contador central.
+ */
+const AGENT_ICONS = [Target, MessageCircle, BarChart3, Sparkles, Search, Workflow];
+// [órbita (0=interna, 1=externa), ángulo inicial en grados]
+const AGENT_SLOTS: Array<[number, number]> = [
+  [0, 90],
+  [0, 270],
+  [1, 20],
+  [1, 110],
+  [1, 200],
+  [1, 290],
+];
+const ORBIT_RADII = [115, 215];
+const ORBIT_DURATIONS = ["50s", "80s"];
+
+const AgentsOrbit = ({ names }: { names: string[] }) => {
+  const { t } = useLanguage();
+  return (
+    <div className="relative flex items-center justify-center h-[400px] sm:h-[560px] overflow-visible">
+      <div className="relative w-[560px] h-[560px] shrink-0 scale-[0.62] sm:scale-100">
+        {/* Anillos por órbita, girando en sentidos opuestos */}
+        {ORBIT_RADII.map((r, orbit) => (
+          <div
+            key={`ring-${orbit}`}
+            className="absolute left-1/2 top-1/2 rounded-full border border-[#26BDF0]/20 animate-spin"
+            style={{
+              width: r * 2,
+              height: r * 2,
+              marginLeft: -r,
+              marginTop: -r,
+              animationDuration: ORBIT_DURATIONS[orbit],
+              animationDirection: orbit === 0 ? "normal" : "reverse",
+            }}
+          >
+            {/* Destello del anillo */}
+            <div className="absolute -top-[2px] left-1/2 w-16 h-1 -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-[#26BDF0]/80 to-transparent blur-[1px]" />
+
+            {/* Nodos de esta órbita */}
+            {AGENT_SLOTS.map(([o, angle], i) => {
+              if (o !== orbit) return null;
+              const Icon = AGENT_ICONS[i];
+              return (
+                <div
+                  key={i}
+                  className="absolute left-1/2 top-1/2"
+                  style={{ transform: `rotate(${angle}deg) translateX(${r}px)` }}
+                >
+                  {/* Contra-rotación: primero deshace el ángulo fijo, luego el giro del anillo */}
+                  <div style={{ transform: `rotate(${-angle}deg)` }}>
+                    <div
+                      className="animate-spin"
+                      style={{
+                        animationDuration: ORBIT_DURATIONS[orbit],
+                        animationDirection: orbit === 0 ? "reverse" : "normal",
+                      }}
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.3, filter: "blur(6px)" }}
+                        whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.5 + i * 0.18, ease: [0.16, 1, 0.3, 1] }}
+                        className="-translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 w-32 -ml-16 -mt-8"
+                      >
+                        <span className="liquid-glass rounded-2xl w-14 h-14 flex items-center justify-center shadow-[0_0_30px_rgba(15,118,214,0.35)]">
+                          <Icon className="h-6 w-6 text-white" strokeWidth={1.5} />
+                        </span>
+                        <span className="liquid-glass rounded-full px-2.5 py-1 text-[10px] leading-tight text-white/90 font-body text-center whitespace-nowrap bg-black/40">
+                          {names[i]}
+                        </span>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+
+        {/* Centro: contador de agentes */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.7 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass-strong rounded-full w-40 h-40 flex flex-col items-center justify-center text-center z-10"
+        >
+          <Bot className="h-5 w-5 text-[#26BDF0] mb-1" strokeWidth={1.5} />
+          <div className="font-heading font-medium text-white text-5xl leading-none">
+            <AnimatedCounter value={6} duration={1.4} />
+          </div>
+          <div className="text-xs text-white font-body mt-1">{t("team.agentsCenter")}</div>
+          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mt-0.5">
+            {t("team.agentsCenterSub")}
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
 
 const TeamSection = () => {
   const { t } = useLanguage();
@@ -94,6 +197,17 @@ const TeamSection = () => {
             </div>
           ))}
         </div>
+
+        {/* Agentes IA: la otra mitad del equipo */}
+        <div className="mt-24 text-center">
+          <h3 className="font-heading font-normal text-white text-3xl md:text-5xl tracking-[-0.024em]">
+            {t("team.agentsTitle")} <span className="font-semibold gradient-text">{t("team.agentsHighlight")}</span>
+          </h3>
+          <p className="mt-4 text-sm md:text-base text-white/80 font-body font-light max-w-xl mx-auto">
+            {t("team.agentsSubtitle")}
+          </p>
+        </div>
+        <AgentsOrbit names={t("team.agents").split("|")} />
       </div>
     </section>
   );

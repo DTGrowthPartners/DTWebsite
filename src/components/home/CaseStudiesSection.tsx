@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { TrendingUp, ShoppingCart, Users, ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { TrendingUp, ShoppingCart, Users, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
+import AnimatedCounter from "@/components/animations/AnimatedCounter";
 
+/**
+ * Casos como filas editoriales (no tarjetas): métrica gigante con contador,
+ * cliente + descripción, tags y detalle expandible por fila.
+ */
 const CaseStudiesSection = () => {
   const { t } = useLanguage();
-  const [expandedCase, setExpandedCase] = useState<number | null>(null);
+  const [expanded, setExpanded] = useState<number | null>(null);
 
   const cases = [
     {
@@ -14,7 +20,7 @@ const CaseStudiesSection = () => {
       num: "01",
       clientKey: "cases.ecommerce",
       industryKey: "cases.fashionIndustry",
-      metric: "$250K",
+      counter: { value: 250, prefix: "$", suffix: "K" },
       metricLabel: "USD en ventas generadas",
       improvement: "ROI 4.2x",
       descKey: "cases.ecommerceDesc",
@@ -27,7 +33,7 @@ const CaseStudiesSection = () => {
       num: "02",
       clientKey: "cases.clinic",
       industryKey: "cases.healthIndustry",
-      metric: "$350M",
+      counter: { value: 350, prefix: "$", suffix: "M" },
       metricLabel: "COP en ventas generadas",
       improvement: "ROAS 5.2x",
       descKey: "cases.clinicDesc",
@@ -40,7 +46,7 @@ const CaseStudiesSection = () => {
       num: "03",
       clientKey: "cases.localRetail",
       industryKey: "cases.webIndustry",
-      metric: "+320%",
+      counter: { value: 320, prefix: "+", suffix: "%" },
       metricLabel: "más cotizaciones",
       improvement: "3.1x conversión",
       descKey: "cases.localRetailDesc",
@@ -68,88 +74,96 @@ const CaseStudiesSection = () => {
           {t("cases.subtitle")}
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-          {cases.map((caseStudy, index) => {
-            const Icon = caseStudy.icon;
-            const isExpanded = expandedCase === index;
+        {/* Filas editoriales */}
+        <div className="mt-16 border-t border-white/10">
+          {cases.map((c, index) => {
+            const Icon = c.icon;
+            const isOpen = expanded === index;
             return (
-              <div
-                key={caseStudy.num}
-                className="liquid-glass rounded-[1.25rem] p-6 md:p-7 flex flex-col min-h-[380px]"
+              <motion.div
+                key={c.num}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="group border-b border-white/10"
               >
-                {/* Cabecera: icono + industria */}
-                <div className="flex items-start justify-between gap-4">
-                  <div className="liquid-glass rounded-[0.75rem] w-11 h-11 flex items-center justify-center shrink-0">
-                    <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
-                  </div>
-                  <span className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
-                    {t(caseStudy.industryKey)}
-                  </span>
-                </div>
-
-                {/* Métrica protagonista */}
-                <div className="mt-8">
-                  <span className="font-mono text-xs text-white/50">{caseStudy.num}</span>
-                  <div className="mt-1 font-heading text-white text-5xl md:text-6xl tracking-[-0.02em] leading-none">
-                    {caseStudy.metric}
-                  </div>
-                  <div className="text-xs text-white font-body font-light mt-2">{caseStudy.metricLabel}</div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mt-1">
-                    {caseStudy.improvement}
-                  </div>
-                </div>
-
-                <div className="flex-1" />
-
-                {/* Cliente + descripción */}
-                <div className="mt-6">
-                  <h3 className="text-white font-body font-medium">{t(caseStudy.clientKey)}</h3>
-                  <p className="mt-2 text-sm text-white/80 font-body font-light leading-snug">
-                    {t(caseStudy.descKey)}
-                  </p>
-                </div>
-
-                {/* Detalle expandible (útil en presentaciones) */}
                 <button
-                  onClick={() => setExpandedCase(isExpanded ? null : index)}
-                  className="mt-5 flex items-center justify-between w-full text-sm font-medium text-white font-body hover:opacity-80 transition-opacity"
+                  onClick={() => setExpanded(isOpen ? null : index)}
+                  className="w-full text-left py-10 md:py-12 grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr_auto] gap-6 md:gap-10 items-center transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
                 >
-                  <span>{isExpanded ? "Ocultar detalles" : "Ver detalles completos"}</span>
-                  {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  {/* Métrica protagonista */}
+                  <div>
+                    <span className="font-mono text-xs text-white/40">{c.num}</span>
+                    <div className="mt-1 font-heading font-medium text-white text-6xl md:text-7xl tracking-[-0.02em] leading-none transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#0F76D6] group-hover:via-[#26BDF0] group-hover:to-[#C2FBFF]">
+                      <AnimatedCounter value={c.counter.value} prefix={c.counter.prefix} suffix={c.counter.suffix} duration={1.6} />
+                    </div>
+                    <div className="text-xs text-white/70 font-body mt-2">{c.metricLabel}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#26BDF0] mt-1">
+                      {c.improvement}
+                    </div>
+                  </div>
+
+                  {/* Cliente + descripción */}
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-3">
+                      <span className="liquid-glass rounded-lg w-9 h-9 flex items-center justify-center shrink-0">
+                        <Icon className="h-4 w-4 text-white" strokeWidth={1.5} />
+                      </span>
+                      <h3 className="font-heading font-medium text-white text-xl md:text-2xl tracking-[-0.01em]">
+                        {t(c.clientKey)}
+                      </h3>
+                    </div>
+                    <p className="mt-3 text-sm text-white/75 font-body font-light leading-relaxed max-w-2xl">
+                      {t(c.descKey)}
+                    </p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {c.tags.map((tag) => (
+                        <span key={tag} className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Expansor */}
+                  <div className="hidden md:flex items-center justify-center liquid-glass rounded-full w-12 h-12 shrink-0">
+                    <ChevronDown className={`w-5 h-5 text-white transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                  </div>
                 </button>
 
-                {isExpanded && (
-                  <div className="mt-4 space-y-2 text-sm text-white/80 font-body font-light border-t border-white/10 pt-4">
-                    <div>
-                      <span className="text-white font-medium">Industria: </span>
-                      {t(caseStudy.industryKey)}
-                    </div>
-                    <div>
-                      <span className="text-white font-medium">Qué hicimos: </span>
-                      {t(caseStudy.descKey)}
-                    </div>
-                    <div>
-                      <span className="text-white font-medium">Métrica principal: </span>
-                      {caseStudy.mainMetric}
-                    </div>
-                    <div>
-                      <span className="text-white font-medium">Métrica secundaria: </span>
-                      {caseStudy.secondaryMetric}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex flex-wrap gap-1.5 mt-5">
-                  {caseStudy.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="liquid-glass rounded-full px-3 py-1 text-[11px] text-white/90 font-body whitespace-nowrap"
+                {/* Detalle expandible (modo presentación) */}
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden"
                     >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+                      <div className="pb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 text-sm text-white/80 font-body font-light">
+                        <div className="liquid-glass rounded-xl p-4">
+                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Industria</span>
+                          {t(c.industryKey)}
+                        </div>
+                        <div className="liquid-glass rounded-xl p-4">
+                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Qué hicimos</span>
+                          {t(c.descKey)}
+                        </div>
+                        <div className="liquid-glass rounded-xl p-4">
+                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Métrica principal</span>
+                          {c.mainMetric}
+                        </div>
+                        <div className="liquid-glass rounded-xl p-4">
+                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mb-1.5">Métrica secundaria</span>
+                          {c.secondaryMetric}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
         </div>
