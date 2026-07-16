@@ -127,32 +127,43 @@ const MotifAds = () => (
   </div>
 );
 
-// 02 · Desarrollo Web — constelación de tecnologías (tiles glass flotando)
-const TECH_LOGOS = [
-  { name: "React", src: "https://cdn.simpleicons.org/react/61DAFB" },
-  { name: "Python", src: "https://cdn.simpleicons.org/python/3776AB" },
-  { name: "Shopify", src: "https://cdn.simpleicons.org/shopify/7AB55C" },
-  { name: "WooCommerce", src: "https://cdn.simpleicons.org/woocommerce/96588A" },
-  { name: "Express.js", src: "https://cdn.simpleicons.org/express/FFFFFF" },
-  { name: "Node.js", src: "https://cdn.simpleicons.org/nodedotjs/5FA04E" },
-];
-
+// 02 · Desarrollo Web — editor de código + terminal con deploy en vivo
 const MotifBrowser = () => (
-  <div className="grid grid-cols-3 gap-4 md:gap-5 w-[240px] md:w-[280px]">
-    {TECH_LOGOS.map((tech, i) => (
-      <div
-        key={tech.name}
-        className={`flex flex-col items-center gap-1.5 animate-float ${i % 2 === 1 ? "translate-y-4" : ""}`}
-        style={{ animationDuration: `${5 + (i % 3)}s`, animationDelay: `${i * 0.35}s` }}
-      >
-        <span className="liquid-glass rounded-2xl w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
-          <img src={tech.src} alt={tech.name} className="w-7 h-7 md:w-8 md:h-8" loading="lazy" />
-        </span>
-        <span className="font-mono text-[8px] uppercase tracking-[0.15em] text-white/60 whitespace-nowrap">
-          {tech.name}
-        </span>
+  <div className="w-[250px] md:w-[300px] animate-float" style={{ animationDuration: "6s" }}>
+    {/* Editor */}
+    <div className="liquid-glass rounded-xl overflow-hidden bg-black/40">
+      <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/10">
+        <span className="w-2 h-2 rounded-full bg-white/40" />
+        <span className="w-2 h-2 rounded-full bg-white/25" />
+        <span className="w-2 h-2 rounded-full bg-white/15" />
+        <span className="ml-2 font-mono text-[8px] tracking-[0.1em] text-white/50">tu-negocio.tsx</span>
       </div>
-    ))}
+      <pre className="p-3 text-[9px] md:text-[10px] leading-[1.7] font-mono text-white/80 whitespace-pre">
+        <span className="text-[#26BDF0]">const</span> <span className="text-white">web</span> ={" "}
+        <span className="text-[#26BDF0]">await</span> <span className="text-[#C2FBFF]">dt</span>.
+        <span className="text-[#C2FBFF]">construir</span>({"{"}
+        {"\n"}  objetivo: <span className="text-[#7dd3fc]">"convertir"</span>,
+        {"\n"}  stack: [<span className="text-[#7dd3fc]">"react"</span>, <span className="text-[#7dd3fc]">"node"</span>],
+        {"\n"}  seo: <span className="text-[#26BDF0]">true</span>,
+        {"\n"}{"}"});
+      </pre>
+    </div>
+
+    {/* Terminal */}
+    <div className="liquid-glass rounded-xl overflow-hidden bg-black/50 mt-2.5 -ml-4 md:-ml-6 mr-4 md:mr-6">
+      <div className="px-3 py-2 font-mono text-[9px] md:text-[10px] leading-[1.8] text-white/75">
+        <div>
+          <span className="text-[#26BDF0]">$</span> npm run deploy
+        </div>
+        <div className="animate-pulse" style={{ animationDuration: "2.6s" }}>
+          <span className="text-[#26BDF0]">✓</span> build <span className="text-white/45">8.2s</span>
+        </div>
+        <div>
+          <span className="text-[#26BDF0]">✓</span> live → <span className="text-[#C2FBFF]">tunegocio.com</span>
+          <span className="motif-caret inline-block w-[6px] h-[11px] bg-[#26BDF0] align-middle ml-1.5" />
+        </div>
+      </div>
+    </div>
   </div>
 );
 

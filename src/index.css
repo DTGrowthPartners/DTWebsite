@@ -452,6 +452,15 @@ All colors MUST be HSL.
   animation: node-pulse 2s ease-in-out infinite;
 }
 
+/* Caret de terminal */
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.motif-caret {
+  animation: caret-blink 1.1s step-end infinite;
+}
+
 /* Parpadeo del robot */
 @keyframes bot-blink {
   0%, 90%, 100% { transform: scaleY(1); }
