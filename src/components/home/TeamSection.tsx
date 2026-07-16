@@ -22,7 +22,7 @@ const AGENT_SLOTS: Array<[number, number]> = [
   [1, 200],
   [1, 290],
 ];
-const ORBIT_RADII = [115, 215];
+const ORBIT_RADII = [145, 230];
 const ORBIT_DURATIONS = ["50s", "80s"];
 
 const AgentsOrbit = ({ names }: { names: string[] }) => {
@@ -94,14 +94,14 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass-strong rounded-full w-40 h-40 flex flex-col items-center justify-center text-center z-10"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass-strong rounded-full w-32 h-32 flex flex-col items-center justify-center text-center z-10"
         >
-          <Bot className="h-5 w-5 text-[#26BDF0] mb-1" strokeWidth={1.5} />
-          <div className="font-heading font-medium text-white text-5xl leading-none">
+          <Bot className="h-4 w-4 text-[#26BDF0] mb-0.5" strokeWidth={1.5} />
+          <div className="font-heading font-medium text-white text-4xl leading-none">
             <AnimatedCounter value={6} duration={1.4} />
           </div>
-          <div className="text-xs text-white font-body mt-1">{t("team.agentsCenter")}</div>
-          <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50 mt-0.5">
+          <div className="text-[11px] text-white font-body mt-1">{t("team.agentsCenter")}</div>
+          <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/50 mt-0.5">
             {t("team.agentsCenterSub")}
           </div>
         </motion.div>
