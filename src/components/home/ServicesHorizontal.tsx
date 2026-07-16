@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
 import heroVisual from "@/assets/hero-visual.jpg";
+import webVcc from "@/assets/webs/vcc.webp";
+import webBhk from "@/assets/webs/bhk.webp";
+import webAya from "@/assets/webs/aya.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import RotatingWord from "@/components/effects/RotatingWord";
@@ -127,24 +130,31 @@ const MotifAds = () => (
   </div>
 );
 
-// 02 · Desarrollo Web — ventana de navegador con esqueleto de página
+// 02 · Desarrollo Web — abanico de mini-cards con webs reales que construimos
+const WEB_CARDS = [
+  { name: "BHK", tag: "E-commerce", img: webBhk, color: "#7C3AED", pos: "-rotate-[12deg] translate-y-5 -mr-9 z-0", dur: "6.5s", delay: "0s" },
+  { name: "VCC", tag: "Inmobiliaria", img: webVcc, color: "#0F76D6", pos: "z-10 -translate-y-1", dur: "5.5s", delay: "0.4s" },
+  { name: "Arismendy", tag: "Maquinaria", img: webAya, color: "#26BDF0", pos: "rotate-[10deg] translate-y-4 -ml-9 z-0", dur: "7s", delay: "0.8s" },
+];
+
 const MotifBrowser = () => (
-  <div className="w-56 md:w-72 liquid-glass rounded-xl animate-float" style={{ animationDuration: "6s" }}>
-    <div className="flex items-center gap-1.5 px-3.5 py-2.5 border-b border-white/10">
-      <span className="w-2 h-2 rounded-full bg-white/40" />
-      <span className="w-2 h-2 rounded-full bg-white/25" />
-      <span className="w-2 h-2 rounded-full bg-white/15" />
-      <span className="ml-2 h-3.5 flex-1 max-w-[110px] rounded-full bg-white/10" />
-    </div>
-    <div className="p-4">
-      <div className="h-2.5 w-3/4 rounded-full bg-white/20 animate-pulse" style={{ animationDuration: "2.4s" }} />
-      <div className="mt-2 h-2.5 w-1/2 rounded-full bg-white/10 animate-pulse" style={{ animationDuration: "2.4s", animationDelay: "0.3s" }} />
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        <div className="h-12 rounded-lg bg-white/[0.07] animate-pulse" style={{ animationDuration: "3s", animationDelay: "0.5s" }} />
-        <div className="h-12 rounded-lg bg-white/[0.07] animate-pulse" style={{ animationDuration: "3s", animationDelay: "0.8s" }} />
+  <div className="flex items-center justify-center -mt-10 md:-mt-16">
+    {WEB_CARDS.map((card) => (
+      <div key={card.name} className={`relative ${card.pos}`}>
+        <div
+          className="w-[118px] md:w-[136px] rounded-2xl overflow-hidden shadow-[0_18px_50px_rgba(0,0,0,0.55)] animate-float"
+          style={{ animationDuration: card.dur, animationDelay: card.delay, background: card.color }}
+        >
+          <div className="px-3 pt-2 pb-1.5 leading-tight">
+            <span className="block text-[11px] font-semibold text-white font-body">{card.name}</span>
+            <span className="block text-[8px] text-white/80 font-body">{card.tag}</span>
+          </div>
+          <div className="m-1.5 mt-0.5 rounded-xl overflow-hidden bg-black/20">
+            <img src={card.img} alt={`Sitio web ${card.name} desarrollado por DT Growth Partners`} className="w-full h-[104px] md:h-[120px] object-cover object-top" loading="lazy" />
+          </div>
+        </div>
       </div>
-      <div className="mt-3 h-7 w-24 rounded-full bg-gradient-to-r from-[#0F76D6]/70 to-[#26BDF0]/70 animate-pulse" style={{ animationDuration: "2s" }} />
-    </div>
+    ))}
   </div>
 );
 
