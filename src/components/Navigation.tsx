@@ -152,12 +152,12 @@ const Navigation = () => {
                     : "opacity-0 -translate-y-2 pointer-events-none"
                 }`}
               >
-                <div className="bg-[#07060F]/55 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[280px]">
+                <div className="bg-[#07060F]/70 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[280px]">
                   {/* Meta Ads */}
                   <Link
                     to="/servicios/meta-ads"
                     onClick={closeAll}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 group"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                       <TrendingUp className="w-4 h-4 text-primary" />
@@ -169,7 +169,7 @@ const Navigation = () => {
                   <Link
                     to="/servicios/desarrollo-web"
                     onClick={closeAll}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 group"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                       <Code className="w-4 h-4 text-primary" />
@@ -181,7 +181,7 @@ const Navigation = () => {
                   <Link
                     to="/servicios/sistemas-automatizaciones"
                     onClick={closeAll}
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 group"
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
                   >
                     <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                       <Zap className="w-4 h-4 text-primary" />
@@ -198,7 +198,7 @@ const Navigation = () => {
                     onMouseEnter={handleSubMouseEnter}
                     onMouseLeave={handleSubMouseLeave}
                   >
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 group cursor-pointer">
+                    <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group cursor-pointer">
                       <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                         <Megaphone className="w-4 h-4 text-primary" />
                       </div>
@@ -214,7 +214,7 @@ const Navigation = () => {
                           : "opacity-0 -translate-x-2 pointer-events-none"
                       }`}
                     >
-                      <div className="bg-[#07060F]/55 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[250px] max-h-[70vh] overflow-y-auto">
+                      <div className="bg-[#07060F]/70 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[250px] max-h-[70vh] overflow-y-auto">
                         {/* Link to main pillar page */}
                         <Link
                           to="/servicios/publicidad-digital-cartagena"
@@ -237,7 +237,7 @@ const Navigation = () => {
                               key={item.path}
                               to={item.path}
                               onClick={closeAll}
-                              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-primary/10 transition-all duration-200 group"
+                              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
                             >
                               <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center group-hover:bg-primary/20 transition-colors">
                                 <Icon className="w-3.5 h-3.5 text-primary" />
@@ -306,7 +306,7 @@ const Navigation = () => {
               <a
                 href="/"
                 onClick={(e) => handleNavClick(e, "/")}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-white/95 hover:text-white transition-colors"
               >
                 {t("nav.home")}
               </a>
@@ -314,7 +314,7 @@ const Navigation = () => {
               {/* Services Accordion (Mobile) */}
               <div>
                 <button
-                  className="flex items-center justify-between w-full text-muted-foreground hover:text-foreground transition-colors"
+                  className="flex items-center justify-between w-full text-white/95 hover:text-white transition-colors"
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                 >
                   {t("nav.services")}
@@ -325,15 +325,15 @@ const Navigation = () => {
                 {mobileServicesOpen && (
                   <div className="mt-2 ml-4 flex flex-col space-y-3 animate-fade-in">
                     {/* Direct services */}
-                    <Link to="/servicios/meta-ads" onClick={closeAll} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/servicios/meta-ads" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><TrendingUp className="w-3.5 h-3.5 text-primary" /></div>
                       <span>{t("nav.services.metaAds")}</span>
                     </Link>
-                    <Link to="/servicios/desarrollo-web" onClick={closeAll} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/servicios/desarrollo-web" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Code className="w-3.5 h-3.5 text-primary" /></div>
                       <span>{t("nav.services.webDev")}</span>
                     </Link>
-                    <Link to="/servicios/sistemas-automatizaciones" onClick={closeAll} className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/servicios/sistemas-automatizaciones" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Zap className="w-3.5 h-3.5 text-primary" /></div>
                       <span>{t("nav.services.automation")}</span>
                     </Link>
@@ -341,7 +341,7 @@ const Navigation = () => {
                     {/* Publicidad Digital sub-accordion */}
                     <div className="border-t border-border/20 pt-2">
                       <button
-                        className="flex items-center justify-between w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
+                        className="flex items-center justify-between w-full text-sm text-white/95 hover:text-white transition-colors"
                         onClick={() => setMobileSubMenuOpen(!mobileSubMenuOpen)}
                       >
                         <div className="flex items-center gap-3">
@@ -367,7 +367,7 @@ const Navigation = () => {
                                 key={item.path}
                                 to={item.path}
                                 onClick={closeAll}
-                                className="flex items-center gap-2.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                                className="flex items-center gap-2.5 text-xs text-white/95 hover:text-white transition-colors"
                               >
                                 <Icon className="w-3 h-3 text-primary/70" />
                                 <span>{item.name}</span>
@@ -387,7 +387,7 @@ const Navigation = () => {
                   key={link.name}
                   href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
-                  className={`relative text-muted-foreground hover:text-foreground transition-colors ${link.name === "DT-OS" ? "animate-pulse gradient-text font-bold" : ""}`}
+                  className={`relative text-white/95 hover:text-white transition-colors ${link.name === "DT-OS" ? "animate-pulse gradient-text font-bold" : ""}`}
                 >
                   {link.name}
                   {link.name === "DT-OS" && (
