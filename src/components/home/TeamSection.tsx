@@ -14,16 +14,19 @@ import stivenImg from "@/assets/equipo/stiven.png";
  */
 const AGENT_ICONS = [Target, MessageCircle, BarChart3, Sparkles, Search, Workflow];
 // [órbita (0=interna, 1=externa), ángulo inicial en grados]
+// Ambos anillos giran en la MISMA dirección y velocidad (rotación rígida):
+// la geometría relativa es constante y los nodos nunca se cruzan ni tapan.
+// Separación angular mínima entre órbitas: 45° → distancia mínima ~170px.
 const AGENT_SLOTS: Array<[number, number]> = [
   [0, 90],
   [0, 270],
-  [1, 20],
-  [1, 110],
-  [1, 200],
-  [1, 290],
+  [1, 45],
+  [1, 135],
+  [1, 225],
+  [1, 315],
 ];
-const ORBIT_RADII = [145, 230];
-const ORBIT_DURATIONS = ["50s", "80s"];
+const ORBIT_RADII = [145, 240];
+const ORBIT_DURATIONS = ["70s", "70s"];
 
 const AgentsOrbit = ({ names }: { names: string[] }) => {
   const { t } = useLanguage();
@@ -41,7 +44,6 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
               marginLeft: -r,
               marginTop: -r,
               animationDuration: ORBIT_DURATIONS[orbit],
-              animationDirection: orbit === 0 ? "normal" : "reverse",
             }}
           >
             {/* Destello del anillo */}
@@ -63,7 +65,7 @@ const AgentsOrbit = ({ names }: { names: string[] }) => {
                       className="animate-spin"
                       style={{
                         animationDuration: ORBIT_DURATIONS[orbit],
-                        animationDirection: orbit === 0 ? "reverse" : "normal",
+                        animationDirection: "reverse",
                       }}
                     >
                       <motion.div
