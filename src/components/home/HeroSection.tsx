@@ -50,19 +50,9 @@ const HeroSection = () => {
 
       {/* Contenido */}
       <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-4 pt-32 pb-10 text-center">
-        {/* Badge */}
-        <motion.div {...enter(0.4)}>
-          <div className="liquid-glass rounded-full flex items-center gap-3 pl-1.5 pr-4 py-1.5">
-            <span className="bg-white text-black rounded-full px-3 py-1 text-xs font-semibold font-body">
-              {t("hero.badgeChip")}
-            </span>
-            <span className="text-sm text-white/90 font-body">{t("hero.badgeText")}</span>
-          </div>
-        </motion.div>
-
         {/* Titular — entrada palabra por palabra + palabra rotativa en bold/degradado */}
         <h1
-          className="mt-8 max-w-5xl font-heading font-normal text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em]"
+          className="max-w-5xl font-heading font-normal text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em]"
           style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", rowGap: "0.08em" }}
         >
           {beforeWords.map((word, i) => (
@@ -87,7 +77,7 @@ const HeroSection = () => {
         {/* Subtítulo */}
         <motion.p
           {...enter(0.9)}
-          className="mt-6 text-sm md:text-base text-white max-w-2xl font-body font-light leading-tight"
+          className="mt-6 text-sm md:text-base text-white max-w-4xl font-body font-light leading-tight lg:whitespace-nowrap"
         >
           {t("hero.scaleDescription")}
         </motion.p>
