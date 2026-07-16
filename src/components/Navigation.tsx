@@ -152,7 +152,7 @@ const Navigation = () => {
                     : "opacity-0 -translate-y-2 pointer-events-none"
                 }`}
               >
-                <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)] p-2 min-w-[280px]">
+                <div className="bg-[#07060F]/55 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[280px]">
                   {/* Meta Ads */}
                   <Link
                     to="/servicios/meta-ads"
@@ -214,7 +214,7 @@ const Navigation = () => {
                           : "opacity-0 -translate-x-2 pointer-events-none"
                       }`}
                     >
-                      <div className="bg-card/95 backdrop-blur-xl border border-border/50 rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.4)] p-2 min-w-[250px] max-h-[70vh] overflow-y-auto">
+                      <div className="bg-[#07060F]/55 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[250px] max-h-[70vh] overflow-y-auto">
                         {/* Link to main pillar page */}
                         <Link
                           to="/servicios/publicidad-digital-cartagena"
