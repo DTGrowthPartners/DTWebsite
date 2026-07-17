@@ -63,7 +63,7 @@ const ContactFormSection = () => {
         try {
           widgetIdRef.current = window.grecaptcha.render(recaptchaRef.current, {
             sitekey: RECAPTCHA_SITE_KEY,
-            theme: 'light',
+            theme: 'dark',
             size: 'normal',
             callback: (token: string) => {
               setRecaptchaToken(token);
@@ -240,8 +240,8 @@ const ContactFormSection = () => {
   }
 
   const fieldCls =
-    "w-full bg-transparent border-0 border-b border-white/15 rounded-none px-0 py-3 text-base md:text-lg text-white font-body font-light placeholder:text-white/25 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-[#26BDF0] focus-visible:border-[#26BDF0] transition-colors duration-300";
-  const labelCls = "font-mono text-[9px] uppercase tracking-[0.22em] text-white/50";
+    "w-full h-12 bg-white/[0.06] border border-white/15 rounded-xl px-4 text-base text-white font-body font-light placeholder:text-white/30 hover:border-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-[#26BDF0]/70 focus-visible:border-[#26BDF0]/70 transition-colors duration-300";
+  const labelCls = "font-body text-[13px] font-medium text-white/75";
 
   return (
     <section id="contacto" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
@@ -310,7 +310,7 @@ const ContactFormSection = () => {
             </div>
             <div className="space-y-1.5 md:col-span-2">
               <label htmlFor="message" className={labelCls}>{t("contact.message")}</label>
-              <Textarea id="message" name="message" rows={3} value={formData.message} onChange={handleChange} placeholder={t("contact.messagePlaceholder")} className={`${fieldCls} resize-none min-h-[90px]`} />
+              <Textarea id="message" name="message" rows={3} value={formData.message} onChange={handleChange} placeholder={t("contact.messagePlaceholder")} className={`${fieldCls} h-auto py-3 resize-none min-h-[110px]`} />
             </div>
           </div>
 
@@ -336,7 +336,7 @@ const ContactFormSection = () => {
                 </>
               )}
             </Button>
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+            <span className="font-body text-xs text-white/40">
               {t("cta.noCommitment")} · {t("cta.free")}
             </span>
           </div>
