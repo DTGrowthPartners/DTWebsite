@@ -324,7 +324,7 @@ const ContactFormSection = () => {
             <Button
               type="submit"
               size="lg"
-              className="rounded-full bg-white text-black font-body font-medium px-10 h-13 hover:bg-white/90 transition-transform duration-300 hover:scale-[1.02] group"
+              className="rounded-full bg-white text-black font-body font-medium text-base px-10 h-14 hover:bg-white/90 transition-transform duration-300 hover:scale-[1.02] group"
               disabled={status === "sending"}
             >
               {status === "sending" ? (

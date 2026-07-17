@@ -44,12 +44,12 @@ const Row = ({
     {[...items, ...items, ...items].map((site, i) => (
       <div
         key={`${site.name}-${i}`}
-        className="relative w-[300px] h-[190px] md:w-[420px] md:h-[264px] rounded-2xl overflow-hidden border border-white/10 shrink-0 group"
+        className="relative h-[190px] md:h-[264px] rounded-2xl overflow-hidden border border-white/10 shrink-0 group"
       >
         <img
           src={site.img}
           alt={`Sitio web ${site.name} desarrollado por DT Growth Partners`}
-          className="w-full h-full object-cover object-top"
+          className="h-full w-auto max-w-none object-cover object-top"
           loading="lazy"
         />
         <span className="absolute bottom-2 left-2 liquid-glass rounded-full px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.15em] text-white/85 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
