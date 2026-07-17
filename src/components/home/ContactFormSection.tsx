@@ -239,6 +239,10 @@ const ContactFormSection = () => {
     );
   }
 
+  const fieldCls =
+    "w-full bg-transparent border-0 border-b border-white/15 rounded-none px-0 py-3 text-base md:text-lg text-white font-body font-light placeholder:text-white/25 focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-[#26BDF0] focus-visible:border-[#26BDF0] transition-colors duration-300";
+  const labelCls = "font-mono text-[9px] uppercase tracking-[0.22em] text-white/50";
+
   return (
     <section id="contacto" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
       <Aurora
@@ -248,199 +252,95 @@ const ContactFormSection = () => {
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-        {/* Encabezado alineado a la izquierda, como el resto de secciones */}
         <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
         <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
           {t("contact.title")} <RotatingWord words={t("contact.rotating").split("|")} interval={3300} className="font-semibold" />
         </h2>
+        <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+          {t("contact.subtitle")}
+        </p>
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-[1fr_1.7fr] items-start">
-          {/* Panel izquierdo: canales directos */}
-          <div className="flex flex-col gap-6">
-            <p className="text-sm md:text-base text-white/80 font-body font-light max-w-sm">
-              {t("contact.subtitle")}
-            </p>
-
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50">
-              {t("contact.directChannels")}
+        {/* Canales directos como chips horizontales */}
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> +57 300 718 9383
+          </a>
+          <a
+            href="mailto:info@dtgrowthpartners.com"
+            className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
+          >
+            <Mail className="h-4 w-4" strokeWidth={1.5} /> info@dtgrowthpartners.com
+          </a>
+          <span className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2.5 text-sm text-white/80 font-body">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#26BDF0] opacity-60" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#26BDF0]" />
             </span>
-
-            <div className="flex flex-col gap-3">
-              <a
-                href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group liquid-glass rounded-2xl p-4 flex items-center gap-4 transition-transform duration-300 hover:-translate-y-1"
-              >
-                <span className="liquid-glass rounded-xl w-11 h-11 flex items-center justify-center shrink-0">
-                  <MessageCircle className="h-5 w-5 text-white" strokeWidth={1.5} />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-medium text-white font-body">WhatsApp</span>
-                  <span className="block text-xs text-white/60 font-body truncate">+57 300 718 9383</span>
-                </span>
-              </a>
-
-              <a
-                href="mailto:info@dtgrowthpartners.com"
-                className="group liquid-glass rounded-2xl p-4 flex items-center gap-4 transition-transform duration-300 hover:-translate-y-1"
-              >
-                <span className="liquid-glass rounded-xl w-11 h-11 flex items-center justify-center shrink-0">
-                  <Mail className="h-5 w-5 text-white" strokeWidth={1.5} />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-sm font-medium text-white font-body">Email</span>
-                  <span className="block text-xs text-white/60 font-body truncate">info@dtgrowthpartners.com</span>
-                </span>
-              </a>
-            </div>
-
-            <div className="space-y-2.5 pt-2">
-              <div className="flex items-start gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45 leading-relaxed">
-                <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" strokeWidth={1.5} />
-                {t("footer.address")}
-              </div>
-              <div className="flex items-start gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-white/45 leading-relaxed">
-                <Clock className="h-3.5 w-3.5 shrink-0 mt-0.5" strokeWidth={1.5} />
-                {t("footer.hours")}
-              </div>
-            </div>
-
-            {/* Disponibilidad: punto pulsante */}
-            <div className="liquid-glass rounded-full self-start px-4 py-2 flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#26BDF0] opacity-60" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#26BDF0]" />
-              </span>
-              <span className="text-xs text-white/80 font-body">{t("contact.responseTime")}</span>
-            </div>
-          </div>
-
-          {/* Formulario */}
-          <div className="liquid-glass rounded-[1.5rem] p-7 md:p-10">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2.5">
-                  <label htmlFor="firstName" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                    {t("contact.firstName")} *
-                  </label>
-                  <Input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                  />
-                </div>
-                <div className="space-y-2.5">
-                  <label htmlFor="lastName" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                    {t("contact.lastName")} *
-                  </label>
-                  <Input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2.5">
-                  <label htmlFor="email" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                    {t("contact.email")} *
-                  </label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                  />
-                </div>
-                <div className="space-y-2.5">
-                  <label htmlFor="phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                    {t("contact.phone")}
-                  </label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2.5">
-                <label htmlFor="company" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                  {t("contact.company")}
-                </label>
-                <Input
-                  id="company"
-                  name="company"
-                  type="text"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="h-12 bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 placeholder:text-white/30 transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                />
-              </div>
-
-              <div className="space-y-2.5">
-                <label htmlFor="message" className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                  {t("contact.message")}
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder={t("contact.messagePlaceholder")}
-                  className="bg-white/[0.04] border-white/10 text-white font-body rounded-xl px-4 py-3 placeholder:text-white/30 resize-none transition-all duration-300 hover:border-white/25 focus-visible:ring-2 focus-visible:ring-[#26BDF0]/50 focus-visible:ring-offset-0 focus-visible:border-[#26BDF0]/60"
-                />
-              </div>
-
-              {/* reCAPTCHA Widget */}
-              <div className="space-y-2">
-                <div className="flex justify-center">
-                  <div ref={recaptchaRef}></div>
-                </div>
-                {recaptchaError && (
-                  <p className="text-sm text-red-500 text-center">{recaptchaError}</p>
-                )}
-              </div>
-
-              <Button
-                type="submit"
-                size="lg"
-                className="w-full h-13 rounded-full bg-white text-black font-body font-medium hover:bg-white/90 transition-transform duration-300 hover:scale-[1.01] group"
-                disabled={status === "sending"}
-              >
-                {status === "sending" ? (
-                  t("contact.sending")
-                ) : (
-                  <>
-                    <Send className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    {t("contact.submit")}
-                  </>
-                )}
-              </Button>
-
-              <p className="text-center font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
-                {t("cta.noCommitment")} · {t("cta.free")}
-              </p>
-            </form>
-          </div>
+            {t("contact.responseTime")}
+          </span>
         </div>
+
+        {/* Formulario editorial: campos subrayados, sin cajas */}
+        <form onSubmit={handleSubmit} className="mt-14 max-w-3xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-9">
+            <div className="space-y-1.5">
+              <label htmlFor="firstName" className={labelCls}>{t("contact.firstName")} *</label>
+              <Input id="firstName" name="firstName" type="text" required value={formData.firstName} onChange={handleChange} className={fieldCls} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="lastName" className={labelCls}>{t("contact.lastName")} *</label>
+              <Input id="lastName" name="lastName" type="text" required value={formData.lastName} onChange={handleChange} className={fieldCls} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="email" className={labelCls}>{t("contact.email")} *</label>
+              <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={fieldCls} />
+            </div>
+            <div className="space-y-1.5">
+              <label htmlFor="phone" className={labelCls}>{t("contact.phone")}</label>
+              <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} className={fieldCls} />
+            </div>
+            <div className="space-y-1.5 md:col-span-2">
+              <label htmlFor="company" className={labelCls}>{t("contact.company")}</label>
+              <Input id="company" name="company" type="text" value={formData.company} onChange={handleChange} className={fieldCls} />
+            </div>
+            <div className="space-y-1.5 md:col-span-2">
+              <label htmlFor="message" className={labelCls}>{t("contact.message")}</label>
+              <Textarea id="message" name="message" rows={3} value={formData.message} onChange={handleChange} placeholder={t("contact.messagePlaceholder")} className={`${fieldCls} resize-none min-h-[90px]`} />
+            </div>
+          </div>
+
+          {/* reCAPTCHA */}
+          <div className="mt-9">
+            <div ref={recaptchaRef}></div>
+            {recaptchaError && <p className="mt-2 text-sm text-red-400">{recaptchaError}</p>}
+          </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
+            <Button
+              type="submit"
+              size="lg"
+              className="rounded-full bg-white text-black font-body font-medium px-10 h-13 hover:bg-white/90 transition-transform duration-300 hover:scale-[1.02] group"
+              disabled={status === "sending"}
+            >
+              {status === "sending" ? (
+                t("contact.sending")
+              ) : (
+                <>
+                  <Send className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  {t("contact.submit")}
+                </>
+              )}
+            </Button>
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
+              {t("cta.noCommitment")} · {t("cta.free")}
+            </span>
+          </div>
+        </form>
       </div>
     </section>
   );

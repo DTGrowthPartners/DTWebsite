@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import HeroSection from "@/components/home/HeroSection";
 import ServicesHorizontal from "@/components/home/ServicesHorizontal";
+import WebsMarquee from "@/components/home/WebsMarquee";
 import CaseStudiesSection from "@/components/home/CaseStudiesSection";
 import MethodSection from "@/components/home/MethodSection";
 import TeamSection from "@/components/home/TeamSection";
@@ -55,6 +56,9 @@ const Index = () => {
 
         {/* Scroll horizontal pineado (no envolver: gestiona su propio scroll). */}
         <ServicesHorizontal />
+
+        {/* Marquee de webs reales impulsado por el scroll */}
+        <WebsMarquee />
 
         {/* Reveals al hacer scroll (framer-motion, se dispara una vez en viewport). */}
         <FadeInView><CaseStudiesSection /></FadeInView>

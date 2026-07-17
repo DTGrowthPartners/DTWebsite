@@ -72,6 +72,7 @@ const translations = {
     "contact.responseTime": "We reply in under 24 hours",
     "contact.directChannels": "Prefer a direct channel?",
     "services.kicker": "// Services",
+    "websMarquee.kicker": "Websites we build",
     "services.scrollHint": "Scroll to explore",
 
     // Services Section
@@ -250,6 +251,7 @@ const translations = {
     "contact.responseTime": "Respondemos en menos de 24 horas",
     "contact.directChannels": "¿Prefieres un canal directo?",
     "services.kicker": "// Servicios",
+    "websMarquee.kicker": "Webs que construimos",
     "services.scrollHint": "Desplázate para explorar",
 
     // Services Section
