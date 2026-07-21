@@ -96,17 +96,17 @@ Sombras: `0 0 60px hsl(208 87% 50% / 0.25)` (glow marca) · `0 8px 40px hsl(226 
 
 ---
 
-## 4. Tipografía (trío Pangram)
+## 4. Tipografía
 
 | Rol | Fuente | Pesos | Uso |
 |---|---|---|---|
-| Principal (`font-heading`) | **PP Neue Montreal** ⚠️ | 400 base / 500 medium / 600 highlights | Titulares gigantes, nombres, métricas |
-| Acento (`font-mono`) | **Neue Machina** ⚠️ | 400 | Kickers `// Sección`, labels uppercase tracking `0.15–0.25em`, numeración 01–04, roles |
+| Principal (`font-heading`) | **Switzer** (Fontshare, gratis) | 400 base / 500 medium / 600 highlights | Titulares gigantes, nombres, métricas |
+| Acento (`font-mono`) | **Space Grotesk** (Google, gratis) | 400–600 | Kickers `// Sección`, labels uppercase tracking `0.15–0.25em`, numeración 01–04, roles |
 | Soporte (`font-body`) | **Manrope** | 300–600 | Párrafos, botones, chips |
 
-⚠️ PP Neue Montreal y Neue Machina son comerciales (Pangram Pangram) — hoy cargadas
-desde cdnfonts **solo en prueba**; producción definitiva requiere licencia web
-(o gemelas libres: Switzer / Space Grotesk).
+Nota: el trío está 100% licenciado. Si algún día se compra la licencia de
+PP Neue Montreal / Neue Machina (Pangram Pangram), el cambio es 1 línea en
+`index.css` + `tailwind.config.ts` (Switzer y Space Grotesk son sus gemelas).
 
 Reglas de titular: `font-normal` base con la palabra clave en `font-semibold`
 (a veces con gradient-text) · tracking `-0.024em` · leading `0.9–1.02` ·

@@ -51,8 +51,8 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Syne', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['"Neue Machina"', '"Space Mono"', 'ui-monospace', 'monospace'],
-        heading: ['"PP Neue Montreal"', 'Inter', 'system-ui', 'sans-serif'],
+        mono: ['"Space Grotesk"', '"Space Mono"', 'ui-monospace', 'monospace'],
+        heading: ['Switzer', 'Inter', 'system-ui', 'sans-serif'],
         body: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
