@@ -394,17 +394,30 @@ type BgBar = { row: number; start: number; span: number; channel: ChannelKey };
 type BgMove = BgBar & { toRow: number; toStart: number; delay: number };
 
 /**
- * Reservas que se mueven solas. Las dos primeras se intercambian el puesto
- * (mismo span y tiempos idénticos); la tercera se muda a un hueco libre.
+ * Reservas que se mueven solas, repartidas por el lienzo y desfasadas en el
+ * tiempo. Los recorridos son cortos (una fila y pocas columnas) a propósito:
+ * el pasillo que barren queda vacío, y un pasillo corto no deja un agujero
+ * visible en la ocupación.
  */
 const BG_MOVES: BgMove[] = [
-  { row: 3, start: 5, span: 3, channel: "booking", toRow: 8, toStart: 15, delay: 0 },
-  { row: 8, start: 15, span: 3, channel: "airbnb", toRow: 3, toStart: 5, delay: 0 },
-  { row: 6, start: 19, span: 4, channel: "whatsapp", toRow: 11, toStart: 9, delay: 3.6 },
+  { row: 2, start: 4, span: 3, channel: "booking", toRow: 3, toStart: 9, delay: 0 },
+  { row: 5, start: 17, span: 4, channel: "airbnb", toRow: 6, toStart: 21, delay: 2.4 },
+  { row: 9, start: 6, span: 3, channel: "whatsapp", toRow: 10, toStart: 11, delay: 4.8 },
+  { row: 11, start: 19, span: 3, channel: "expedia", toRow: 12, toStart: 15, delay: 7.2 },
 ];
 
-const overlaps = (a: { row: number; start: number; span: number }, row: number, start: number, span: number) =>
-  a.row === row && a.start < start + span && start < a.start + a.span;
+/**
+ * ¿La reserva `a` cae dentro del rectángulo que barre el movimiento `m`?
+ * Se comprueba el recorrido completo, no solo origen y destino: si solo se
+ * liberaran los extremos, la reserva en vuelo pasaría por encima de otras.
+ */
+const inSweptPath = (a: BgBar, m: BgMove) => {
+  const r0 = Math.min(m.row, m.toRow);
+  const r1 = Math.max(m.row, m.toRow);
+  const c0 = Math.min(m.start, m.toStart);
+  const c1 = Math.max(m.start + m.span, m.toStart + m.span);
+  return a.row >= r0 && a.row <= r1 && a.start < c1 && c0 < a.start + a.span;
+};
 
 const BG_BARS: BgBar[] = (() => {
   const channels: ChannelKey[] = [
@@ -430,14 +443,9 @@ const BG_BARS: BgBar[] = (() => {
     }
   }
 
-  // Libera las casillas de origen y destino de cada movimiento: si no, una
-  // reserva aterrizaría encima de otra, que es justo lo que el sistema impide.
-  return bars.filter(
-    (b) =>
-      !BG_MOVES.some(
-        (m) => overlaps(b, m.row, m.start, m.span) || overlaps(b, m.toRow, m.toStart, m.span)
-      )
-  );
+  // Vacía el pasillo de cada movimiento: ninguna reserva en vuelo pasa por
+  // encima de otra, ni aterriza sobre una ocupada.
+  return bars.filter((b) => !BG_MOVES.some((m) => inSweptPath(b, m)));
 })();
 
 const colPct = 100 / BG_COLS;
