@@ -20,10 +20,15 @@ const PANELS = 5; // intro + 4 servicios
 
 // 01 · Meta Ads — preview real de campaña: anuncio en Instagram → lead en WhatsApp
 const PhoneFrame = ({ children }: { children: ReactNode }) => (
-  <div className="relative rounded-[1.3rem] bg-black/85 border border-white/20 p-[6px] shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
-    <div className="relative rounded-[0.95rem] overflow-hidden bg-black aspect-[9/16]">
+  <div className="relative rounded-[2rem] bg-[#101014] border border-white/25 p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
+    {/* Botones laterales */}
+    <div className="absolute -right-[2px] top-[24%] h-12 w-[2.5px] rounded-r bg-white/20" />
+    <div className="absolute -left-[2px] top-[20%] h-7 w-[2.5px] rounded-l bg-white/20" />
+    <div className="absolute -left-[2px] top-[30%] h-7 w-[2.5px] rounded-l bg-white/20" />
+    <div className="relative rounded-[1.55rem] overflow-hidden bg-black aspect-[9/18.5]">
       {children}
-      <div className="absolute top-1.5 left-1/2 -translate-x-1/2 z-10 h-1.5 w-1.5 rounded-full bg-black ring-1 ring-white/25" />
+      {/* Isla de cámara */}
+      <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 h-[9px] w-[38px] rounded-full bg-black ring-1 ring-white/20" />
     </div>
   </div>
 );
@@ -170,17 +175,17 @@ const AD_PHONES = [
 ];
 
 const MotifAds = () => (
-  <div className="flex items-start gap-2.5 md:gap-3">
+  <div className="flex items-start gap-3 md:gap-4">
     {AD_PHONES.map((phone) => {
       const Preview = phone.C;
       return (
         <div key={phone.label} className={"flex flex-col items-center gap-2 " + phone.cls}>
-          <div className="w-[102px] md:w-[116px] animate-float" style={{ animationDuration: phone.dur, animationDelay: phone.delay }}>
+          <div className="w-[150px] md:w-[170px] animate-float" style={{ animationDuration: phone.dur, animationDelay: phone.delay }}>
             <PhoneFrame>
               <Preview />
             </PhoneFrame>
           </div>
-          <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+          <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/60 whitespace-nowrap">
             {phone.label}
           </span>
         </div>
@@ -582,7 +587,7 @@ const ServicesHorizontal = () => {
               </span>
 
               {/* Motivo grande a la derecha */}
-              <div className="sh-motif absolute right-[5vw] top-[34%] -translate-y-1/2 hidden md:block z-10 opacity-95 scale-110 lg:scale-125 origin-top-right">
+              <div className="sh-motif absolute right-[4vw] top-[30%] -translate-y-1/2 hidden md:block z-10 opacity-95">
                 <M />
               </div>
 
