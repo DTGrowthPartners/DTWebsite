@@ -23,6 +23,7 @@ const translations = {
     "nav.services.metaAds": "Meta Ads",
     "nav.services.webDev": "Web Development",
     "nav.services.automation": "Automations & AI",
+    "nav.services.hotels": "Hotel System",
     "nav.services.digitalAds": "Digital Advertising",
 
     // Pagination
@@ -202,6 +203,7 @@ const translations = {
     "nav.services.metaAds": "Meta Ads",
     "nav.services.webDev": "Desarrollo Web",
     "nav.services.automation": "Automatizaciones & IA",
+    "nav.services.hotels": "Sistema para Hoteles",
     "nav.services.digitalAds": "Publicidad Digital",
 
     // Pagination

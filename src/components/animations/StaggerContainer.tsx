@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ReactNode } from "react";
 
 interface StaggerContainerProps {
@@ -8,7 +8,7 @@ interface StaggerContainerProps {
   once?: boolean;
 }
 
-const containerVariants = (staggerDelay: number) => ({
+const containerVariants = (staggerDelay: number): Variants => ({
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -19,7 +19,7 @@ const containerVariants = (staggerDelay: number) => ({
   },
 });
 
-export const staggerItemVariants = {
+export const staggerItemVariants: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,

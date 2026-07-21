@@ -35,6 +35,11 @@ const routes = [
     description: "Automatiza tu negocio con IA. Flujos, chatbots y agentes inteligentes para empresas en Cartagena. Trabaja menos, crece más.",
   },
   {
+    path: "/servicios/sistema-hoteles",
+    title: "DT Hotels — Software de Gestión Hotelera (PMS) | DT Growth Partners",
+    description: "PMS para hoteles independientes: forecast de ocupación, reservas, pagos, contabilidad diaria y motor de reservas para tu web. Ya operando en hoteles reales.",
+  },
+  {
     path: "/casos-exito/retail-bebidas",
     title: "Caso de Éxito: Retail de Bebidas — De ROAS 1.3x a $29.2M en ventas | DT Growth Partners",
     description: "Cómo transformamos las campañas de Meta Ads de un retail de bebidas en Cartagena, logrando $29.2M COP en ventas y un ROAS de 31x.",

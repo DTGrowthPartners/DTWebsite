@@ -71,6 +71,11 @@ const Footer = () => {
                   {t("services.automation")}
                 </Link>
               </li>
+              <li>
+                <Link to="/servicios/sistema-hoteles" className="hover:text-white transition-colors">
+                  {t("nav.services.hotels")}
+                </Link>
+              </li>
             </ul>
           </div>
 
