@@ -289,19 +289,25 @@ const SistemaHoteles = () => {
               <div className="min-w-0">
                 <span className="text-sm font-body text-white/80">{"// Software para hoteles"}</span>
 
+                {/* La palabra rotativa va sola en su renglón y al final del
+                    titular: así su ancho no reacomoda ningún texto y el alto
+                    del h1 —y por tanto el largo del scroll— nunca cambia.
+                    El span envolvente evita pisar el justify-center y el
+                    width animado que el propio componente maneja. */}
                 <h1 className="mt-6 flex flex-wrap items-baseline gap-x-[0.24em] font-heading font-normal text-white text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.04] tracking-[-0.024em]">
                   El sistema que reemplaza el
-                  <RotatingWord
-                    words={["Excel", "cuaderno", "Drive", "grupo de WhatsApp"]}
-                    interval={3000}
-                    className="font-semibold"
-                    innerClassName="gradient-text"
-                  />
-                  de tu hotel
+                  <span className="basis-full flex">
+                    <RotatingWord
+                      words={["Excel", "cuaderno", "Drive"]}
+                      interval={3000}
+                      className="font-semibold"
+                      innerClassName="gradient-text"
+                    />
+                  </span>
                 </h1>
 
                 <p className="mt-6 text-base md:text-lg text-white/75 font-body font-light max-w-xl leading-relaxed">
-                  DT Hotels es un PMS completo: ocupación, reservas, cobros, contabilidad diaria y
+                  DT Hotels es el PMS de tu hotel: ocupación, reservas, cobros, contabilidad diaria y
                   motor de reservas para tu propia web. Construido dentro de un hotel real, no en una
                   sala de reuniones.
                 </p>
@@ -718,12 +724,14 @@ const SistemaHoteles = () => {
               <div className="relative z-10 max-w-2xl mx-auto text-center">
                 <h2 className="flex flex-wrap items-baseline justify-center gap-x-[0.26em] font-heading font-normal text-white text-3xl md:text-5xl leading-[1.05] tracking-[-0.024em]">
                   <BlurText text="Te lo mostramos" />
-                  <RotatingWord
-                    words={["funcionando", "con datos reales", "sin discurso"]}
-                    interval={2900}
-                    className="font-semibold"
-                    innerClassName="gradient-text"
-                  />
+                  <span className="basis-full flex justify-center">
+                    <RotatingWord
+                      words={["funcionando", "con datos reales", "sin discurso"]}
+                      interval={2900}
+                      className="font-semibold"
+                      innerClassName="gradient-text"
+                    />
+                  </span>
                 </h2>
                 <p className="mt-5 text-sm md:text-base text-white/70 font-body font-light">
                   Agenda una demo y recorremos el sistema con datos de un hotel real. Si tiene
