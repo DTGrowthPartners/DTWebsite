@@ -227,6 +227,48 @@ const faqs = [
 
 /* ------------------------------------------------------------------ */
 
+/**
+ * Encabezado de sección a dos columnas: eyebrow + titular a la izquierda,
+ * párrafo de apoyo y un micro-dato a la derecha (llena el vacío del lado
+ * derecho que dejaban los encabezados de una sola columna).
+ */
+const SectionHead = ({
+  eyebrow,
+  children,
+  lead,
+  stat,
+}: {
+  eyebrow: string;
+  children: React.ReactNode;
+  lead: string;
+  stat?: { value: string; label: string };
+}) => (
+  <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] gap-8 lg:gap-16 items-end">
+    <div>
+      <span className="text-sm font-body text-white/80">{`// ${eyebrow}`}</span>
+      <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em]">
+        {children}
+      </h2>
+    </div>
+    <FadeInView direction="up" delay={0.1} className="lg:pb-2">
+      <div className="rule-brand mb-6 max-w-[7rem]" />
+      <p className="text-sm md:text-base text-white/65 font-body font-light leading-relaxed">
+        {lead}
+      </p>
+      {stat && (
+        <div className="mt-6 flex items-baseline gap-3">
+          <span className="font-heading font-medium text-3xl md:text-4xl gradient-text leading-none">
+            {stat.value}
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45 max-w-[12rem]">
+            {stat.label}
+          </span>
+        </div>
+      )}
+    </FadeInView>
+  </div>
+);
+
 const SistemaHoteles = () => {
   const [tab, setTab] = React.useState(0);
   const active = screens[tab];
@@ -398,11 +440,14 @@ const SistemaHoteles = () => {
           />
 
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// El sistema por dentro"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="El sistema por dentro"
+              lead="No es un tablero más para llenar a mano: es donde recepción, administración y contabilidad trabajan el día a día. Míralo por dentro, pantalla por pantalla."
+              stat={{ value: "3", label: "pantallas donde vive toda la operación" }}
+            >
               Tres pantallas que sostienen{" "}
               <span className="font-semibold gradient-text">toda la operación</span>
-            </h2>
+            </SectionHead>
 
             {/* Pestañas */}
             <div className="mt-10 flex flex-wrap gap-2">
@@ -475,10 +520,13 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section id="modulos" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Módulos"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Módulos"
+              lead="Reservas, cobros, tarifas, contabilidad y reportes dejan de vivir en archivos sueltos y correos. Todo pasa a un mismo lugar, con la misma información para todo el equipo."
+              stat={{ value: "9", label: "módulos ya en producción" }}
+            >
               Nueve módulos, <span className="font-semibold gradient-text">un solo lugar</span>
-            </h2>
+            </SectionHead>
 
             {/* Tilt 3D + glare, el mismo de las tarjetas del equipo en la home */}
             <StaggerContainer
@@ -569,11 +617,14 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Conexiones"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Conexiones"
+              lead="No te pedimos cambiar tu forma de cobrar ni de comunicarte. El sistema se enchufa a tu pasarela de pagos, tu web, tu correo y tu WhatsApp, y trabaja con lo que ya tienes."
+              stat={{ value: "6", label: "conexiones listas de fábrica" }}
+            >
               Conectado con lo que{" "}
               <span className="font-semibold gradient-text">ya usa tu hotel</span>
-            </h2>
+            </SectionHead>
 
             <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {integrations.map((it, i) => {
@@ -643,11 +694,14 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Implementación"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Implementación"
+              lead="Nosotros hacemos el montaje: cargamos tus habitaciones, tus tarifas por temporada y tu histórico desde el Excel que ya usas. Tu hotel sigue vendiendo mientras tanto."
+              stat={{ value: "3–6", label: "semanas de la firma al arranque" }}
+            >
               Del Excel al sistema{" "}
               <span className="font-semibold gradient-text">sin parar el hotel</span>
-            </h2>
+            </SectionHead>
 
             <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {process.map((s, i) => (
