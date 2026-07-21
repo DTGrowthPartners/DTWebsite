@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import MetaAds from "./pages/MetaAds";
 import DesarrolloWeb from "./pages/DesarrolloWeb";
 import SistemasAutomatizaciones from "./pages/SistemasAutomatizaciones";
+import SistemaHoteles from "./pages/SistemaHoteles";
 import CaseStudyRetailLicores from "./pages/CaseStudyRetailLicores";
 import CaseStudyEscalamientoTrimestral from "./pages/CaseStudyEscalamientoTrimestral";
 import CaseStudyRestaurante from "./pages/CaseStudyRestaurante";
@@ -79,6 +80,9 @@ const App = () => (
                 <Route path="/servicios/meta-ads" element={<MetaAds />} />
                 <Route path="/servicios/desarrollo-web" element={<DesarrolloWeb />} />
                 <Route path="/servicios/sistemas-automatizaciones" element={<SistemasAutomatizaciones />} />
+                <Route path="/servicios/sistema-hoteles" element={<SistemaHoteles />} />
+                <Route path="/sistemaHoteles" element={<Navigate to="/servicios/sistema-hoteles" replace />} />
+                <Route path="/sistemahoteles" element={<Navigate to="/servicios/sistema-hoteles" replace />} />
                 <Route path="/casos-exito/retail-bebidas" element={<CaseStudyRetailLicores />} />
                 <Route path="/casos-exito/escalamiento-trimestral" element={<CaseStudyEscalamientoTrimestral />} />
                 <Route path="/casos-exito/reconocimiento-local-restaurante" element={<CaseStudyRestaurante />} />

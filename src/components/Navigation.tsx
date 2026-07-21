@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight, Hotel } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTarget } from "@/lib/smooth-scroll";
@@ -189,6 +189,18 @@ const Navigation = () => {
                     <span>{t("nav.services.automation")}</span>
                   </Link>
 
+                  {/* Sistema para Hoteles */}
+                  <Link
+                    to="/servicios/sistema-hoteles"
+                    onClick={closeAll}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
+                  >
+                    <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Hotel className="w-4 h-4 text-primary" />
+                    </div>
+                    <span>{t("nav.services.hotels")}</span>
+                  </Link>
+
                   {/* Divider */}
                   <div className="my-1.5 mx-3 border-t border-border/30" />
 
@@ -336,6 +348,10 @@ const Navigation = () => {
                     <Link to="/servicios/sistemas-automatizaciones" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Zap className="w-3.5 h-3.5 text-primary" /></div>
                       <span>{t("nav.services.automation")}</span>
+                    </Link>
+                    <Link to="/servicios/sistema-hoteles" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
+                      <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Hotel className="w-3.5 h-3.5 text-primary" /></div>
+                      <span>{t("nav.services.hotels")}</span>
                     </Link>
 
                     {/* Publicidad Digital sub-accordion */}
