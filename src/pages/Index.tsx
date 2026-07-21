@@ -66,7 +66,7 @@ const Index = () => {
         <FadeInView><TeamSection /></FadeInView>
         <FadeInView><TestimonialsSection /></FadeInView>
         <FadeInView><CTASection /></FadeInView>
-        <FadeInView><ContactFormSection /></FadeInView>
+        <ContactFormSection />
       </main>
       <Footer />
     </div>

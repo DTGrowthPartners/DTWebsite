@@ -1,4 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,6 +54,72 @@ const ContactFormSection = () => {
   const [recaptchaError, setRecaptchaError] = useState<string>("");
   const recaptchaRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<number | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const magnetRef = useRef<HTMLSpanElement | null>(null);
+
+  /* GSAP: reveals escalonados de la sección + botón de envío magnético */
+  useLayoutEffect(() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const magnet = magnetRef.current;
+    let move: ((e: PointerEvent) => void) | null = null;
+    let leave: (() => void) | null = null;
+
+    const ctx = gsap.context(() => {
+      gsap.from(".cf-rev", {
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 72%", toggleActions: "play none none reverse" },
+      });
+
+      gsap.from(".cf-chip", {
+        y: 22,
+        opacity: 0,
+        scale: 0.85,
+        duration: 0.6,
+        stagger: 0.09,
+        ease: "back.out(1.8)",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 62%", toggleActions: "play none none reverse" },
+      });
+
+      gsap.from(".cf-field", {
+        y: 36,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.08,
+        ease: "power3.out",
+        scrollTrigger: { trigger: formRef.current, start: "top 82%", toggleActions: "play none none reverse" },
+      });
+
+      if (magnet) {
+        const xTo = gsap.quickTo(magnet, "x", { duration: 0.4, ease: "power3.out" });
+        const yTo = gsap.quickTo(magnet, "y", { duration: 0.4, ease: "power3.out" });
+        move = (e: PointerEvent) => {
+          const r = magnet.getBoundingClientRect();
+          xTo((e.clientX - (r.left + r.width / 2)) / 4);
+          yTo((e.clientY - (r.top + r.height / 2)) / 4);
+        };
+        leave = () => {
+          gsap.to(magnet, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
+        };
+        magnet.addEventListener("pointermove", move);
+        magnet.addEventListener("pointerleave", leave);
+      }
+    }, sectionRef);
+
+    return () => {
+      if (magnet && move && leave) {
+        magnet.removeEventListener("pointermove", move);
+        magnet.removeEventListener("pointerleave", leave);
+      }
+      ctx.revert();
+    };
+  }, []);
 
   // Site key de reCAPTCHA desde variables de entorno
   const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "6Lfcok8sAAAAAIEAjC1Q56__W7ao4VYxyGOQ6iLD";
@@ -244,7 +312,7 @@ const ContactFormSection = () => {
   const labelCls = "font-body text-[13px] font-medium text-white/75";
 
   return (
-    <section id="contacto" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+    <section id="contacto" ref={sectionRef} className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
       <Aurora
         blobs={[
           { color: "blue", className: "bottom-[-140px] left-[20%] w-[600px] h-[600px] opacity-25" },
@@ -252,11 +320,11 @@ const ContactFormSection = () => {
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-        <span className="text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
-        <h2 className="mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+        <span className="cf-rev block text-sm font-body text-white/80">{`// ${t("footer.contact")}`}</span>
+        <h2 className="cf-rev mt-6 font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
           {t("contact.title")} <RotatingWord words={t("contact.rotating").split("|")} interval={3300} className="font-semibold" />
         </h2>
-        <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+        <p className="cf-rev mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
           {t("contact.subtitle")}
         </p>
 
@@ -266,17 +334,17 @@ const ContactFormSection = () => {
             href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
             target="_blank"
             rel="noopener noreferrer"
-            className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
+            className="cf-chip liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
           >
             <MessageCircle className="h-4 w-4" strokeWidth={1.5} /> +57 300 718 9383
           </a>
           <a
             href="mailto:info@dtgrowthpartners.com"
-            className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
+            className="cf-chip liquid-glass rounded-full px-4 py-2 flex items-center gap-2 text-sm text-white font-body transition-transform duration-300 hover:-translate-y-0.5"
           >
             <Mail className="h-4 w-4" strokeWidth={1.5} /> info@dtgrowthpartners.com
           </a>
-          <span className="liquid-glass rounded-full px-4 py-2 flex items-center gap-2.5 text-sm text-white/80 font-body">
+          <span className="cf-chip liquid-glass rounded-full px-4 py-2 flex items-center gap-2.5 text-sm text-white/80 font-body">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#26BDF0] opacity-60" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#26BDF0]" />
@@ -286,41 +354,42 @@ const ContactFormSection = () => {
         </div>
 
         {/* Formulario editorial: campos subrayados, sin cajas */}
-        <form onSubmit={handleSubmit} className="mt-14 max-w-3xl">
+        <form ref={formRef} onSubmit={handleSubmit} className="mt-14 max-w-3xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-9">
-            <div className="space-y-1.5">
+            <div className="cf-field space-y-1.5">
               <label htmlFor="firstName" className={labelCls}>{t("contact.firstName")} *</label>
               <Input id="firstName" name="firstName" type="text" required value={formData.firstName} onChange={handleChange} className={fieldCls} />
             </div>
-            <div className="space-y-1.5">
+            <div className="cf-field space-y-1.5">
               <label htmlFor="lastName" className={labelCls}>{t("contact.lastName")} *</label>
               <Input id="lastName" name="lastName" type="text" required value={formData.lastName} onChange={handleChange} className={fieldCls} />
             </div>
-            <div className="space-y-1.5">
+            <div className="cf-field space-y-1.5">
               <label htmlFor="email" className={labelCls}>{t("contact.email")} *</label>
               <Input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className={fieldCls} />
             </div>
-            <div className="space-y-1.5">
+            <div className="cf-field space-y-1.5">
               <label htmlFor="phone" className={labelCls}>{t("contact.phone")}</label>
               <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} className={fieldCls} />
             </div>
-            <div className="space-y-1.5 md:col-span-2">
+            <div className="cf-field space-y-1.5 md:col-span-2">
               <label htmlFor="company" className={labelCls}>{t("contact.company")}</label>
               <Input id="company" name="company" type="text" value={formData.company} onChange={handleChange} className={fieldCls} />
             </div>
-            <div className="space-y-1.5 md:col-span-2">
+            <div className="cf-field space-y-1.5 md:col-span-2">
               <label htmlFor="message" className={labelCls}>{t("contact.message")}</label>
               <Textarea id="message" name="message" rows={3} value={formData.message} onChange={handleChange} placeholder={t("contact.messagePlaceholder")} className={`${fieldCls} h-auto py-3 resize-none min-h-[110px]`} />
             </div>
           </div>
 
           {/* reCAPTCHA */}
-          <div className="mt-9">
+          <div className="cf-field mt-9">
             <div ref={recaptchaRef}></div>
             {recaptchaError && <p className="mt-2 text-sm text-red-400">{recaptchaError}</p>}
           </div>
 
-          <div className="mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
+          <div className="cf-field mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
+            <span ref={magnetRef} className="inline-block will-change-transform">
             <Button
               type="submit"
               size="lg"
@@ -336,6 +405,7 @@ const ContactFormSection = () => {
                 </>
               )}
             </Button>
+            </span>
             <span className="font-body text-xs text-white/40">
               {t("cta.noCommitment")} · {t("cta.free")}
             </span>
