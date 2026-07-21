@@ -1,6 +1,9 @@
-import { useRef, type ReactNode } from "react";
+import { useRef, useLayoutEffect, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getLenis } from "@/lib/smooth-scroll";
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
 import heroVisual from "@/assets/hero-visual.jpg";
 import { useLanguage } from "@/context/LanguageContext";
@@ -233,38 +236,13 @@ const MotifBot = () => (
  * Panel con animación propia ligada al progreso del scroll: la tarjeta
  * escala, aparece y rota levemente cuando su panel pasa por el centro.
  */
-const Panel = ({
-  progress,
-  index,
-  children,
-}: {
-  progress: MotionValue<number>;
-  index: number;
-  children: ReactNode;
-}) => {
-  const center = index / (PANELS - 1);
-  const range = 0.16;
-  const scale = useTransform(progress, [center - range, center, center + range], [0.82, 1, 0.82]);
-  const opacity = useTransform(progress, [center - range, center, center + range], [0.25, 1, 0.25]);
-  const rotate = useTransform(progress, [center - range, center + range], [2, -2]);
-
-  return (
-    <div className="w-screen h-full shrink-0 flex items-center justify-center px-5 md:px-16">
-      <motion.div style={{ scale, opacity, rotate }} className="w-full flex justify-center will-change-transform">
-        {children}
-      </motion.div>
-    </div>
-  );
-};
 
 const ServicesHorizontal = () => {
   const { t } = useLanguage();
   const reduced = useReducedMotion();
-  const targetRef = useRef<HTMLDivElement | null>(null);
-
-  const { scrollYProgress } = useScroll({ target: targetRef, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", `-${(PANELS - 1) * 100}vw`]);
-  const progressScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const progressRef = useRef<HTMLDivElement | null>(null);
 
   const services = [
     {
@@ -309,93 +287,190 @@ const ServicesHorizontal = () => {
     },
   ];
 
-  // Tarjeta de servicio — grande, con blur fuerte (liquid-glass-strong)
-  const ServiceCard = ({ s }: { s: (typeof services)[number] }) => {
-    const Icon = s.icon;
-    const tags = t(s.highlightsKey).split(",").map((x) => x.trim()).filter(Boolean).slice(0, 4);
-    const Motif = s.Motif;
-    const inner = (
-      <div className="liquid-glass-strong rounded-[2rem] p-7 md:p-14 w-full max-w-4xl flex flex-col min-h-[440px] md:min-h-[560px] text-left">
-        {/* Motivo decorativo del servicio */}
-        <div className="pointer-events-none absolute right-8 md:right-16 top-[46%] -translate-y-1/2 hidden sm:block opacity-90">
-          <Motif />
-        </div>
+  /* GSAP: pin de la sección + track horizontal con scrub, y coreografía
+     interna por panel vía containerAnimation (triggers sobre el eje X). */
+  useLayoutEffect(() => {
+    if (reduced) return;
+    gsap.registerPlugin(ScrollTrigger);
 
-        <div className="flex items-start justify-between gap-4">
-          <div className="liquid-glass rounded-[1rem] w-12 h-12 md:w-14 md:h-14 flex items-center justify-center shrink-0">
-            <Icon className="h-6 w-6 md:h-7 md:w-7 text-white" strokeWidth={1.5} />
-          </div>
-          <div className="flex flex-wrap justify-end gap-2 max-w-[70%]">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="liquid-glass rounded-full px-4 py-1.5 text-xs text-white/90 font-body whitespace-nowrap"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
+    const lenis = getLenis();
+    const onLenisScroll = () => ScrollTrigger.update();
+    lenis?.on("scroll", onLenisScroll);
 
-        <div className="flex-1" />
+    const ctx = gsap.context(() => {
+      const track = trackRef.current!;
+      const panels = gsap.utils.toArray<HTMLElement>(".sh-panel");
+      const distance = () => window.innerWidth * (panels.length - 1);
 
-        <div className="mt-8">
-          <span className="font-mono text-sm text-white/50">{s.num}</span>
-          <h3 className="mt-2 font-heading font-medium text-white text-4xl md:text-6xl lg:text-7xl tracking-[-0.024em] leading-[1.02]">
-            {t(s.titleKey)}
-          </h3>
-          <p className="mt-5 text-base md:text-lg text-white/90 font-body font-light leading-snug max-w-[46ch]">
-            {t(s.descKey)}
-          </p>
-          <span className="mt-7 inline-flex items-center gap-2 text-base font-medium text-white font-body group-hover:gap-3 transition-all">
-            {t("services.seeMore")}
-            <ArrowUpRight className="h-5 w-5" />
-          </span>
-        </div>
-      </div>
+      const tween = gsap.to(track, {
+        xPercent: (-100 * (panels.length - 1)) / panels.length,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          pin: true,
+          scrub: 1,
+          end: () => "+=" + distance(),
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Barra de progreso ligada al mismo recorrido
+      gsap.fromTo(
+        progressRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: () => "+=" + distance(),
+            scrub: true,
+          },
+        }
+      );
+
+      // Coreografía por panel en el eje horizontal
+      panels.forEach((panel) => {
+        const num = panel.querySelector(".sh-num");
+        const title = panel.querySelector(".sh-title");
+        const motif = panel.querySelector(".sh-motif");
+        const items = panel.querySelectorAll(".sh-stagger");
+
+        if (num) {
+          gsap.fromTo(
+            num,
+            { xPercent: 45 },
+            {
+              xPercent: -45,
+              ease: "none",
+              scrollTrigger: {
+                trigger: panel,
+                containerAnimation: tween,
+                start: "left right",
+                end: "right left",
+                scrub: true,
+              },
+            }
+          );
+        }
+
+        if (title) {
+          gsap.from(title, {
+            xPercent: 18,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: tween,
+              start: "left 90%",
+              end: "left 35%",
+              scrub: true,
+            },
+          });
+        }
+
+        if (motif) {
+          gsap.from(motif, {
+            xPercent: 30,
+            rotate: 4,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: tween,
+              start: "left 95%",
+              end: "left 40%",
+              scrub: true,
+            },
+          });
+        }
+
+        if (items.length) {
+          gsap.from(items, {
+            y: 44,
+            opacity: 0,
+            stagger: 0.09,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: panel,
+              containerAnimation: tween,
+              start: "left 55%",
+              toggleActions: "play none none reverse",
+            },
+          });
+        }
+      });
+
+      setTimeout(() => ScrollTrigger.refresh(), 400);
+    }, sectionRef);
+
+    return () => {
+      lenis?.off("scroll", onLenisScroll);
+      ctx.revert();
+    };
+  }, [reduced]);
+
+  // Fila de tags + CTA sobre hairline (aprovecha el ancho completo)
+  const MetaRow = ({ s }: { s: (typeof services)[number] }) => {
+    const tags = t(s.highlightsKey).split(",").map((x) => x.trim()).filter(Boolean);
+    const cta = (
+      <span className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-white font-body whitespace-nowrap group-hover:gap-3 transition-all">
+        {t("services.seeMore")}
+        <ArrowUpRight className="h-5 w-5" />
+      </span>
     );
-
-    return s.external ? (
-      <a href={s.path} target="_blank" rel="noopener noreferrer" className="group w-full flex justify-center">
-        {inner}
-      </a>
-    ) : (
-      <Link to={s.path} className="group w-full flex justify-center">
-        {inner}
-      </Link>
+    return (
+      <div className="sh-stagger mt-8 pt-6 border-t border-white/15 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {tags.map((tag) => (
+            <span key={tag} className="liquid-glass rounded-full px-4 py-1.5 text-xs text-white/90 font-body whitespace-nowrap">
+              {tag}
+            </span>
+          ))}
+        </div>
+        {s.external ? (
+          <a href={s.path} target="_blank" rel="noopener noreferrer" className="group">
+            {cta}
+          </a>
+        ) : (
+          <Link to={s.path} className="group">
+            {cta}
+          </Link>
+        )}
+      </div>
     );
   };
-
-  // Panel intro (título de la sección)
-  const IntroPanel = (
-    <div className="flex flex-col items-start justify-center max-w-4xl w-full">
-      <span className="text-sm font-body text-white/80 mb-6">{t("services.kicker")}</span>
-      <h2 className="font-heading font-normal text-white text-6xl md:text-7xl lg:text-[7rem] leading-[1.02] tracking-[-0.024em]">
-        {t("services.title")}
-        <br />
-        <RotatingWord words={t("services.rotating").split("|")} interval={3100} className="font-semibold" />
-      </h2>
-      <p className="mt-6 text-base md:text-lg text-white/90 font-body font-light max-w-md">
-        {t("services.subtitle")}
-      </p>
-      <div className="mt-10 inline-flex items-center gap-3 text-sm text-white/70 font-body">
-        {t("services.scrollHint")}
-        <ArrowRight className="h-4 w-4 animate-pulse" />
-      </div>
-    </div>
-  );
 
   // Capas de fondo compartidas (azul-púrpura profundo + video + mancha blur)
   const Background = (
     <>
       <div className="absolute inset-0 z-0" style={{ background: "hsl(260 87% 3%)" }} />
       <FadingVideo src={fondoHorizontal} className="absolute inset-0 w-full h-full object-cover z-0" />
-      {/* Mancha desenfocada tras el contenido: asienta las tarjetas sobre el video */}
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[984px] max-w-none h-[527px] bg-gray-950 opacity-90 blur-[82px] z-[1]" />
-      {/* Franjas de fundido: entra desde negro (hero) y sale hacia la sección de casos */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black to-transparent z-[2]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
     </>
+  );
+
+  const IntroContent = (
+    <div>
+      <span className="sh-stagger block text-sm font-body text-white/80 mb-6">{t("services.kicker")}</span>
+      <h2 className="sh-title font-heading font-normal text-white text-[13vw] md:text-[8.5vw] leading-[0.98] tracking-[-0.03em]">
+        {t("services.title")}
+        <br />
+        <RotatingWord words={t("services.rotating").split("|")} interval={3100} className="font-semibold" />
+      </h2>
+      <p className="sh-stagger mt-6 text-base md:text-lg text-white/90 font-body font-light max-w-md">
+        {t("services.subtitle")}
+      </p>
+      <div className="sh-stagger mt-10 inline-flex items-center gap-3 text-sm text-white/70 font-body">
+        {t("services.scrollHint")}
+        <ArrowRight className="h-4 w-4 animate-pulse" />
+      </div>
+    </div>
   );
 
   // Fallback accesible: stack vertical sin pin
@@ -404,11 +479,19 @@ const ServicesHorizontal = () => {
       <section id="servicios" className="relative py-24 overflow-hidden" style={{ background: "hsl(260 87% 3%)" }}>
         {Background}
         <div className="relative z-10 px-8 md:px-16">
-          <div className="mb-16">{IntroPanel}</div>
-          <div className="grid gap-8 lg:grid-cols-2">
-            {services.map((s) => (
-              <ServiceCard key={s.num} s={s} />
-            ))}
+          <div className="mb-16">{IntroContent}</div>
+          <div className="space-y-20">
+            {services.map((s) => {
+              const M = s.Motif;
+              return (
+                <div key={s.num}>
+                  <span className="font-mono text-xs text-white/50">{"Servicio " + s.num + " — 04"}</span>
+                  <h3 className="mt-2 font-heading font-medium text-white text-5xl md:text-7xl tracking-[-0.03em]">{t(s.titleKey)}</h3>
+                  <p className="mt-4 text-base text-white/85 font-body font-light max-w-xl">{t(s.descKey)}</p>
+                  <MetaRow s={s} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -416,36 +499,62 @@ const ServicesHorizontal = () => {
   }
 
   return (
-    <section id="servicios" ref={targetRef} className="relative h-[500vh]" style={{ background: "hsl(260 87% 3%)" }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
-        {Background}
+    <section id="servicios" ref={sectionRef} className="relative h-screen overflow-hidden" style={{ background: "hsl(260 87% 3%)" }}>
+      {Background}
 
-        {/* Pista horizontal */}
-        <motion.div style={{ x }} className="relative z-10 flex h-full w-[500vw]">
-          <Panel progress={scrollYProgress} index={0}>
-            {IntroPanel}
-          </Panel>
-          {services.map((s, i) => (
-            <Panel key={s.num} progress={scrollYProgress} index={i + 1}>
-              <ServiceCard s={s} />
-            </Panel>
-          ))}
-        </motion.div>
+      {/* Pista horizontal full-bleed */}
+      <div ref={trackRef} className="relative z-10 flex h-full w-[500vw] will-change-transform">
+        {/* Panel intro */}
+        <div className="sh-panel relative w-screen h-full shrink-0 flex items-center px-8 md:px-16 lg:px-20">
+          {IntroContent}
+        </div>
 
-        {/* Progreso — el acento azul de marca vive aquí */}
-        <div className="absolute bottom-6 left-8 right-8 md:left-20 md:right-20 z-20">
-          <div className="h-px bg-white/15 relative overflow-visible">
-            <motion.div
-              style={{ scaleX: progressScale }}
-              className="absolute inset-y-0 left-0 w-full origin-left"
-            >
-              <div className="h-px w-full bg-gradient-to-r from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF]" />
-            </motion.div>
+        {/* Paneles de servicios a todo el ancho */}
+        {services.map((s) => {
+          const M = s.Motif;
+          return (
+            <div key={s.num} className="sh-panel relative w-screen h-full shrink-0 overflow-hidden">
+              {/* Número fantasma gigante con parallax propio */}
+              <span
+                aria-hidden
+                className="sh-num pointer-events-none select-none absolute -top-[2vw] right-[2vw] font-heading font-semibold text-white/[0.07] text-[34vw] md:text-[24vw] leading-none z-0"
+              >
+                {s.num}
+              </span>
+
+              {/* Motivo grande a la derecha */}
+              <div className="sh-motif absolute right-[5vw] top-[34%] -translate-y-1/2 hidden md:block z-10 opacity-95 scale-110 lg:scale-125 origin-top-right">
+                <M />
+              </div>
+
+              {/* Contenido anclado abajo, a todo el ancho */}
+              <div className="absolute inset-x-0 bottom-0 z-20 px-8 md:px-16 lg:px-20 pb-24 md:pb-28">
+                <span className="sh-stagger block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0]">
+                  {"Servicio " + s.num + " — 04"}
+                </span>
+                <h3 className="sh-title mt-3 font-heading font-medium text-white text-[14vw] md:text-[9vw] leading-[0.95] tracking-[-0.035em] whitespace-nowrap">
+                  {t(s.titleKey)}
+                </h3>
+                <p className="sh-stagger mt-5 text-base md:text-xl text-white/85 font-body font-light leading-snug max-w-2xl">
+                  {t(s.descKey)}
+                </p>
+                <MetaRow s={s} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Progreso */}
+      <div className="absolute bottom-6 left-8 right-8 md:left-20 md:right-20 z-30">
+        <div className="h-px bg-white/15 relative">
+          <div ref={progressRef} className="absolute inset-y-0 left-0 w-full origin-left scale-x-0">
+            <div className="h-px w-full bg-gradient-to-r from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF]" />
           </div>
-          <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-            <span>{t("services.kicker").replace("// ", "")}</span>
-            <span>01 — 04</span>
-          </div>
+        </div>
+        <div className="mt-3 flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
+          <span>{t("services.kicker").replace("// ", "")}</span>
+          <span>01 — 04</span>
         </div>
       </div>
     </section>
