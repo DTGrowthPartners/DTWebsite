@@ -55,7 +55,7 @@ const InstagramAdPreview = () => (
       <MoreHorizontal className="ml-auto h-3 w-3 text-neutral-500" />
     </div>
     <div className="relative flex-1 min-h-0 overflow-hidden">
-      <img src={adInsta} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <img src={adInsta} alt="" className="absolute inset-0 h-full w-full object-cover scale-[1.5]" />
       <div className="absolute inset-x-0 bottom-0 p-1.5">
         <span className="text-[7.5px] font-medium text-white leading-tight block">
           Escala tu negocio con datos
