@@ -4,7 +4,18 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import Aurora from "@/components/effects/Aurora";
-import { FadeInView } from "@/components/animations";
+import BlurText from "@/components/effects/BlurText";
+import RotatingWord from "@/components/effects/RotatingWord";
+import Tilt from "@/components/effects/Tilt";
+import { motion } from "framer-motion";
+import {
+  FadeInView,
+  AnimatedCounter,
+  FloatingElement,
+  StaggerContainer,
+  StaggerItem,
+  ScaleOnHover,
+} from "@/components/animations";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -18,6 +29,7 @@ import {
   DashboardMockup,
   LedgerMockup,
   BookingFlowMockup,
+  ChannelsTicker,
 } from "@/components/hoteles/PmsMockups";
 import {
   ArrowRight,
@@ -277,9 +289,15 @@ const SistemaHoteles = () => {
               <div className="min-w-0">
                 <span className="text-sm font-body text-white/80">{"// Software para hoteles"}</span>
 
-                <h1 className="mt-6 font-heading font-normal text-white text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em]">
-                  El sistema que reemplaza el{" "}
-                  <span className="font-semibold gradient-text">Excel de tu hotel</span>
+                <h1 className="mt-6 flex flex-wrap items-baseline gap-x-[0.24em] font-heading font-normal text-white text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.04] tracking-[-0.024em]">
+                  El sistema que reemplaza el
+                  <RotatingWord
+                    words={["Excel", "cuaderno", "Drive", "grupo de WhatsApp"]}
+                    interval={3000}
+                    className="font-semibold"
+                    innerClassName="gradient-text"
+                  />
+                  de tu hotel
                 </h1>
 
                 <p className="mt-6 text-base md:text-lg text-white/75 font-body font-light max-w-xl leading-relaxed">
@@ -313,9 +331,11 @@ const SistemaHoteles = () => {
               </div>
 
               <FadeInView direction="up" delay={0.15} className="min-w-0">
-                <BrowserFrame url="tuhotel.com/dashboard/forecast">
-                  <ForecastMockup />
-                </BrowserFrame>
+                <FloatingElement amplitude={5} duration={7}>
+                  <BrowserFrame url="tuhotel.com/dashboard/forecast">
+                    <ForecastMockup />
+                  </BrowserFrame>
+                </FloatingElement>
               </FadeInView>
             </div>
           </div>
@@ -325,9 +345,16 @@ const SistemaHoteles = () => {
         </section>
 
         {/* ---------------------------------------------------------- */}
+        {/* Ticker de canales                                           */}
+        {/* ---------------------------------------------------------- */}
+        <section className="relative bg-[#07060F] py-8 border-y border-white/[0.06]">
+          <ChannelsTicker />
+        </section>
+
+        {/* ---------------------------------------------------------- */}
         {/* Problema                                                    */}
         {/* ---------------------------------------------------------- */}
-        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+        <section className="relative bg-[#07060F] grain py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
             <span className="text-sm font-body text-white/80">{"// El punto de quiebre"}</span>
             <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
@@ -338,8 +365,8 @@ const SistemaHoteles = () => {
             <div className="mt-16 border-t border-white/10">
               {painPoints.map((p, i) => (
                 <FadeInView key={p.title} direction="up" delay={i * 0.06}>
-                  <div className="border-b border-white/10 py-8 md:py-10 grid md:grid-cols-[minmax(0,320px)_1fr] gap-4 md:gap-12">
-                    <h3 className="font-heading font-medium text-white text-xl md:text-2xl tracking-[-0.01em]">
+                  <div className="group border-b border-white/10 py-8 md:py-10 grid md:grid-cols-[minmax(0,320px)_1fr] gap-4 md:gap-12 transition-colors duration-300 hover:bg-white/[0.02] md:px-6 md:-mx-6 rounded-2xl">
+                    <h3 className="font-heading font-medium text-white text-xl md:text-2xl tracking-[-0.01em] transition-transform duration-500 ease-smooth md:group-hover:translate-x-2">
                       {p.title}
                     </h3>
                     <p className="text-sm md:text-base text-white/65 font-body font-light max-w-2xl">
@@ -380,23 +407,42 @@ const SistemaHoteles = () => {
                 <button
                   key={s.key}
                   onClick={() => setTab(i)}
-                  className={`px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.18em] transition-all duration-300 border ${
+                  className={`relative px-4 py-2 rounded-full font-mono text-[10px] uppercase tracking-[0.18em] transition-colors duration-300 border ${
                     i === tab
-                      ? "bg-primary/15 border-primary/40 text-white"
+                      ? "border-primary/40 text-white"
                       : "liquid-glass border-white/10 text-white/50 hover:text-white/80"
                   }`}
                 >
-                  {s.label}
+                  {i === tab && (
+                    <motion.span
+                      layoutId="hoteles-tab-pill"
+                      className="absolute inset-0 rounded-full bg-primary/15"
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  )}
+                  <span className="relative z-10">{s.label}</span>
                 </button>
               ))}
             </div>
 
             <div className="mt-10 grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-10 lg:gap-14 items-center">
-              <BrowserFrame key={active.key} url={active.url} className="animate-fade-in min-w-0">
-                {active.render}
-              </BrowserFrame>
+              <motion.div
+                key={active.key}
+                initial={{ opacity: 0, y: 24, scale: 0.985 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                className="min-w-0"
+              >
+                <BrowserFrame url={active.url}>{active.render}</BrowserFrame>
+              </motion.div>
 
-              <div key={`copy-${active.key}`} className="animate-fade-in min-w-0">
+              <motion.div
+                key={`copy-${active.key}`}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="min-w-0"
+              >
                 <h3 className="font-heading font-medium text-white text-2xl md:text-3xl tracking-[-0.015em]">
                   {active.title}
                 </h3>
@@ -416,7 +462,7 @@ const SistemaHoteles = () => {
                     />
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -431,24 +477,30 @@ const SistemaHoteles = () => {
               Nueve módulos, <span className="font-semibold gradient-text">un solo lugar</span>
             </h2>
 
-            <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-              {modules.map((m, i) => {
+            {/* Tilt 3D + glare, el mismo de las tarjetas del equipo en la home */}
+            <StaggerContainer
+              className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
+              staggerDelay={0.07}
+            >
+              {modules.map((m) => {
                 const Icon = m.icon;
                 return (
-                  <FadeInView key={m.name} direction="up" delay={(i % 3) * 0.06}>
-                    <div className="liquid-glass rounded-2xl border border-white/10 p-6 h-full transition-all duration-300 hover:border-primary/30 hover:bg-white/[0.03]">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
-                        <Icon className="w-4 h-4 text-primary" />
+                  <StaggerItem key={m.name} className="h-full">
+                    <Tilt className="h-full" cardClassName="!rounded-2xl h-full">
+                      <div className="liquid-glass rounded-2xl border border-white/10 p-6 h-full transition-colors duration-300 hover:border-primary/30">
+                        <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                          <Icon className="w-4 h-4 text-primary" />
+                        </div>
+                        <h3 className="mt-5 font-heading font-medium text-white text-lg tracking-[-0.01em]">
+                          {m.name}
+                        </h3>
+                        <p className="mt-2 text-sm text-white/60 font-body font-light">{m.desc}</p>
                       </div>
-                      <h3 className="mt-5 font-heading font-medium text-white text-lg tracking-[-0.01em]">
-                        {m.name}
-                      </h3>
-                      <p className="mt-2 text-sm text-white/60 font-body font-light">{m.desc}</p>
-                    </div>
-                  </FadeInView>
+                    </Tilt>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </StaggerContainer>
           </div>
         </section>
 
@@ -524,7 +576,8 @@ const SistemaHoteles = () => {
               {integrations.map((it, i) => {
                 const Icon = it.icon;
                 return (
-                  <FadeInView key={it.title} direction="up" delay={(i % 3) * 0.06}>
+                  <FadeInView key={it.title} direction="up" delay={(i % 3) * 0.06} className="h-full">
+                    <ScaleOnHover className="h-full" scale={1.02} lift={-4}>
                     <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 h-full">
                       <Icon className="w-5 h-5 text-[#26BDF0]" />
                       <h3 className="mt-5 font-heading font-medium text-white text-lg tracking-[-0.01em]">
@@ -532,6 +585,7 @@ const SistemaHoteles = () => {
                       </h3>
                       <p className="mt-2 text-sm text-white/60 font-body font-light">{it.body}</p>
                     </div>
+                    </ScaleOnHover>
                   </FadeInView>
                 );
               })}
@@ -562,14 +616,14 @@ const SistemaHoteles = () => {
 
             <div className="mt-14 grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
               {[
-                { n: "2", l: "Propiedades en operación" },
-                { n: "9", l: "Módulos en producción" },
-                { n: "0", l: "Reservas de la web digitadas a mano" },
+                { n: 2, l: "Propiedades en operación" },
+                { n: 9, l: "Módulos en producción" },
+                { n: 0, l: "Reservas de la web digitadas a mano" },
               ].map((m, i) => (
                 <FadeInView key={m.l} direction="up" delay={i * 0.08}>
                   <div className="liquid-glass-strong rounded-2xl border border-white/10 p-8">
                     <div className="font-heading font-medium text-5xl md:text-6xl gradient-text leading-none">
-                      {m.n}
+                      <AnimatedCounter value={m.n} duration={1.6} />
                     </div>
                     <div className="mt-4 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
                       {m.l}
@@ -662,8 +716,14 @@ const SistemaHoteles = () => {
               <div className="absolute inset-0 bg-black/50" />
 
               <div className="relative z-10 max-w-2xl mx-auto text-center">
-                <h2 className="font-heading font-normal text-white text-3xl md:text-5xl leading-[0.98] tracking-[-0.024em]">
-                  Te lo mostramos <span className="font-semibold gradient-text">funcionando</span>
+                <h2 className="flex flex-wrap items-baseline justify-center gap-x-[0.26em] font-heading font-normal text-white text-3xl md:text-5xl leading-[1.05] tracking-[-0.024em]">
+                  <BlurText text="Te lo mostramos" />
+                  <RotatingWord
+                    words={["funcionando", "con datos reales", "sin discurso"]}
+                    interval={2900}
+                    className="font-semibold"
+                    innerClassName="gradient-text"
+                  />
                 </h2>
                 <p className="mt-5 text-sm md:text-base text-white/70 font-body font-light">
                   Agenda una demo y recorremos el sistema con datos de un hotel real. Si tiene
