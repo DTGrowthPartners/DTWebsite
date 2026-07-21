@@ -5,7 +5,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "@/lib/smooth-scroll";
 import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
-import heroVisual from "@/assets/hero-visual.jpg";
+import adLocal from "@/assets/ads/ad-local.webp";
+import adInsta from "@/assets/ads/ad-insta.webp";
+import adCartagena from "@/assets/ads/ad-cartagena.webp";
 import { useLanguage } from "@/context/LanguageContext";
 import FadingVideo from "@/components/effects/FadingVideo";
 import RotatingWord from "@/components/effects/RotatingWord";
@@ -53,7 +55,7 @@ const InstagramAdPreview = () => (
       <MoreHorizontal className="ml-auto h-3 w-3 text-neutral-500" />
     </div>
     <div className="relative flex-1 min-h-0 overflow-hidden">
-      <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <img src={adInsta} alt="" className="absolute inset-0 h-full w-full object-cover" />
       <div className="absolute inset-x-0 bottom-0 p-1.5">
         <span className="text-[7.5px] font-medium text-white leading-tight block">
           Escala tu negocio con datos
@@ -92,7 +94,7 @@ const FacebookAdPreview = () => (
       Escala tu negocio con datos, no suposiciones.
     </p>
     <div className="relative flex-1 min-h-0 overflow-hidden">
-      <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover" />
+      <img src={adLocal} alt="" className="absolute inset-0 h-full w-full object-cover" />
     </div>
     <div className="flex items-center justify-between gap-1 bg-neutral-100 px-2 py-1.5">
       <div className="leading-tight min-w-0">
@@ -106,7 +108,7 @@ const FacebookAdPreview = () => (
 
 const StoryPreview = () => (
   <div className="absolute inset-0 bg-black flex flex-col">
-    <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover opacity-95" />
+    <img src={adCartagena} alt="" className="absolute inset-0 h-full w-full object-cover opacity-95" />
     <div className="relative flex gap-0.5 px-1.5 pt-2">
       <span className="h-[2px] flex-1 rounded-full bg-white" />
       <span className="h-[2px] flex-1 rounded-full bg-white/30" />
