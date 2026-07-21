@@ -20,12 +20,12 @@ const PANELS = 5; // intro + 4 servicios
 
 // 01 · Meta Ads — preview real de campaña: anuncio en Instagram → lead en WhatsApp
 const PhoneFrame = ({ children }: { children: ReactNode }) => (
-  <div className="relative rounded-[2rem] bg-[#101014] border border-white/25 p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
+  <div className="relative rounded-[1.35rem] bg-[#101014] border border-white/25 p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
     {/* Botones laterales */}
     <div className="absolute -right-[2px] top-[24%] h-12 w-[2.5px] rounded-r bg-white/20" />
     <div className="absolute -left-[2px] top-[20%] h-7 w-[2.5px] rounded-l bg-white/20" />
     <div className="absolute -left-[2px] top-[30%] h-7 w-[2.5px] rounded-l bg-white/20" />
-    <div className="relative rounded-[1.55rem] overflow-hidden bg-black aspect-[9/18.5]">
+    <div className="relative rounded-[1rem] overflow-hidden bg-black aspect-[9/18.5]">
       {children}
       {/* Isla de cámara */}
       <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 h-[9px] w-[38px] rounded-full bg-black ring-1 ring-white/20" />
@@ -587,7 +587,7 @@ const ServicesHorizontal = () => {
               </span>
 
               {/* Motivo grande a la derecha */}
-              <div className="sh-motif absolute right-[4vw] top-[30%] -translate-y-1/2 hidden md:block z-10 opacity-95">
+              <div className="sh-motif absolute right-[4vw] top-[42%] -translate-y-1/2 hidden md:block z-10 opacity-95">
                 <M />
               </div>
 
