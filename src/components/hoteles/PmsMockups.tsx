@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Globe, MessageCircle, CreditCard, CalendarCheck, Lock } from "lucide-react";
+import AnimatedCounter from "@/components/animations/AnimatedCounter";
 
 /* ------------------------------------------------------------------ */
 /*  Canales — misma semántica de color que el PMS real, reinterpretada  */
@@ -80,11 +82,11 @@ const isWeekend = (d: number) => d % 7 === 5 || d % 7 === 6;
 
 export const ForecastMockup = () => (
   <div className="space-y-3">
-    {/* KPIs del mes */}
+    {/* KPIs del mes — los dos primeros cuentan al entrar en pantalla */}
     <div className="grid grid-cols-4 gap-2">
       {[
-        { k: "Ocupación", v: "78%" },
-        { k: "Noches", v: "312" },
+        { k: "Ocupación", v: <AnimatedCounter value={78} suffix="%" duration={1.6} /> },
+        { k: "Noches", v: <AnimatedCounter value={312} duration={1.8} /> },
         { k: "Proyectado", v: "$48.2M" },
         { k: "Por cobrar", v: "$6.1M" },
       ].map((m) => (
@@ -136,7 +138,7 @@ export const ForecastMockup = () => (
                 style={{ gridColumn: d + 2, gridRow: r + 2 }}
                 className={`h-5 md:h-6 rounded-[3px] border ${
                   d === TODAY
-                    ? "border-[#26BDF0]/25 bg-[#26BDF0]/[0.06]"
+                    ? "border-[#26BDF0]/25 bg-[#26BDF0]/[0.06] motif-node"
                     : isWeekend(d)
                     ? "border-white/[0.06] bg-white/[0.03]"
                     : "border-white/[0.05] bg-white/[0.012]"
@@ -146,26 +148,30 @@ export const ForecastMockup = () => (
           </React.Fragment>
         ))}
 
-        {/* Reservas */}
+        {/* Reservas — se "escriben" sobre la grilla de izquierda a derecha */}
         {RESERVATIONS.map((res, i) => {
           const c = CHANNELS[res.channel].color;
           return (
-            <div
+            <motion.div
               key={i}
-              className="h-5 md:h-6 self-center rounded-[4px] border flex items-center px-1.5 overflow-hidden animate-fade-in"
+              initial={{ scaleX: 0, opacity: 0 }}
+              whileInView={{ scaleX: 1, opacity: 1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: 0.15 + i * 0.05, ease: [0.16, 1, 0.3, 1] }}
+              className="h-5 md:h-6 self-center rounded-[4px] border flex items-center px-1.5 overflow-hidden"
               style={{
                 gridColumn: `${2 + res.start} / span ${res.span}`,
                 gridRow: res.room + 2,
                 background: `linear-gradient(90deg, ${c}66, ${c}26)`,
                 borderColor: `${c}80`,
                 boxShadow: `inset 0 1px 0 rgba(255,255,255,0.12)`,
-                animationDelay: `${i * 0.04}s`,
+                transformOrigin: "left",
               }}
             >
               <span className="font-mono text-[8px] text-white/90 truncate whitespace-nowrap">
                 {res.guest}
               </span>
-            </div>
+            </motion.div>
           );
         })}
       </div>
@@ -202,19 +208,24 @@ export const DashboardMockup = () => (
   <div className="space-y-3">
     <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
       {[
-        { k: "Entradas hoy", v: "6" },
-        { k: "Salidas hoy", v: "4" },
-        { k: "En casa", v: "11" },
-        { k: "Disponibles", v: "3" },
+        { k: "Entradas hoy", v: 6 },
+        { k: "Salidas hoy", v: 4 },
+        { k: "En casa", v: 11 },
+        { k: "Disponibles", v: 3 },
       ].map((m, i) => (
-        <div
+        <motion.div
           key={m.k}
-          className="rounded-lg border border-white/[0.07] bg-white/[0.02] px-3 py-2.5 animate-fade-in"
-          style={{ animationDelay: `${i * 0.06}s` }}
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-lg border border-white/[0.07] bg-white/[0.02] px-3 py-2.5"
         >
           <div className="font-mono text-[8px] uppercase tracking-[0.18em] text-white/40">{m.k}</div>
-          <div className="font-heading text-xl md:text-2xl text-white mt-1 leading-none">{m.v}</div>
-        </div>
+          <div className="font-heading text-xl md:text-2xl text-white mt-1 leading-none">
+            <AnimatedCounter value={m.v} duration={1.2} />
+          </div>
+        </motion.div>
       ))}
     </div>
 
@@ -368,6 +379,38 @@ export const LedgerMockup = () => (
 );
 
 /* ------------------------------------------------------------------ */
+/*  Ticker de canales — mismo recurso que el marquee de marcas          */
+/* ------------------------------------------------------------------ */
+const TICKER = [
+  "Booking.com",
+  "Expedia",
+  "Airbnb",
+  "Reserva directa",
+  "WhatsApp",
+  "Walk-in",
+  "Agencia",
+  "Despegar",
+];
+
+export const ChannelsTicker = () => (
+  <div className="marquee-mask w-full overflow-hidden">
+    <div
+      className="flex w-max items-center gap-10 md:gap-14 animate-marquee"
+      style={{ "--marquee-duration": "48s" } as React.CSSProperties}
+    >
+      {[...TICKER, ...TICKER, ...TICKER].map((name, i) => (
+        <span key={i} className="flex items-center gap-3 shrink-0">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]/60" />
+          <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.22em] text-white/35 whitespace-nowrap">
+            {name}
+          </span>
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
+/* ------------------------------------------------------------------ */
 /*  Motor de reservas — flujo anti-sobreventa                          */
 /* ------------------------------------------------------------------ */
 const FLOW = [
@@ -393,29 +436,62 @@ const FLOW = [
   },
 ];
 
-export const BookingFlowMockup = () => (
-  <div className="relative">
-    <div className="absolute left-[19px] top-6 bottom-6 w-px bg-gradient-to-b from-[#0F76D6]/60 via-[#26BDF0]/40 to-transparent hidden sm:block" />
-    <div className="space-y-4">
-      {FLOW.map((step, i) => {
-        const Icon = step.icon;
-        return (
-          <div key={step.title} className="relative flex gap-4 items-start">
-            <div className="w-10 h-10 rounded-xl liquid-glass border border-white/10 flex items-center justify-center shrink-0 relative z-10 bg-[#05070F]">
-              <Icon className="w-4 h-4 text-[#26BDF0]" />
+/**
+ * Timeline con la línea dibujándose al hacer scroll — mismo recurso que el
+ * "Método" de la home, reutilizado aquí en vertical compacto.
+ */
+export const BookingFlowMockup = () => {
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: railRef,
+    offset: ["start 80%", "end 60%"],
+  });
+  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  return (
+    <div ref={railRef} className="relative">
+      {/* Riel base + línea de marca que se dibuja con el scroll */}
+      <div className="absolute left-[19px] top-6 bottom-6 w-px bg-white/10" />
+      <motion.div
+        style={{ scaleY: lineScale }}
+        className="absolute left-[19px] top-6 bottom-6 w-px origin-top bg-gradient-to-b from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF]"
+      />
+
+      <div className="space-y-4">
+        {FLOW.map((step, i) => {
+          const Icon = step.icon;
+          return (
+            <div key={step.title} className="relative flex gap-4 items-start">
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="w-10 h-10 rounded-xl liquid-glass border border-white/10 flex items-center justify-center shrink-0 relative z-10 bg-[#05070F] shadow-[0_0_25px_rgba(38,189,240,0.25)]"
+              >
+                <Icon className="w-4 h-4 text-[#26BDF0]" />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="pt-1"
+              >
+                <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
+                  0{i + 1}
+                </div>
+                <h3 className="font-heading text-base md:text-lg text-white mt-1 tracking-[-0.01em]">
+                  {step.title}
+                </h3>
+                <p className="mt-1.5 text-sm text-white/65 font-body font-light max-w-md">
+                  {step.body}
+                </p>
+              </motion.div>
             </div>
-            <div className="pt-1">
-              <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/35">
-                0{i + 1}
-              </div>
-              <h3 className="font-heading text-base md:text-lg text-white mt-1 tracking-[-0.01em]">
-                {step.title}
-              </h3>
-              <p className="mt-1.5 text-sm text-white/65 font-body font-light max-w-md">{step.body}</p>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
-  </div>
-);
+  );
+};
