@@ -381,36 +381,64 @@ export const LedgerMockup = () => (
 /* ------------------------------------------------------------------ */
 /*  Fondo del hero — la grilla del forecast como ambiente, sin datos    */
 /* ------------------------------------------------------------------ */
-const BG_COLS = 16;
-const BG_ROWS = 9;
+const BG_COLS = 26;
+const BG_ROWS = 14;
 
 type BgBar = { row: number; start: number; span: number; channel: ChannelKey };
 
-const BG_BARS: BgBar[] = [
-  { row: 0, start: 1, span: 3, channel: "booking" },
-  { row: 0, start: 6, span: 4, channel: "directo" },
-  { row: 0, start: 12, span: 3, channel: "airbnb" },
-  { row: 1, start: 0, span: 2, channel: "expedia" },
-  { row: 1, start: 4, span: 5, channel: "booking" },
-  { row: 1, start: 11, span: 2, channel: "whatsapp" },
-  { row: 2, start: 2, span: 4, channel: "directo" },
-  { row: 2, start: 9, span: 5, channel: "expedia" },
-  { row: 3, start: 0, span: 3, channel: "walkin" },
-  { row: 3, start: 7, span: 3, channel: "booking" },
-  { row: 3, start: 13, span: 3, channel: "directo" },
-  { row: 4, start: 3, span: 5, channel: "whatsapp" },
-  { row: 4, start: 10, span: 4, channel: "airbnb" },
-  { row: 5, start: 1, span: 4, channel: "booking" },
-  { row: 5, start: 8, span: 2, channel: "walkin" },
-  { row: 5, start: 12, span: 4, channel: "expedia" },
-  { row: 6, start: 0, span: 4, channel: "directo" },
-  { row: 6, start: 6, span: 3, channel: "booking" },
-  { row: 6, start: 11, span: 3, channel: "whatsapp" },
-  { row: 7, start: 2, span: 3, channel: "airbnb" },
-  { row: 7, start: 9, span: 5, channel: "directo" },
-  { row: 8, start: 4, span: 4, channel: "booking" },
-  { row: 8, start: 12, span: 2, channel: "walkin" },
+/**
+ * Ocupación generada con un PRNG de semilla fija: da un patrón que parece
+ * real (estadías de largo variable, huecos entre reservas) y es idéntico en
+ * cada render, así no baila entre recargas ni entre servidor y cliente.
+ */
+type BgMove = BgBar & { toRow: number; toStart: number; delay: number };
+
+/**
+ * Reservas que se mueven solas. Las dos primeras se intercambian el puesto
+ * (mismo span y tiempos idénticos); la tercera se muda a un hueco libre.
+ */
+const BG_MOVES: BgMove[] = [
+  { row: 3, start: 5, span: 3, channel: "booking", toRow: 8, toStart: 15, delay: 0 },
+  { row: 8, start: 15, span: 3, channel: "airbnb", toRow: 3, toStart: 5, delay: 0 },
+  { row: 6, start: 19, span: 4, channel: "whatsapp", toRow: 11, toStart: 9, delay: 3.6 },
 ];
+
+const overlaps = (a: { row: number; start: number; span: number }, row: number, start: number, span: number) =>
+  a.row === row && a.start < start + span && start < a.start + a.span;
+
+const BG_BARS: BgBar[] = (() => {
+  const channels: ChannelKey[] = [
+    "booking",
+    "directo",
+    "airbnb",
+    "expedia",
+    "whatsapp",
+    "walkin",
+  ];
+  let seed = 20260721;
+  const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  const bars: BgBar[] = [];
+  for (let row = 0; row < BG_ROWS; row++) {
+    let col = Math.floor(rnd() * 4);
+    while (col < BG_COLS) {
+      const span = 2 + Math.floor(rnd() * 5);
+      if (col + span <= BG_COLS) {
+        bars.push({ row, start: col, span, channel: channels[Math.floor(rnd() * channels.length)] });
+      }
+      col += span + 1 + Math.floor(rnd() * 4);
+    }
+  }
+
+  // Libera las casillas de origen y destino de cada movimiento: si no, una
+  // reserva aterrizaría encima de otra, que es justo lo que el sistema impide.
+  return bars.filter(
+    (b) =>
+      !BG_MOVES.some(
+        (m) => overlaps(b, m.row, m.start, m.span) || overlaps(b, m.toRow, m.toStart, m.span)
+      )
+  );
+})();
 
 const colPct = 100 / BG_COLS;
 const rowPct = 100 / BG_ROWS;
@@ -419,12 +447,12 @@ const barStyle = (b: BgBar): React.CSSProperties => {
   const c = CHANNELS[b.channel].color;
   return {
     left: `${b.start * colPct}%`,
-    top: `calc(${b.row * rowPct}% + 6px)`,
-    width: `calc(${b.span * colPct}% - 6px)`,
-    height: `calc(${rowPct}% - 12px)`,
-    background: `linear-gradient(90deg, ${c}55, ${c}1f)`,
-    border: `1px solid ${c}66`,
-    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)",
+    top: `calc(${b.row * rowPct}% + 4px)`,
+    width: `calc(${b.span * colPct}% - 5px)`,
+    height: `calc(${rowPct}% - 8px)`,
+    background: `linear-gradient(90deg, ${c}bf, ${c}59)`,
+    border: `1px solid ${c}`,
+    boxShadow: `inset 0 1px 0 rgba(255,255,255,0.22), 0 0 22px ${c}33`,
   };
 };
 
@@ -434,10 +462,10 @@ const barStyle = (b: BgBar): React.CSSProperties => {
  * habitación y otra fecha — el drag & drop es una función real del módulo.
  */
 export const ForecastBackdrop = () => {
-  /* La que se arrastra ocupa 3 celdas: moverla 5 columnas equivale a 5/3 de
-     su propio ancho (166%), y 3 filas a 3 veces su propio alto (300%). Así el
-     movimiento va por transform y no toca el layout. */
-  const drag: BgBar = { row: 1, start: 2, span: 3, channel: "directo" };
+  /* El desplazamiento se expresa en % del propio elemento: moverse N columnas
+     equivale a N/span de su ancho, y M filas a M veces su alto. Así todo va
+     por transform y no toca el layout. */
+  const CYCLE = 12;
 
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -446,7 +474,7 @@ export const ForecastBackdrop = () => {
         className="absolute inset-0"
         style={{
           backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.055) 1px, transparent 1px)",
+            "linear-gradient(to right, rgba(255,255,255,0.10) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.10) 1px, transparent 1px)",
           backgroundSize: `${colPct}% ${rowPct}%`,
         }}
       />
@@ -460,7 +488,7 @@ export const ForecastBackdrop = () => {
             animate={{ opacity: 1, scaleX: 1 }}
             transition={{
               duration: 0.5,
-              delay: 0.2 + i * 0.045,
+              delay: 0.15 + Math.min(i * 0.014, 1.1),
               ease: [0.16, 1, 0.3, 1],
             }}
             className="absolute rounded-[4px] origin-left"
@@ -468,56 +496,60 @@ export const ForecastBackdrop = () => {
           />
         ))}
 
-        {/* Hueco que deja la reserva mientras se arrastra */}
-        <motion.div
-          className="absolute rounded-[4px] border border-dashed border-white/20"
-          style={{
-            left: `${drag.start * colPct}%`,
-            top: `calc(${drag.row * rowPct}% + 6px)`,
-            width: `calc(${drag.span * colPct}% - 6px)`,
-            height: `calc(${rowPct}% - 12px)`,
-          }}
-          animate={{ opacity: [0, 0, 0.9, 0.9, 0] }}
-          transition={{
-            duration: 11,
-            times: [0, 0.1, 0.16, 0.62, 0.72],
-            repeat: Infinity,
-            repeatDelay: 1.5,
-            ease: "linear",
-          }}
-        />
+        {/* Reservas que se mueven, con el hueco punteado que dejan atrás */}
+        {BG_MOVES.map((m, i) => {
+          const dx = `${((m.toStart - m.start) / m.span) * 100}%`;
+          const dy = `${(m.toRow - m.row) * 100}%`;
+          const flat = "inset 0 1px 0 rgba(255,255,255,0.22)";
+          const lifted =
+            "0 14px 34px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.35)";
 
-        {/* La reserva que se arrastra */}
-        <motion.div
-          className="absolute rounded-[4px]"
-          style={barStyle(drag)}
-          animate={{
-            x: ["0%", "0%", "166%", "166%", "0%", "0%"],
-            y: ["0%", "0%", "300%", "300%", "0%", "0%"],
-            scale: [1, 1.07, 1.07, 1, 1, 1],
-            boxShadow: [
-              "inset 0 1px 0 rgba(255,255,255,0.10)",
-              "0 12px 30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25)",
-              "0 12px 30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25)",
-              "inset 0 1px 0 rgba(255,255,255,0.10)",
-              "inset 0 1px 0 rgba(255,255,255,0.10)",
-              "inset 0 1px 0 rgba(255,255,255,0.10)",
-            ],
-          }}
-          transition={{
-            duration: 11,
-            times: [0, 0.14, 0.42, 0.52, 0.78, 1],
-            repeat: Infinity,
-            repeatDelay: 1.5,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-        />
+          return (
+            <React.Fragment key={`move-${i}`}>
+              <motion.div
+                className="absolute rounded-[4px] border border-dashed border-white/25"
+                style={{
+                  left: `${m.start * colPct}%`,
+                  top: `calc(${m.row * rowPct}% + 4px)`,
+                  width: `calc(${m.span * colPct}% - 5px)`,
+                  height: `calc(${rowPct}% - 8px)`,
+                }}
+                animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
+                transition={{
+                  duration: CYCLE,
+                  times: [0, 0.12, 0.2, 0.6, 0.72, 1],
+                  repeat: Infinity,
+                  delay: m.delay,
+                  ease: "linear",
+                }}
+              />
+
+              <motion.div
+                className="absolute rounded-[4px]"
+                style={barStyle(m)}
+                animate={{
+                  x: ["0%", "0%", dx, dx, "0%", "0%"],
+                  y: ["0%", "0%", dy, dy, "0%", "0%"],
+                  scale: [1, 1.08, 1.08, 1, 1, 1],
+                  boxShadow: [flat, lifted, lifted, flat, flat, flat],
+                }}
+                transition={{
+                  duration: CYCLE,
+                  times: [0, 0.14, 0.42, 0.52, 0.78, 1],
+                  repeat: Infinity,
+                  delay: m.delay,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              />
+            </React.Fragment>
+          );
+        })}
       </div>
 
       {/* Columna del día de hoy */}
       <div
         className="absolute top-0 bottom-0 bg-[#26BDF0]/[0.05] border-x border-[#26BDF0]/15 motif-node"
-        style={{ left: `${6 * colPct}%`, width: `${colPct}%` }}
+        style={{ left: `${16 * colPct}%`, width: `${colPct}%` }}
       />
     </div>
   );

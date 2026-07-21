@@ -274,13 +274,11 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section className="relative bg-black overflow-hidden min-h-[92vh] flex items-center">
           {/* La grilla del forecast es el ambiente del hero, no una captura */}
-          <div className="absolute inset-0 opacity-[0.55]">
-            <ForecastBackdrop />
-          </div>
+          <ForecastBackdrop />
 
-          {/* Velos: el texto manda, la grilla acompaña */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/35" />
-          <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_10%_40%,rgba(0,0,0,0.92),transparent_60%)]" />
+          {/* Un solo velo, direccional: opaco donde va el texto, transparente
+              en la derecha para que los bloques se vean a plena intensidad. */}
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.97)_0%,rgba(0,0,0,0.94)_32%,rgba(0,0,0,0.62)_55%,rgba(0,0,0,0.15)_78%,transparent_100%)]" />
 
           <Aurora
             blobs={[
