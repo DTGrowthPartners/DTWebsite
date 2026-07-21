@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 import {
   FadeInView,
   AnimatedCounter,
-  FloatingElement,
   StaggerContainer,
   StaggerItem,
   ScaleOnHover,
@@ -30,6 +29,7 @@ import {
   LedgerMockup,
   BookingFlowMockup,
   ChannelsTicker,
+  ForecastBackdrop,
 } from "@/components/hoteles/PmsMockups";
 import {
   ArrowRight,
@@ -272,21 +272,29 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         {/* Hero                                                        */}
         {/* ---------------------------------------------------------- */}
-        <section className="relative bg-black overflow-hidden">
+        <section className="relative bg-black overflow-hidden min-h-[92vh] flex items-center">
+          {/* La grilla del forecast es el ambiente del hero, no una captura */}
+          <div className="absolute inset-0 opacity-[0.55]">
+            <ForecastBackdrop />
+          </div>
+
+          {/* Velos: el texto manda, la grilla acompaña */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/35" />
+          <div className="absolute inset-0 bg-[radial-gradient(120%_100%_at_10%_40%,rgba(0,0,0,0.92),transparent_60%)]" />
+
           <Aurora
             blobs={[
-              { color: "blue", className: "-top-40 left-[5%] w-[620px] h-[620px] opacity-30" },
+              { color: "blue", className: "-top-40 left-[5%] w-[620px] h-[620px] opacity-25" },
               {
                 color: "cyan",
-                className: "top-[20%] right-[-120px] w-[540px] h-[540px] opacity-20",
+                className: "top-[20%] right-[-120px] w-[540px] h-[540px] opacity-15",
                 delay: "-6s",
               },
             ]}
           />
 
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pt-16 pb-24 md:pt-24 md:pb-32">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 lg:gap-16 items-center">
-              <div className="min-w-0">
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pt-24 pb-28 md:pt-28 md:pb-36">
+            <div className="max-w-3xl">
                 <span className="text-sm font-body text-white/80">{"// Software para hoteles"}</span>
 
                 {/* La palabra rotativa va sola en su renglón y al final del
@@ -333,16 +341,7 @@ const SistemaHoteles = () => {
                       </span>
                     </span>
                   ))}
-                </div>
               </div>
-
-              <FadeInView direction="up" delay={0.15} className="min-w-0">
-                <FloatingElement amplitude={5} duration={7}>
-                  <BrowserFrame url="tuhotel.com/dashboard/forecast">
-                    <ForecastMockup />
-                  </BrowserFrame>
-                </FloatingElement>
-              </FadeInView>
             </div>
           </div>
 

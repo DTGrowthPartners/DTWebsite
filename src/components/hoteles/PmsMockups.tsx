@@ -379,6 +379,151 @@ export const LedgerMockup = () => (
 );
 
 /* ------------------------------------------------------------------ */
+/*  Fondo del hero — la grilla del forecast como ambiente, sin datos    */
+/* ------------------------------------------------------------------ */
+const BG_COLS = 16;
+const BG_ROWS = 9;
+
+type BgBar = { row: number; start: number; span: number; channel: ChannelKey };
+
+const BG_BARS: BgBar[] = [
+  { row: 0, start: 1, span: 3, channel: "booking" },
+  { row: 0, start: 6, span: 4, channel: "directo" },
+  { row: 0, start: 12, span: 3, channel: "airbnb" },
+  { row: 1, start: 0, span: 2, channel: "expedia" },
+  { row: 1, start: 4, span: 5, channel: "booking" },
+  { row: 1, start: 11, span: 2, channel: "whatsapp" },
+  { row: 2, start: 2, span: 4, channel: "directo" },
+  { row: 2, start: 9, span: 5, channel: "expedia" },
+  { row: 3, start: 0, span: 3, channel: "walkin" },
+  { row: 3, start: 7, span: 3, channel: "booking" },
+  { row: 3, start: 13, span: 3, channel: "directo" },
+  { row: 4, start: 3, span: 5, channel: "whatsapp" },
+  { row: 4, start: 10, span: 4, channel: "airbnb" },
+  { row: 5, start: 1, span: 4, channel: "booking" },
+  { row: 5, start: 8, span: 2, channel: "walkin" },
+  { row: 5, start: 12, span: 4, channel: "expedia" },
+  { row: 6, start: 0, span: 4, channel: "directo" },
+  { row: 6, start: 6, span: 3, channel: "booking" },
+  { row: 6, start: 11, span: 3, channel: "whatsapp" },
+  { row: 7, start: 2, span: 3, channel: "airbnb" },
+  { row: 7, start: 9, span: 5, channel: "directo" },
+  { row: 8, start: 4, span: 4, channel: "booking" },
+  { row: 8, start: 12, span: 2, channel: "walkin" },
+];
+
+const colPct = 100 / BG_COLS;
+const rowPct = 100 / BG_ROWS;
+
+const barStyle = (b: BgBar): React.CSSProperties => {
+  const c = CHANNELS[b.channel].color;
+  return {
+    left: `${b.start * colPct}%`,
+    top: `calc(${b.row * rowPct}% + 6px)`,
+    width: `calc(${b.span * colPct}% - 6px)`,
+    height: `calc(${rowPct}% - 12px)`,
+    background: `linear-gradient(90deg, ${c}55, ${c}1f)`,
+    border: `1px solid ${c}66`,
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.10)",
+  };
+};
+
+/**
+ * La grilla del forecast usada como fondo del hero: sin nombres, sin cifras,
+ * solo el tejido de bloques por canal. Una reserva se arrastra sola a otra
+ * habitación y otra fecha — el drag & drop es una función real del módulo.
+ */
+export const ForecastBackdrop = () => {
+  /* La que se arrastra ocupa 3 celdas: moverla 5 columnas equivale a 5/3 de
+     su propio ancho (166%), y 3 filas a 3 veces su propio alto (300%). Así el
+     movimiento va por transform y no toca el layout. */
+  const drag: BgBar = { row: 1, start: 2, span: 3, channel: "directo" };
+
+  return (
+    <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Tejido de celdas */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.055) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.055) 1px, transparent 1px)",
+          backgroundSize: `${colPct}% ${rowPct}%`,
+        }}
+      />
+
+      {/* Reservas */}
+      <div className="absolute inset-0">
+        {BG_BARS.map((b, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.2 + i * 0.045,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="absolute rounded-[4px] origin-left"
+            style={barStyle(b)}
+          />
+        ))}
+
+        {/* Hueco que deja la reserva mientras se arrastra */}
+        <motion.div
+          className="absolute rounded-[4px] border border-dashed border-white/20"
+          style={{
+            left: `${drag.start * colPct}%`,
+            top: `calc(${drag.row * rowPct}% + 6px)`,
+            width: `calc(${drag.span * colPct}% - 6px)`,
+            height: `calc(${rowPct}% - 12px)`,
+          }}
+          animate={{ opacity: [0, 0, 0.9, 0.9, 0] }}
+          transition={{
+            duration: 11,
+            times: [0, 0.1, 0.16, 0.62, 0.72],
+            repeat: Infinity,
+            repeatDelay: 1.5,
+            ease: "linear",
+          }}
+        />
+
+        {/* La reserva que se arrastra */}
+        <motion.div
+          className="absolute rounded-[4px]"
+          style={barStyle(drag)}
+          animate={{
+            x: ["0%", "0%", "166%", "166%", "0%", "0%"],
+            y: ["0%", "0%", "300%", "300%", "0%", "0%"],
+            scale: [1, 1.07, 1.07, 1, 1, 1],
+            boxShadow: [
+              "inset 0 1px 0 rgba(255,255,255,0.10)",
+              "0 12px 30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25)",
+              "0 12px 30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25)",
+              "inset 0 1px 0 rgba(255,255,255,0.10)",
+              "inset 0 1px 0 rgba(255,255,255,0.10)",
+              "inset 0 1px 0 rgba(255,255,255,0.10)",
+            ],
+          }}
+          transition={{
+            duration: 11,
+            times: [0, 0.14, 0.42, 0.52, 0.78, 1],
+            repeat: Infinity,
+            repeatDelay: 1.5,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+        />
+      </div>
+
+      {/* Columna del día de hoy */}
+      <div
+        className="absolute top-0 bottom-0 bg-[#26BDF0]/[0.05] border-x border-[#26BDF0]/15 motif-node"
+        style={{ left: `${6 * colPct}%`, width: `${colPct}%` }}
+      />
+    </div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
 /*  Ticker de canales — mismo recurso que el marquee de marcas          */
 /* ------------------------------------------------------------------ */
 const TICKER = [
