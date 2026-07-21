@@ -70,6 +70,59 @@ const InstagramAdPreview = () => (
   </div>
 );
 
+const FacebookAdPreview = () => (
+  <div className="absolute inset-0 bg-white flex flex-col font-body">
+    <div className="px-2.5 pt-2.5 pb-1 text-[11px] font-bold tracking-tight text-[#1877F2]">facebook</div>
+    <div className="flex items-center gap-1.5 px-2 pb-1">
+      <span className="grid h-4.5 w-4.5 shrink-0 place-items-center rounded-full bg-[#0F76D6] text-white text-[6.5px] font-semibold" style={{ width: 18, height: 18 }}>
+        DT
+      </span>
+      <div className="leading-tight">
+        <div className="text-[7.5px] font-semibold text-neutral-900">DT Growth Partners</div>
+        <div className="text-[6px] text-neutral-500">Publicidad · 🌎</div>
+      </div>
+      <MoreHorizontal className="ml-auto h-2.5 w-2.5 text-neutral-400" />
+    </div>
+    <p className="px-2 pb-1 text-[6.5px] text-neutral-700 leading-snug">
+      Escala tu negocio con datos, no suposiciones.
+    </p>
+    <div className="relative flex-1 min-h-0 overflow-hidden">
+      <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover" />
+    </div>
+    <div className="flex items-center justify-between gap-1 bg-neutral-100 px-2 py-1.5">
+      <div className="leading-tight min-w-0">
+        <div className="text-[5.5px] text-neutral-400">api.whatsapp.com</div>
+        <div className="text-[6.5px] font-semibold text-neutral-800 truncate">Agenda tu consulta</div>
+      </div>
+      <span className="shrink-0 rounded bg-[#25D366] text-white text-[6px] font-medium px-1.5 py-0.5">WhatsApp</span>
+    </div>
+  </div>
+);
+
+const StoryPreview = () => (
+  <div className="absolute inset-0 bg-black flex flex-col">
+    <img src={heroVisual} alt="" className="absolute inset-0 h-full w-full object-cover opacity-95" />
+    <div className="relative flex gap-0.5 px-1.5 pt-2">
+      <span className="h-[2px] flex-1 rounded-full bg-white" />
+      <span className="h-[2px] flex-1 rounded-full bg-white/30" />
+      <span className="h-[2px] flex-1 rounded-full bg-white/30" />
+    </div>
+    <div className="relative flex items-center gap-1 px-1.5 pt-1.5">
+      <span className="grid place-items-center rounded-full bg-[#0F76D6] text-white text-[6px] font-semibold" style={{ width: 15, height: 15 }}>
+        DT
+      </span>
+      <span className="text-[6.5px] text-white font-body">dtgrowthpartners · <span className="text-white/70">Publicidad</span></span>
+    </div>
+    <div className="flex-1" />
+    <div className="relative px-2 pb-1 text-center">
+      <div className="text-[8px] text-white font-body font-medium leading-tight">Crecimiento medible para tu negocio</div>
+    </div>
+    <div className="relative mx-auto mb-2.5 rounded-full bg-white px-2.5 py-1 text-[6.5px] font-semibold text-black font-body">
+      Más información
+    </div>
+  </div>
+);
+
 const WhatsAppLeadPreview = () => (
   <div className="absolute inset-0 bg-[#EFE7DC] flex flex-col font-body">
     <div className="flex items-center gap-1.5 bg-[#075E54] px-2 pt-3 pb-1.5 text-white">
@@ -109,24 +162,30 @@ const WhatsAppLeadPreview = () => (
   </div>
 );
 
+const AD_PHONES = [
+  { label: "Feed de Facebook", C: FacebookAdPreview, cls: "-rotate-3 translate-y-3", dur: "6s", delay: "0s" },
+  { label: "Feed de Instagram", C: InstagramAdPreview, cls: "z-10 -translate-y-1", dur: "5.2s", delay: "0.3s" },
+  { label: "Historias", C: StoryPreview, cls: "rotate-2 translate-y-2", dur: "6.6s", delay: "0.6s" },
+  { label: "Tu WhatsApp", C: WhatsAppLeadPreview, cls: "rotate-[5deg] translate-y-4", dur: "5.8s", delay: "0.9s" },
+];
+
 const MotifAds = () => (
-  <div className="relative w-[290px] h-[330px]">
-    {/* Anuncio en Instagram */}
-    <div className="absolute left-0 top-0 w-[150px] -rotate-6 animate-float" style={{ animationDuration: "6s" }}>
-      <PhoneFrame>
-        <InstagramAdPreview />
-      </PhoneFrame>
-    </div>
-    {/* Conversación del lead en WhatsApp */}
-    <div className="absolute right-0 top-10 w-[150px] rotate-6 animate-float" style={{ animationDuration: "5s", animationDelay: "0.9s" }}>
-      <PhoneFrame>
-        <WhatsAppLeadPreview />
-      </PhoneFrame>
-    </div>
-    {/* Conector: del anuncio al lead */}
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 liquid-glass rounded-full px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.15em] text-white/90 z-10">
-      Lead →
-    </div>
+  <div className="flex items-start gap-2.5 md:gap-3">
+    {AD_PHONES.map((phone) => {
+      const Preview = phone.C;
+      return (
+        <div key={phone.label} className={"flex flex-col items-center gap-2 " + phone.cls}>
+          <div className="w-[102px] md:w-[116px] animate-float" style={{ animationDuration: phone.dur, animationDelay: phone.delay }}>
+            <PhoneFrame>
+              <Preview />
+            </PhoneFrame>
+          </div>
+          <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/55 whitespace-nowrap">
+            {phone.label}
+          </span>
+        </div>
+      );
+    })}
   </div>
 );
 

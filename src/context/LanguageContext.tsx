@@ -235,7 +235,7 @@ const translations = {
     "hero.badgeChip": "Nuevo",
     "hero.badgeText": "Consultoría estratégica de crecimiento gratis — cupos limitados",
     "hero.rotatingWords": "ciencia|datos|IA|estrategia",
-    "services.rotating": "dimensiones|plataformas|etapas",
+    "services.rotating": "las dimensiones|las plataformas|las etapas",
     "cases.rotating": "datos|estrategia|ciencia",
     "method.rotating": "siguiente nivel|crecimiento real",
     "team.rotating": "DT Growth|tu crecimiento|tus resultados",
@@ -255,7 +255,7 @@ const translations = {
     "services.scrollHint": "Desplázate para explorar",
 
     // Services Section
-    "services.title": "Crecimiento en todas las",
+    "services.title": "Crecimiento en todas",
     "services.titleHighlight": "dimensiones",
     "services.subtitle": "Performance, desarrollo y sistemas trabajando en conjunto para escalar tu negocio",
     "services.metaAds": "Meta Ads",
