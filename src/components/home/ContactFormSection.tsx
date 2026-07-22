@@ -74,17 +74,16 @@ const ContactFormSection = () => {
         duration: 0.8,
         stagger: 0.12,
         ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 72%", toggleActions: "play none none reverse" },
+        scrollTrigger: { trigger: sectionRef.current, start: "top 72%", once: true },
       });
 
       gsap.from(".cf-chip", {
-        y: 22,
+        y: 14,
         opacity: 0,
-        scale: 0.85,
-        duration: 0.6,
-        stagger: 0.09,
-        ease: "back.out(1.8)",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 62%", toggleActions: "play none none reverse" },
+        duration: 0.55,
+        stagger: 0.07,
+        ease: "power3.out",
+        scrollTrigger: { trigger: sectionRef.current, start: "top 68%", once: true },
       });
 
       gsap.from(".cf-field", {
@@ -93,7 +92,7 @@ const ContactFormSection = () => {
         duration: 0.7,
         stagger: 0.08,
         ease: "power3.out",
-        scrollTrigger: { trigger: formRef.current, start: "top 82%", toggleActions: "play none none reverse" },
+        scrollTrigger: { trigger: formRef.current, start: "top 82%", once: true },
       });
 
       if (magnet) {
