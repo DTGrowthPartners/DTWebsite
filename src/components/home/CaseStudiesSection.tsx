@@ -25,6 +25,7 @@ const CaseStudiesSection = () => {
       improvement: "ROI 4.2x",
       descKey: "cases.ecommerceDesc",
       tags: ["Meta Ads", "E-commerce", "Performance"],
+      growth: [18, 24, 22, 35, 42, 55, 68, 100],
       mainMetric: "$250K USD en ventas",
       secondaryMetric: "ROI 4.2x",
     },
@@ -38,6 +39,7 @@ const CaseStudiesSection = () => {
       improvement: "ROAS 5.2x",
       descKey: "cases.clinicDesc",
       tags: ["Meta Ads", "WhatsApp", "Leads"],
+      growth: [12, 20, 30, 28, 45, 60, 78, 100],
       mainMetric: "350M COP en ventas generadas",
       secondaryMetric: "ROAS 5.2x",
     },
@@ -51,6 +53,7 @@ const CaseStudiesSection = () => {
       improvement: "3.1x conversión",
       descKey: "cases.localRetailDesc",
       tags: ["Web Development", "B2B", "SEO"],
+      growth: [15, 18, 30, 45, 40, 62, 85, 100],
       mainMetric: "+320% cotizaciones",
       secondaryMetric: "3.1x conversión",
     },
@@ -90,7 +93,7 @@ const CaseStudiesSection = () => {
               >
                 <button
                   onClick={() => setExpanded(isOpen ? null : index)}
-                  className="w-full text-left py-10 md:py-12 grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr_auto] gap-6 md:gap-10 items-center transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
+                  className="w-full text-left py-10 md:py-12 grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr_auto] lg:grid-cols-[minmax(240px,300px)_1fr_auto_auto] gap-6 md:gap-10 items-center transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
                 >
                   {/* Métrica protagonista */}
                   <div>
@@ -123,6 +126,32 @@ const CaseStudiesSection = () => {
                           {tag}
                         </span>
                       ))}
+                    </div>
+                  </div>
+
+                  {/* Mini-gráfica: el crecimiento se "escribe" solo (efecto DT Hotels) */}
+                  <div className="hidden lg:block w-[200px] shrink-0 self-center">
+                    <div className="flex items-end gap-1.5 h-20 border-b border-white/10">
+                      {c.growth.map((h, bi) => (
+                        <motion.div
+                          key={bi}
+                          initial={{ scaleY: 0 }}
+                          whileInView={{ scaleY: 1 }}
+                          viewport={{ once: true, margin: "-60px" }}
+                          transition={{ duration: 0.5, delay: 0.25 + bi * 0.07, ease: [0.16, 1, 0.3, 1] }}
+                          style={{ height: h + "%", transformOrigin: "bottom" }}
+                          className={
+                            "flex-1 rounded-t-[3px] " +
+                            (bi === c.growth.length - 1
+                              ? "bg-gradient-to-t from-[#0F76D6] to-[#C2FBFF] shadow-[0_0_18px_rgba(38,189,240,0.45)]"
+                              : "bg-gradient-to-t from-[#0F76D6]/45 to-[#26BDF0]/70")
+                          }
+                        />
+                      ))}
+                    </div>
+                    <div className="mt-2 flex justify-between font-mono text-[8px] uppercase tracking-[0.18em] text-white/35">
+                      <span>{"// evolución"}</span>
+                      <span className="text-[#26BDF0]">{c.improvement}</span>
                     </div>
                   </div>
 
