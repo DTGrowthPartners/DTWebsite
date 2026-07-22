@@ -658,7 +658,7 @@ const SistemaHoteles = () => {
             ]}
           />
           {/* El chiste de la sección: se llama "Sin humo" y es la única con humo. */}
-          <Smoke density={16} opacity={0.5} speed={-16} />
+          <Smoke density={14} opacity={0.42} speed={-16} />
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 text-center">
             <span className="text-sm font-body text-white/80">{"// Sin humo"}</span>
             <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-4xl mx-auto">
@@ -677,12 +677,14 @@ const SistemaHoteles = () => {
                 { n: 9, l: "Módulos en producción" },
                 { n: 0, l: "Reservas de la web digitadas a mano" },
               ].map((m, i) => (
-                <FadeInView key={m.l} direction="up" delay={i * 0.08}>
-                  <div className="liquid-glass-strong rounded-2xl border border-white/10 p-8">
+                <FadeInView key={m.l} direction="up" delay={i * 0.08} className="h-full">
+                  {/* h-full + flex: las tres cards igualan altura y el label
+                      queda anclado abajo aunque ocupe una o dos líneas. */}
+                  <div className="liquid-glass-strong rounded-2xl border border-white/10 p-8 h-full flex flex-col">
                     <div className="font-heading font-medium text-5xl md:text-6xl gradient-text leading-none">
                       <AnimatedCounter value={m.n} duration={1.6} />
                     </div>
-                    <div className="mt-4 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 mt-auto pt-4">
                       {m.l}
                     </div>
                   </div>
