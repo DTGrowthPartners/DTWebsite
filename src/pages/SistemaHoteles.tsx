@@ -6,7 +6,6 @@ import ContactFormSection from "@/components/home/ContactFormSection";
 import Aurora from "@/components/effects/Aurora";
 import BlurText from "@/components/effects/BlurText";
 import RotatingWord from "@/components/effects/RotatingWord";
-import Smoke from "@/components/effects/Smoke";
 import Tilt from "@/components/effects/Tilt";
 import { motion } from "framer-motion";
 import {
@@ -657,8 +656,6 @@ const SistemaHoteles = () => {
               { color: "cyan", className: "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] opacity-15" },
             ]}
           />
-          {/* El chiste de la sección: se llama "Sin humo" y es la única con humo. */}
-          <Smoke density={14} opacity={0.42} speed={-16} />
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 text-center">
             <span className="text-sm font-body text-white/80">{"// Sin humo"}</span>
             <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-4xl mx-auto">
