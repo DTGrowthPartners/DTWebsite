@@ -38,12 +38,16 @@ const CurtainReveal = ({ children }: { children: ReactNode }) => {
         });
       }
 
+      // power2.out (no linear): con lineal el contenido está inmóvil durante
+      // toda la cortina y al terminar arranca de golpe a velocidad de scroll.
+      // Con esta curva deriva al inicio (aún enmascarado), flota a mitad y
+      // llega al final ya moviéndose a la velocidad del scroll → sin "asentón".
       gsap.fromTo(
         innerRef.current,
         { y: () => -window.innerHeight },
         {
           y: 0,
-          ease: "none",
+          ease: "power2.out",
           scrollTrigger: {
             trigger: wrap,
             start: "top bottom",
