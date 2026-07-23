@@ -32,8 +32,10 @@ const ORBIT_DURATIONS = ["70s", "70s"];
 const AgentsOrbit = ({ names, humans }: { names: string[]; humans: { img: string; name: string }[] }) => {
   const { t } = useLanguage();
   return (
-    <div className="relative flex items-center justify-center h-[400px] sm:h-[560px] overflow-visible">
-      <div className="relative w-[560px] h-[560px] shrink-0 scale-[0.62] sm:scale-100">
+    <div className="relative h-[400px] sm:h-[560px] w-full max-w-full overflow-visible">
+      {/* La caja de 560px va en absoluto: si estuviera en el flujo ensancharía
+          la columna más allá del viewport móvil (el scale no reduce el layout). */}
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[560px] h-[560px] scale-[0.62] sm:scale-100">
         {/* Anillos por órbita, girando en sentidos opuestos */}
         {ORBIT_RADII.map((r, orbit) => (
           <div
@@ -173,10 +175,10 @@ const TeamSection = () => {
               key={member.name}
               className={`sm:w-auto sm:max-w-none ${
                 i === 0
-                  ? "w-[34vw] max-w-[135px] -rotate-[8deg] translate-y-4 -mr-10 z-0"
+                  ? "w-[30vw] max-w-[120px] -rotate-[8deg] translate-y-4 -mr-10 z-0"
                   : i === 2
-                    ? "w-[34vw] max-w-[135px] rotate-[8deg] translate-y-4 -ml-10 z-0"
-                    : "w-[42vw] max-w-[165px] z-10"
+                    ? "w-[30vw] max-w-[120px] rotate-[8deg] translate-y-4 -ml-10 z-0"
+                    : "w-[38vw] max-w-[150px] z-10"
               } sm:rotate-0 sm:translate-y-0 sm:mx-0 sm:z-auto`}
             >
               <motion.div

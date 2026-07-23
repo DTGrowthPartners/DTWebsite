@@ -583,7 +583,7 @@ const ServicesHorizontal = () => {
               {/* Número fantasma gigante con parallax propio */}
               <span
                 aria-hidden
-                className="sh-num pointer-events-none select-none absolute -top-[2vw] right-[2vw] font-heading font-semibold text-white/[0.07] text-[34vw] md:text-[24vw] leading-none z-0"
+                className="sh-num pointer-events-none select-none absolute bottom-[44%] md:bottom-auto md:-top-[2vw] right-[2vw] font-heading font-semibold text-white/[0.07] text-[34vw] md:text-[24vw] leading-none z-0"
               >
                 {s.num}
               </span>
@@ -598,7 +598,7 @@ const ServicesHorizontal = () => {
                 <span className="sh-stagger block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0]">
                   {"Servicio " + s.num + " — 04"}
                 </span>
-                <h3 className="sh-title mt-3 font-heading font-medium text-white text-[14vw] md:text-[9vw] leading-[0.95] tracking-[-0.035em] whitespace-nowrap">
+                <h3 className="sh-title mt-3 font-heading font-medium text-white text-[12vw] md:text-[9vw] leading-[0.95] tracking-[-0.035em] md:whitespace-nowrap">
                   {t(s.titleKey)}
                 </h3>
                 <p className="sh-stagger mt-5 text-base md:text-xl text-white/85 font-body font-light leading-snug max-w-2xl">
