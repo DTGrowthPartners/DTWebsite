@@ -56,16 +56,10 @@ const ContactFormSection = () => {
   const widgetIdRef = useRef<number | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
-  const magnetRef = useRef<HTMLSpanElement | null>(null);
-
-  /* GSAP: reveals escalonados de la sección + botón de envío magnético */
+  /* GSAP: reveals escalonados de la sección */
   useLayoutEffect(() => {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
-
-    const magnet = magnetRef.current;
-    let move: ((e: PointerEvent) => void) | null = null;
-    let leave: (() => void) | null = null;
 
     const ctx = gsap.context(() => {
       gsap.from(".cf-rev", {
@@ -95,29 +89,9 @@ const ContactFormSection = () => {
         scrollTrigger: { trigger: formRef.current, start: "top 82%", once: true },
       });
 
-      if (magnet) {
-        const xTo = gsap.quickTo(magnet, "x", { duration: 0.4, ease: "power3.out" });
-        const yTo = gsap.quickTo(magnet, "y", { duration: 0.4, ease: "power3.out" });
-        move = (e: PointerEvent) => {
-          const r = magnet.getBoundingClientRect();
-          xTo((e.clientX - (r.left + r.width / 2)) / 4);
-          yTo((e.clientY - (r.top + r.height / 2)) / 4);
-        };
-        leave = () => {
-          gsap.to(magnet, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" });
-        };
-        magnet.addEventListener("pointermove", move);
-        magnet.addEventListener("pointerleave", leave);
-      }
     }, sectionRef);
 
-    return () => {
-      if (magnet && move && leave) {
-        magnet.removeEventListener("pointermove", move);
-        magnet.removeEventListener("pointerleave", leave);
-      }
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   // Site key de reCAPTCHA desde variables de entorno
@@ -380,27 +354,22 @@ const ContactFormSection = () => {
             {recaptchaError && <p className="mt-2 text-sm text-red-400">{recaptchaError}</p>}
           </div>
 
-          <div className="cf-field mt-10 flex flex-col sm:flex-row sm:items-center gap-5">
-            <span ref={magnetRef} className="inline-block will-change-transform">
+          <div className="cf-field mt-10">
             <Button
               type="submit"
               size="lg"
-              className="rounded-full bg-white text-black font-body font-medium text-base px-10 h-14 hover:bg-white/90 transition-transform duration-300 hover:scale-[1.02] group"
+              className="rounded-full bg-white text-black font-body font-medium text-base px-10 h-14 hover:bg-white/90"
               disabled={status === "sending"}
             >
               {status === "sending" ? (
                 t("contact.sending")
               ) : (
                 <>
-                  <Send className="mr-2 h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <Send className="mr-2 h-5 w-5" />
                   {t("contact.submit")}
                 </>
               )}
             </Button>
-            </span>
-            <span className="font-body text-xs text-white/40">
-              {t("cta.noCommitment")} · {t("cta.free")}
-            </span>
           </div>
         </form>
       </div>
