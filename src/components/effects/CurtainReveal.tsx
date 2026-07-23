@@ -3,43 +3,61 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 /**
- * Revelado tipo "cortina" — adaptación scroll-driven del swipe-slider de GSAP
- * (CodePen XWzRraJ): un wrapper exterior con overflow-hidden entra desplazado
- * hacia abajo mientras el interior contrabalancea el mismo trayecto, así el
- * contenido queda quieto y una "máscara" lo va destapando al hacer scroll.
- * (El pen usa Observer y secciones fullscreen; aquí el scroll sigue libre.)
+ * Transición estilo swipe-slider de GSAP (CodePen XWzRraJ / xxWdeMK),
+ * adaptada a scroll libre: al llegar a la costura, la sección anterior se
+ * congela (pin sin spacer) y esta entra cubriéndola a pantalla completa.
+ * El contenido contrarresta el viaje del wrapper (el outer sube +100vh
+ * mientras el inner parte de -100vh), así queda estático llenando el
+ * viewport mientras el borde de la "cortina" lo destapa — la firma del pen.
  */
-const CurtainReveal = ({ children, amountVh = 42 }: { children: ReactNode; amountVh?: number }) => {
+const CurtainReveal = ({ children }: { children: ReactNode }) => {
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const outerRef = useRef<HTMLDivElement | null>(null);
   const innerRef = useRef<HTMLDivElement | null>(null);
 
   useLayoutEffect(() => {
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
 
+    const wrap = wrapRef.current!;
+    const prev = wrap.previousElementSibling as HTMLElement | null;
+
     const ctx = gsap.context(() => {
-      const dist = () => (window.innerHeight * amountVh) / 100;
-      gsap
-        .timeline({
+      // La sección saliente queda fijada (sin spacer) mientras la cortina
+      // la cubre; al soltarse ya está totalmente tapada por esta sección.
+      if (prev) {
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: "top bottom",
+          end: "top top",
+          pin: prev,
+          pinSpacing: false,
+          invalidateOnRefresh: true,
+        });
+      }
+
+      gsap.fromTo(
+        innerRef.current,
+        { y: () => -window.innerHeight },
+        {
+          y: 0,
+          ease: "none",
           scrollTrigger: {
-            trigger: wrapRef.current,
+            trigger: wrap,
             start: "top bottom",
-            end: "top 25%",
+            end: "top top",
             scrub: true,
             invalidateOnRefresh: true,
           },
-        })
-        .fromTo(outerRef.current, { y: dist }, { y: 0, ease: "none" }, 0)
-        .fromTo(innerRef.current, { y: () => -dist() }, { y: 0, ease: "none" }, 0);
+        }
+      );
     }, wrapRef);
 
     return () => ctx.revert();
-  }, [amountVh]);
+  }, []);
 
   return (
-    <div ref={wrapRef}>
-      <div ref={outerRef} className="overflow-hidden will-change-transform">
+    <div ref={wrapRef} className="relative">
+      <div className="overflow-hidden">
         <div ref={innerRef} className="will-change-transform">{children}</div>
       </div>
     </div>
