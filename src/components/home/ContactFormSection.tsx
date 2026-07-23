@@ -343,13 +343,6 @@ const ContactFormSection = () => {
           >
             <Mail className="h-4 w-4" strokeWidth={1.5} /> info@dtgrowthpartners.com
           </a>
-          <span className="cf-chip liquid-glass rounded-full px-4 py-2 flex items-center gap-2.5 text-sm text-white/80 font-body">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#26BDF0] opacity-60" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#26BDF0]" />
-            </span>
-            {t("contact.responseTime")}
-          </span>
         </div>
 
         {/* Formulario editorial: campos subrayados, sin cajas */}
