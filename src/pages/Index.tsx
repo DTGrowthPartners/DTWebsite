@@ -11,6 +11,7 @@ import TestimonialsSection from "@/components/home/TestimonialsSection";
 import CTASection from "@/components/home/CTASection";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import { FadeInView } from "@/components/animations";
+import CurtainReveal from "@/components/effects/CurtainReveal";
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
@@ -62,9 +63,11 @@ const Index = () => {
 
         {/* Reveals al hacer scroll (framer-motion, se dispara una vez en viewport). */}
         <FadeInView><CaseStudiesSection /></FadeInView>
-        <FadeInView><MethodSection /></FadeInView>
+        {/* Cortina estilo swipe-slider al entrar desde Casos de Éxito */}
+        <CurtainReveal><MethodSection /></CurtainReveal>
         <FadeInView><TeamSection /></FadeInView>
-        <FadeInView><TestimonialsSection /></FadeInView>
+        {/* Cortina estilo swipe-slider al entrar desde Equipo */}
+        <CurtainReveal><TestimonialsSection /></CurtainReveal>
         <FadeInView><CTASection /></FadeInView>
         <ContactFormSection />
       </main>
