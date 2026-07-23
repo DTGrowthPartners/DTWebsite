@@ -101,10 +101,15 @@ All colors MUST be HSL.
 
   html {
     scroll-behavior: smooth;
+    /* Los elementos w-screen (100vw) rebasan el viewport por el ancho de la
+       scrollbar clásica; clip evita la barra horizontal sin crear un nuevo
+       contenedor de scroll (a diferencia de hidden). */
+    overflow-x: clip;
   }
 
   body {
     @apply bg-background text-foreground;
+    overflow-x: clip;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-feature-settings: 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
