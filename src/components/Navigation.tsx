@@ -1,8 +1,9 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight, Hotel } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight, Hotel } from "lucide-react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import gsap from "gsap";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToTarget } from "@/lib/smooth-scroll";
 
@@ -18,6 +19,66 @@ const Navigation = () => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const subTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  /* Menú móvil "isla" (CodePen JoRMPLg de GreenSock): timeline pausada que
+     entra con rebote back.out y sale suave gracias a easeReverse (GSAP 3.14). */
+  const navRef = useRef<HTMLElement>(null);
+  const mobileOverlayRef = useRef<HTMLDivElement>(null);
+  const mobileBackdropRef = useRef<HTMLDivElement>(null);
+  const mobilePanelRef = useRef<HTMLDivElement>(null);
+  const mobileTlRef = useRef<gsap.core.Timeline | null>(null);
+  const isOpenRef = useRef(false);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      mobileTlRef.current = gsap
+        .timeline({ paused: true })
+        .set(mobileOverlayRef.current, { pointerEvents: "auto" })
+        .to(mobileBackdropRef.current, { opacity: 1, duration: 0.3, ease: "power2.out" }, 0)
+        // Hamburguesa → X (la barra central se desvanece, las otras se cruzan)
+        .to(".mm-bar-mid", { opacity: 0, duration: 0.15, ease: "power2.in", easeReverse: true }, 0)
+        .to(".mm-bar-top", { attr: { x1: 3, y1: 3, x2: 13, y2: 13 }, duration: 0.28, ease: "power3.inOut" }, 0)
+        .to(".mm-bar-bot", { attr: { x1: 13, y1: 3, x2: 3, y2: 13 }, duration: 0.28, ease: "power3.inOut" }, 0)
+        // El panel cae con rebote, pero se retira con una curva suave
+        .from(
+          mobilePanelRef.current,
+          { autoAlpha: 0, yPercent: -8, scale: 0.6, duration: 0.8, transformOrigin: "top right", ease: "back.out(2)", easeReverse: "power3.out" },
+          0.1
+        )
+        .from(".mm-link", { opacity: 0, y: 8, duration: 0.32, ease: "power2.out", easeReverse: true, stagger: 0.05 }, 0.22);
+    }, navRef);
+    return () => ctx.revert();
+  }, []);
+
+  const prefersReduced = () =>
+    typeof matchMedia !== "undefined" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const openMobile = () => {
+    isOpenRef.current = true;
+    setIsOpen(true);
+    mobileTlRef.current?.timeScale(prefersReduced() ? 100 : 1).play();
+  };
+
+  const closeMobile = () => {
+    if (!isOpenRef.current) return;
+    isOpenRef.current = false;
+    setIsOpen(false);
+    const tl = mobileTlRef.current;
+    if (!tl) return;
+    tl.eventCallback("onReverseComplete", () => gsap.set(mobileOverlayRef.current, { pointerEvents: "none" }));
+    // Salida un poco más rápida que la entrada (como el exit speed del pen)
+    tl.timeScale(prefersReduced() ? 100 : 1.6).reverse();
+  };
+
+  // Escape cierra el menú móvil
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMobile();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const pubDigitalSubItems = [
     { name: "Meta Ads Cartagena", path: "/servicios/meta-ads-cartagena", icon: Target },
@@ -93,7 +154,7 @@ const Navigation = () => {
       navigate(path);
     }
 
-    setIsOpen(false);
+    closeMobile();
     setServicesOpen(false);
     setSubMenuOpen(false);
     setMobileServicesOpen(false);
@@ -101,7 +162,7 @@ const Navigation = () => {
   };
 
   const closeAll = () => {
-    setIsOpen(false);
+    closeMobile();
     setServicesOpen(false);
     setSubMenuOpen(false);
     setMobileServicesOpen(false);
@@ -109,9 +170,9 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-4 w-full z-50 px-4 md:px-8 lg:px-16">
+    <nav ref={navRef} className="fixed top-4 w-full z-50 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1600px] mx-auto">
-        <div className="flex items-center justify-between gap-4">
+        <div className="relative z-10 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center shrink-0">
             <img src={logo} alt="DT Growth" width={110} />
           </Link>
@@ -300,31 +361,44 @@ const Navigation = () => {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button — hamburguesa que se transforma en X vía GSAP */}
           <button
             className="md:hidden liquid-glass rounded-full w-11 h-11 flex items-center justify-center text-white"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
+            onClick={() => (isOpenRef.current ? closeMobile() : openMobile())}
+            aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isOpen}
           >
-            {isOpen ? <X size={22} /> : <Menu size={22} />}
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ overflow: "visible" }}>
+              <line className="mm-bar-top" x1="2" y1="5" x2="14" y2="5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <line className="mm-bar-mid" x1="2" y1="8" x2="14" y2="8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <line className="mm-bar-bot" x1="2" y1="11" x2="14" y2="11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
           </button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden mt-3 rounded-[1.5rem] bg-black/70 backdrop-blur-2xl border border-white/10 p-6 animate-fade-in">
+        {/* Mobile Navigation — overlay siempre montado; GSAP lo abre/cierra */}
+        <div ref={mobileOverlayRef} className="md:hidden fixed inset-0 z-0 pointer-events-none">
+          <div
+            ref={mobileBackdropRef}
+            className="absolute inset-0 bg-[#07060F]/80 backdrop-blur-md opacity-0"
+            onClick={closeMobile}
+          />
+          <div
+            ref={mobilePanelRef}
+            className="absolute left-4 right-4 top-[4.5rem] max-h-[calc(100dvh-6rem)] overflow-y-auto rounded-[1.5rem] bg-[#07060F]/85 backdrop-blur-2xl border border-white/10 p-6"
+          >
             <div className="flex flex-col space-y-4">
               {/* Home */}
               <a
                 href="/"
                 onClick={(e) => handleNavClick(e, "/")}
-                className="text-white/95 hover:text-white transition-colors"
+                className="mm-link text-white/95 hover:text-white transition-colors"
               >
                 {t("nav.home")}
               </a>
 
               {/* Services Accordion (Mobile) */}
-              <div>
+              <div className="mm-link">
                 <button
                   className="flex items-center justify-between w-full text-white/95 hover:text-white transition-colors"
                   onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
@@ -403,7 +477,7 @@ const Navigation = () => {
                   key={link.name}
                   href={link.path}
                   onClick={(e) => handleNavClick(e, link.path)}
-                  className={`relative text-white/95 hover:text-white transition-colors ${link.name === "DT-OS" ? "animate-pulse gradient-text font-bold" : ""}`}
+                  className={`mm-link relative text-white/95 hover:text-white transition-colors ${link.name === "DT-OS" ? "animate-pulse gradient-text font-bold" : ""}`}
                 >
                   {link.name}
                   {link.name === "DT-OS" && (
@@ -412,12 +486,12 @@ const Navigation = () => {
                 </a>
               ))}
 
-              <Button asChild className="btn-primary w-full">
+              <Button asChild className="mm-link btn-primary w-full">
                 <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Quiero%20agendar%20una%20consultor%C3%ADa.&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
                   {t("common.consultation")}
                 </a>
               </Button>
-              <div className="mt-4 flex items-center justify-center space-x-2">
+              <div className="mm-link mt-4 flex items-center justify-center space-x-2">
                 <span className="text-sm text-muted-foreground">{t("language.es")}</span>
                 <div
                   className="relative inline-block w-10 h-5 bg-primary/20 rounded-full cursor-pointer"
@@ -431,7 +505,7 @@ const Navigation = () => {
               </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
