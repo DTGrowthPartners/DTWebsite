@@ -14,13 +14,13 @@ const CTASection = () => {
   const bullets = [t("cta.noCommitment"), t("cta.duration"), t("cta.free")];
 
   return (
-    <section className="relative min-h-[90vh] bg-black overflow-hidden flex items-center">
+    <section className="relative min-h-[90vh] bg-[#07060F] overflow-hidden flex items-center">
       {/* Mismo video del hero: cierra el círculo visual de la página */}
       <FadingVideo src={fondoVideo} className="absolute inset-0 w-full h-full object-cover z-0" />
 
       {/* Franjas de fundido con las secciones vecinas (testimonios y contacto) */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[#07060F] to-transparent z-[5]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07060F] to-transparent z-[5]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 md:h-80 bg-gradient-to-b from-[#07060F] to-transparent z-[5]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 md:h-80 bg-gradient-to-t from-[#07060F] to-transparent z-[5]" />
 
       <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
         <h2 className="flex flex-wrap items-baseline justify-center gap-x-[0.28em] font-heading font-normal text-white text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.02] tracking-[-0.024em] max-w-5xl">

@@ -63,8 +63,8 @@ const CaseStudiesSection = () => {
     <section id="casos" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
       <Aurora
         blobs={[
-          { color: "blue", className: "-top-32 left-[15%] w-[560px] h-[560px] opacity-30" },
-          { color: "purple", className: "bottom-[-160px] right-[-80px] w-[520px] h-[520px] opacity-25", delay: "-8s" },
+          { color: "blue", className: "top-[8%] left-[15%] w-[560px] h-[560px] opacity-30" },
+          { color: "purple", className: "bottom-[10%] right-[-80px] w-[520px] h-[520px] opacity-25", delay: "-8s" },
         ]}
       />
 

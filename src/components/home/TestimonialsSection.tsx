@@ -76,8 +76,8 @@ const TestimonialsSection = () => {
     <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
       <Aurora
         blobs={[
-          { color: "blue", className: "top-[-120px] left-[-120px] w-[540px] h-[540px] opacity-25" },
-          { color: "magenta", className: "bottom-[-160px] right-[-100px] w-[560px] h-[560px] opacity-20", delay: "-7s" },
+          { color: "blue", className: "top-[8%] left-[-120px] w-[540px] h-[540px] opacity-25" },
+          { color: "magenta", className: "bottom-[8%] right-[-100px] w-[560px] h-[560px] opacity-20", delay: "-7s" },
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">

@@ -314,8 +314,8 @@ const ContactFormSection = () => {
     <section id="contacto" ref={sectionRef} className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
       <Aurora
         blobs={[
-          { color: "blue", className: "bottom-[-140px] left-[20%] w-[600px] h-[600px] opacity-25" },
-          { color: "purple", className: "top-[-120px] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-5s" },
+          { color: "blue", className: "bottom-[10%] left-[20%] w-[600px] h-[600px] opacity-25" },
+          { color: "purple", className: "top-[10%] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-5s" },
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">

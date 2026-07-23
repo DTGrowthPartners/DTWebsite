@@ -48,7 +48,7 @@ const MethodSection = () => {
       <Aurora
         blobs={[
           { color: "purple", className: "top-[10%] left-[-140px] w-[520px] h-[520px] opacity-25" },
-          { color: "cyan", className: "bottom-[-120px] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-6s" },
+          { color: "cyan", className: "bottom-[8%] right-[10%] w-[480px] h-[480px] opacity-20", delay: "-6s" },
         ]}
       />
       <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">

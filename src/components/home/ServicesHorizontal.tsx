@@ -516,8 +516,8 @@ const ServicesHorizontal = () => {
       <div className="absolute inset-0 z-0" style={{ background: "hsl(260 87% 3%)" }} />
       <FadingVideo src={fondoHorizontal} className="absolute inset-0 w-full h-full object-cover z-0" />
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[984px] max-w-none h-[527px] bg-gray-950 opacity-90 blur-[82px] z-[1]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black to-transparent z-[2]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-black to-transparent z-[2]" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
     </>
   );
 
