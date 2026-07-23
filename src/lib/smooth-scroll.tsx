@@ -46,11 +46,11 @@ const SmoothScroll = ({ children }: { children: ReactNode }) => {
     if (prefersReduced) return; // scroll nativo, sin inercia
 
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.35,
       easing: (t) => 1 - Math.pow(1 - t, 3), // easeOutCubic
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.2,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1.1,
     });
     lenisInstance = lenis;
 

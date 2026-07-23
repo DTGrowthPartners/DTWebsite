@@ -583,7 +583,7 @@ const ServicesHorizontal = () => {
               {/* Número fantasma gigante con parallax propio */}
               <span
                 aria-hidden
-                className="sh-num pointer-events-none select-none absolute bottom-[44%] md:bottom-auto md:-top-[2vw] right-[2vw] font-heading font-semibold text-white/[0.07] text-[34vw] md:text-[24vw] leading-none z-0"
+                className="sh-num pointer-events-none select-none absolute top-[7%] md:-top-[2vw] right-[2vw] font-heading font-semibold text-white/[0.07] text-[34vw] md:text-[24vw] leading-none z-0"
               >
                 {s.num}
               </span>
@@ -593,8 +593,9 @@ const ServicesHorizontal = () => {
                 <M />
               </div>
 
-              {/* Contenido anclado abajo, a todo el ancho */}
-              <div className="absolute inset-x-0 bottom-0 z-20 px-8 md:px-16 lg:px-20 pb-24 md:pb-28">
+              {/* Contenido: centrado vertical en móvil (evita el vacío arriba),
+                  anclado abajo en desktop */}
+              <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 md:top-auto md:translate-y-0 md:bottom-0 z-20 px-8 md:px-16 lg:px-20 md:pb-28">
                 <span className="sh-stagger block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0]">
                   {"Servicio " + s.num + " — 04"}
                 </span>

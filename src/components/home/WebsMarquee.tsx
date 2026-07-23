@@ -66,8 +66,8 @@ const WebsMarquee = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const x1 = useTransform(scrollYProgress, [0, 1], ["-30%", "0%"]);
-  const x2 = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
+  const x1 = useTransform(scrollYProgress, [0, 1], ["-14%", "0%"]);
+  const x2 = useTransform(scrollYProgress, [0, 1], ["-2%", "-16%"]);
   const xStatic = useTransform(scrollYProgress, [0, 1], ["-15%", "-15%"]);
 
   return (

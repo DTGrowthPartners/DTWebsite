@@ -21,7 +21,10 @@ const CurtainReveal = ({ children }: { children: ReactNode }) => {
     const wrap = wrapRef.current!;
     const prev = wrap.previousElementSibling as HTMLElement | null;
 
-    const ctx = gsap.context(() => {
+    // Solo en md+: en móvil el pin (position:fixed) sobre el scroll táctil
+    // nativo produce jitter durante el momentum; ahí se scrollea normal.
+    const mm = gsap.matchMedia(wrapRef);
+    mm.add("(min-width: 768px)", () => {
       // La sección saliente queda fijada (sin spacer) mientras la cortina
       // la cubre; al soltarse ya está totalmente tapada por esta sección.
       if (prev) {
@@ -50,9 +53,9 @@ const CurtainReveal = ({ children }: { children: ReactNode }) => {
           },
         }
       );
-    }, wrapRef);
+    });
 
-    return () => ctx.revert();
+    return () => mm.revert();
   }, []);
 
   return (
