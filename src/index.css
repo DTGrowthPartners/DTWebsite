@@ -384,6 +384,53 @@ All colors MUST be HSL.
    Rediseño QClay — firma visual y utilidades de movimiento
    ============================================================ */
 
+/* ── Scrollbar global liquid-glass ──
+   Los pseudo-elementos de scrollbar no soportan backdrop-filter, así que el
+   vidrio se emula: píldora translúcida con hairline y brillo interior, flotando
+   sobre un riel casi invisible (borde transparente + background-clip). */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+::-webkit-scrollbar-thumb {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.22),
+      rgba(38, 189, 240, 0.28) 55%,
+      rgba(15, 118, 214, 0.32)
+    );
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  min-height: 48px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.32),
+      rgba(38, 189, 240, 0.45) 55%,
+      rgba(15, 118, 214, 0.5)
+    );
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 0 12px rgba(38, 189, 240, 0.35);
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+/* Firefox: sin pseudo-elementos, se aproxima con el mismo tinte */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(38, 189, 240, 0.35) rgba(255, 255, 255, 0.04);
+}
+
 /* Marquee infinito para el ticker de marcas (duplicar el contenido en JSX) */
 @keyframes marquee {
   from { transform: translateX(0); }
