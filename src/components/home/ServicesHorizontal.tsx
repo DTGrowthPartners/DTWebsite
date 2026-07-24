@@ -4,8 +4,9 @@ import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "@/lib/smooth-scroll";
-import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal, Bot, FileText, Mail, Slack, Database, Check } from "lucide-react";
+import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal, Bot, FileText, Slack, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { siGmail, siWhatsapp, siShopify, siHubspot } from "simple-icons";
 import adLocal from "@/assets/ads/ad-local.webp";
 import adInsta from "@/assets/ads/ad-insta.webp";
 import adCartagena from "@/assets/ads/ad-cartagena.webp";
@@ -293,61 +294,76 @@ const MotifBrowser = () => {
   );
 };
 
-// 03 · Automatizaciones & IA — flujo estilo n8n: PDF/Gmail/WhatsApp entran
-// al agente IA y salen a Slack/CRM, con las conexiones fluyendo.
-const FlowNode = ({
-  icon: Icon,
-  label,
-  className,
-  iconClass = "text-white",
-  big = false,
-}: {
-  icon: typeof Bot;
-  label: string;
-  className: string;
-  iconClass?: string;
-  big?: boolean;
-}) => (
-  <div className={`absolute flex flex-col items-center gap-1.5 ${className}`}>
-    <span
-      className={`liquid-glass flex items-center justify-center bg-black/40 ${
-        big
-          ? "rounded-2xl w-16 h-16 shadow-[0_0_35px_rgba(38,189,240,0.45)]"
-          : "rounded-xl w-12 h-12"
-      }`}
-    >
-      <Icon className={`${big ? "h-7 w-7" : "h-5 w-5"} ${iconClass}`} strokeWidth={1.5} />
-    </span>
-    <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/60 whitespace-nowrap">
-      {label}
-    </span>
-  </div>
+// 03 · Automatizaciones & IA — malla de servicios interconectados (logos
+// reales vía simple-icons) con las conexiones fluyendo entre todos.
+type BrandGlyph = { path: string; hex: string };
+const BrandIcon = ({ icon }: { icon: BrandGlyph }) => (
+  <svg viewBox="0 0 24 24" className="h-5 w-5" fill={`#${icon.hex}`} aria-hidden>
+    <path d={icon.path} />
+  </svg>
 );
 
+// Posición (x,y) de la esquina del ícono en un lienzo de 390×290
+const FLOW_NODES = [
+  { key: "pdf", label: "PDF", x: 4, y: 112, node: <FileText className="h-5 w-5 text-[#ff6b6b]" strokeWidth={1.5} /> },
+  { key: "gmail", label: "Gmail", x: 56, y: 8, node: <BrandIcon icon={siGmail} /> },
+  { key: "shopify", label: "Shopify", x: 240, y: 0, node: <BrandIcon icon={siShopify} /> },
+  { key: "slack", label: "Slack", x: 336, y: 96, node: <Slack className="h-5 w-5 text-[#E01E5A]" strokeWidth={1.5} /> },
+  { key: "crm", label: "CRM", x: 276, y: 212, node: <BrandIcon icon={siHubspot} /> },
+  { key: "whatsapp", label: "WhatsApp", x: 76, y: 214, node: <BrandIcon icon={siWhatsapp} /> },
+];
+// Malla: anillo exterior + diagonales que se cruzan (sin nodo central)
+const FLOW_LINKS: Array<[string, string, boolean]> = [
+  ["pdf", "gmail", false],
+  ["gmail", "shopify", true],
+  ["shopify", "slack", false],
+  ["slack", "crm", true],
+  ["crm", "whatsapp", false],
+  ["whatsapp", "pdf", true],
+  ["gmail", "crm", true],
+  ["shopify", "whatsapp", false],
+  ["pdf", "slack", false],
+];
+const flowCenter = (key: string) => {
+  const n = FLOW_NODES.find((x) => x.key === key)!;
+  return [n.x + 24, n.y + 24] as const;
+};
+
 const MotifFlow = () => (
-  <div className="relative w-[340px] h-[270px] md:w-[390px] md:h-[280px] animate-float" style={{ animationDuration: "7s" }}>
+  <div className="relative w-[340px] h-[260px] md:w-[390px] md:h-[290px] animate-float" style={{ animationDuration: "7s" }}>
     {/* Conexiones (debajo de los nodos) */}
-    <svg viewBox="0 0 390 280" fill="none" className="absolute inset-0 w-full h-full" aria-hidden>
-      {/* Entradas → agente */}
-      <path className="motif-dash" d="M60 42 C 120 42, 130 120, 165 130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <path className="motif-dash" style={{ animationDuration: "2.4s" }} d="M60 132 H 160" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <path className="motif-dash" style={{ animationDuration: "1.8s" }} d="M60 222 C 120 222, 130 145, 165 136" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
-      {/* Agente → salidas */}
-      <path className="motif-dash" style={{ animationDuration: "2.1s" }} d="M225 128 C 265 118, 275 88, 320 82" stroke="rgba(38,189,240,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
-      <path className="motif-dash" style={{ animationDuration: "2.7s" }} d="M225 138 C 265 148, 275 178, 320 184" stroke="rgba(38,189,240,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+    <svg viewBox="0 0 390 290" fill="none" className="absolute inset-0 w-full h-full" aria-hidden>
+      {FLOW_LINKS.map(([a, b, cyan], i) => {
+        const [x1, y1] = flowCenter(a);
+        const [x2, y2] = flowCenter(b);
+        return (
+          <line
+            key={`${a}-${b}`}
+            className="motif-dash"
+            style={{ animationDuration: `${1.8 + (i % 5) * 0.3}s` }}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={cyan ? "rgba(38,189,240,0.5)" : "rgba(255,255,255,0.28)"}
+            strokeWidth="1.5"
+            strokeDasharray="4 6"
+          />
+        );
+      })}
     </svg>
 
-    {/* Entradas */}
-    <FlowNode icon={FileText} label="PDF" className="left-0 top-[10px]" iconClass="text-[#ff8a8a]" />
-    <FlowNode icon={Mail} label="Gmail" className="left-0 top-[100px]" iconClass="text-[#ffd28a]" />
-    <FlowNode icon={MessageCircle} label="WhatsApp" className="left-0 top-[190px]" iconClass="text-[#4ade80]" />
-
-    {/* Agente central */}
-    <FlowNode icon={Bot} label="Agente IA" big className="left-1/2 top-[100px] -translate-x-1/2" iconClass="text-[#26BDF0]" />
-
-    {/* Salidas */}
-    <FlowNode icon={Slack} label="Slack" className="right-0 top-[50px]" iconClass="text-[#e0a3f5]" />
-    <FlowNode icon={Database} label="CRM" className="right-0 top-[152px]" iconClass="text-[#C2FBFF]" />
+    {/* Nodos con logos reales */}
+    {FLOW_NODES.map((n) => (
+      <div key={n.key} className="absolute flex flex-col items-center gap-1.5" style={{ left: n.x, top: n.y }}>
+        <span className="liquid-glass rounded-xl w-12 h-12 flex items-center justify-center bg-black/45">
+          {n.node}
+        </span>
+        <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/60 whitespace-nowrap">
+          {n.label}
+        </span>
+      </div>
+    ))}
 
     {/* Chip de estado del flujo (wrapper posiciona: .liquid-glass fuerza
         position:relative y pisaría el absolute) */}
