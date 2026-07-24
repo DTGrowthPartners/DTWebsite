@@ -25,7 +25,8 @@ const CTASection = () => {
       <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
         {/* Una sola línea desde md (tamaño calibrado para "despegar?", la
             palabra más larga); en móvil sí puede partir */}
-        <h2 className="flex flex-wrap md:flex-nowrap items-baseline justify-center gap-x-[0.28em] font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6rem] leading-[1.02] tracking-[-0.024em]">
+        {/* Sin gap-x: BlurText ya deja 0.28em tras "para"; con gap se duplicaba */}
+        <h2 className="flex flex-wrap md:flex-nowrap items-baseline justify-center font-heading font-normal text-white text-5xl md:text-6xl lg:text-[5.5rem] xl:text-[6rem] leading-[1.02] tracking-[-0.024em]">
           <BlurText text={t("cta.title")} />
           <RotatingWord words={t("cta.rotating").split("|")} interval={2900} className="font-semibold" innerClassName="gradient-text" />
         </h2>
