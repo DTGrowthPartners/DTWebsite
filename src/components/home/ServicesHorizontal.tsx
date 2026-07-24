@@ -1,4 +1,4 @@
-import { useRef, useLayoutEffect, type ReactNode } from "react";
+import { useRef, useLayoutEffect, useState, useEffect, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
@@ -196,8 +196,68 @@ const MotifAds = () => (
   </div>
 );
 
-// 02 · Desarrollo Web — editor de código + terminal con deploy en vivo
-const MotifBrowser = () => (
+// 02 · Desarrollo Web — el código se escribe solo en el editor + terminal
+const CODE_TOKENS: Array<{ t: string; c?: string }> = [
+  { t: "const ", c: "text-[#26BDF0]" },
+  { t: "web", c: "text-white" },
+  { t: " = " },
+  { t: "await ", c: "text-[#26BDF0]" },
+  { t: "dt", c: "text-[#C2FBFF]" },
+  { t: "." },
+  { t: "construir", c: "text-[#C2FBFF]" },
+  { t: "({\n  objetivo: " },
+  { t: '"convertir"', c: "text-[#7dd3fc]" },
+  { t: ",\n  stack: [" },
+  { t: '"react"', c: "text-[#7dd3fc]" },
+  { t: ", " },
+  { t: '"node"', c: "text-[#7dd3fc]" },
+  { t: "],\n  seo: " },
+  { t: "true", c: "text-[#26BDF0]" },
+  { t: ",\n});" },
+];
+const CODE_LEN = CODE_TOKENS.reduce((n, x) => n + x.t.length, 0);
+
+const MotifBrowser = () => {
+  const reduced = useReducedMotion();
+  const [count, setCount] = useState(reduced ? CODE_LEN : 0);
+
+  // Tipeo en bucle: escribe carácter a carácter, pausa con el código completo
+  // y vuelve a empezar. Con reduced-motion el código queda fijo.
+  useEffect(() => {
+    if (reduced) return;
+    let i = 0;
+    let id = 0;
+    const tick = () => {
+      i += 1;
+      setCount(i);
+      if (i >= CODE_LEN) {
+        id = window.setTimeout(() => {
+          i = 0;
+          setCount(0);
+          id = window.setTimeout(tick, 400);
+        }, 4500);
+      } else {
+        id = window.setTimeout(tick, 34);
+      }
+    };
+    id = window.setTimeout(tick, 600);
+    return () => window.clearTimeout(id);
+  }, [reduced]);
+
+  let used = 0;
+  const typed: ReactNode[] = [];
+  for (const tok of CODE_TOKENS) {
+    if (used >= count) break;
+    const take = Math.min(tok.t.length, count - used);
+    typed.push(
+      <span key={used} className={tok.c}>
+        {tok.t.slice(0, take)}
+      </span>
+    );
+    used += tok.t.length;
+  }
+
+  return (
   <div className="w-[250px] md:w-[300px] animate-float" style={{ animationDuration: "6s" }}>
     {/* Editor */}
     <div className="liquid-glass rounded-xl overflow-hidden bg-black/40">
@@ -207,14 +267,10 @@ const MotifBrowser = () => (
         <span className="w-2 h-2 rounded-full bg-white/15" />
         <span className="ml-2 font-mono text-[8px] tracking-[0.1em] text-white/50">tu-negocio.tsx</span>
       </div>
-      <pre className="p-3 text-[9px] md:text-[10px] leading-[1.7] font-mono text-white/80 whitespace-pre">
-        <span className="text-[#26BDF0]">const</span> <span className="text-white">web</span> ={" "}
-        <span className="text-[#26BDF0]">await</span> <span className="text-[#C2FBFF]">dt</span>.
-        <span className="text-[#C2FBFF]">construir</span>({"{"}
-        {"\n"}  objetivo: <span className="text-[#7dd3fc]">"convertir"</span>,
-        {"\n"}  stack: [<span className="text-[#7dd3fc]">"react"</span>, <span className="text-[#7dd3fc]">"node"</span>],
-        {"\n"}  seo: <span className="text-[#26BDF0]">true</span>,
-        {"\n"}{"}"});
+      {/* min-h fija: la caja no crece mientras el código se escribe */}
+      <pre className="p-3 text-[9px] md:text-[10px] leading-[1.7] font-mono text-white/80 whitespace-pre min-h-[8.2em]">
+        {typed}
+        <span className="motif-caret inline-block w-[6px] h-[11px] bg-[#26BDF0] align-middle ml-0.5" />
       </pre>
     </div>
 
@@ -229,12 +285,12 @@ const MotifBrowser = () => (
         </div>
         <div>
           <span className="text-[#26BDF0]">✓</span> live → <span className="text-[#C2FBFF]">tunegocio.com</span>
-          <span className="motif-caret inline-block w-[6px] h-[11px] bg-[#26BDF0] align-middle ml-1.5" />
         </div>
       </div>
     </div>
   </div>
-);
+  );
+};
 
 // 03 · Automatizaciones & IA — circuito de nodos conectados
 const MotifFlow = () => (

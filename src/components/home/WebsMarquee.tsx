@@ -11,6 +11,12 @@ import tNeuro from "@/assets/webs/neurocarolina-tile.webp";
 import tPsico from "@/assets/webs/psico-tile.webp";
 import tTennis from "@/assets/webs/tennis-tile.webp";
 import tVcc from "@/assets/webs/vcc-tile.webp";
+import tEquilibrio from "@/assets/webs/equilibrio-tile.webp";
+import tCasanova2 from "@/assets/webs/casanova2-tile.webp";
+import tCobraflow from "@/assets/webs/cobraflow-tile.webp";
+import tAcbApp from "@/assets/webs/acbapp-tile.webp";
+import tEquilibrioLaser from "@/assets/webs/equilibrio-laser-tile.webp";
+import tChatCrm from "@/assets/webs/chatcrm-tile.webp";
 
 /**
  * Marquee de sitios reales impulsado por el scroll (no autoplay):
@@ -22,14 +28,20 @@ const ROW_1 = [
   { img: tVcc, name: "VCC" },
   { img: tBhk, name: "BHK" },
   { img: tAcbfit, name: "ACB Fit" },
+  { img: tEquilibrio, name: "Equilibrio Clinic" },
   { img: tHotel, name: "Hotel" },
+  { img: tCobraflow, name: "CobraFlow" },
   { img: tNeuro, name: "Neuro Carolina" },
+  { img: tCasanova2, name: "Roberto Casanova" },
 ];
 const ROW_2 = [
   { img: tTennis, name: "Tennis Cartagena" },
   { img: tAya, name: "Arismendy" },
+  { img: tAcbApp, name: "ACB Planes" },
   { img: tMotostop, name: "Motos Top" },
+  { img: tEquilibrioLaser, name: "Depilación Láser" },
   { img: tPsico, name: "Psico" },
+  { img: tChatCrm, name: "Chat CRM" },
   { img: tCasanova, name: "Roberto Casanova" },
 ];
 
@@ -66,8 +78,8 @@ const WebsMarquee = () => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const x1 = useTransform(scrollYProgress, [0, 1], ["-14%", "0%"]);
-  const x2 = useTransform(scrollYProgress, [0, 1], ["-2%", "-16%"]);
+  const x1 = useTransform(scrollYProgress, [0, 1], ["-8%", "0%"]);
+  const x2 = useTransform(scrollYProgress, [0, 1], ["-2%", "-10%"]);
   const xStatic = useTransform(scrollYProgress, [0, 1], ["-15%", "-15%"]);
 
   return (
