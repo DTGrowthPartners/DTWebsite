@@ -4,7 +4,8 @@ import { useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getLenis } from "@/lib/smooth-scroll";
-import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal } from "lucide-react";
+import { ArrowUpRight, ArrowRight, TrendingUp, Code, Zap, MessageCircle, Heart, Send, MoreHorizontal, Bot, FileText, Mail, Slack, Database, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import adLocal from "@/assets/ads/ad-local.webp";
 import adInsta from "@/assets/ads/ad-insta.webp";
 import adCartagena from "@/assets/ads/ad-cartagena.webp";
@@ -292,67 +293,193 @@ const MotifBrowser = () => {
   );
 };
 
-// 03 · Automatizaciones & IA — circuito de nodos conectados
-const MotifFlow = () => (
-  <svg
-    width="250"
-    height="170"
-    viewBox="0 0 250 170"
-    fill="none"
-    className="animate-float"
-    style={{ animationDuration: "7s" }}
-    aria-hidden
-  >
-    <path className="motif-dash" d="M52 46 H125 V124 H198" stroke="rgba(255,255,255,0.28)" strokeWidth="1.5" strokeDasharray="4 6" />
-    <path className="motif-dash" style={{ animationDuration: "2s" }} d="M52 124 H90 V46 H198" stroke="rgba(255,255,255,0.14)" strokeWidth="1.5" strokeDasharray="4 6" />
-    {[
-      { x: 28, y: 24, active: false },
-      { x: 28, y: 102, active: false },
-      { x: 174, y: 24, active: false },
-      { x: 174, y: 102, active: true },
-    ].map((n, i) => (
-      <g key={i}>
-        <rect
-          x={n.x}
-          y={n.y}
-          width="46"
-          height="44"
-          rx="12"
-          fill={n.active ? "rgba(15,118,214,0.35)" : "rgba(255,255,255,0.05)"}
-          stroke={n.active ? "rgba(38,189,240,0.9)" : "rgba(255,255,255,0.25)"}
-          strokeWidth="1.4"
-        />
-        <circle
-          className={n.active ? "motif-node" : undefined}
-          cx={n.x + 23}
-          cy={n.y + 22}
-          r="4.5"
-          fill={n.active ? "#26BDF0" : "rgba(255,255,255,0.45)"}
-        />
-      </g>
-    ))}
-  </svg>
+// 03 · Automatizaciones & IA — flujo estilo n8n: PDF/Gmail/WhatsApp entran
+// al agente IA y salen a Slack/CRM, con las conexiones fluyendo.
+const FlowNode = ({
+  icon: Icon,
+  label,
+  className,
+  iconClass = "text-white",
+  big = false,
+}: {
+  icon: typeof Bot;
+  label: string;
+  className: string;
+  iconClass?: string;
+  big?: boolean;
+}) => (
+  <div className={`absolute flex flex-col items-center gap-1.5 ${className}`}>
+    <span
+      className={`liquid-glass flex items-center justify-center bg-black/40 ${
+        big
+          ? "rounded-2xl w-16 h-16 shadow-[0_0_35px_rgba(38,189,240,0.45)]"
+          : "rounded-xl w-12 h-12"
+      }`}
+    >
+      <Icon className={`${big ? "h-7 w-7" : "h-5 w-5"} ${iconClass}`} strokeWidth={1.5} />
+    </span>
+    <span className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/60 whitespace-nowrap">
+      {label}
+    </span>
+  </div>
 );
 
-// 04 · Chatbots — cabeza de robot con antena y burbuja escribiendo
-const MotifBot = () => (
-  <div className="relative animate-float" style={{ animationDuration: "5.5s" }}>
-    <div className="absolute -top-5 left-1/2 -translate-x-1/2 w-px h-5 bg-white/30" />
-    <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#26BDF0]" />
-    <div className="liquid-glass rounded-2xl w-28 h-24 md:w-32 md:h-28 flex items-center justify-center gap-5">
-      <span className="motif-eye w-3 h-6 rounded-full bg-white/85" />
-      <span className="motif-eye w-3 h-6 rounded-full bg-white/85" />
-    </div>
-    <div className="absolute -right-14 -top-8 liquid-glass rounded-2xl rounded-bl-sm px-3.5 py-2.5 flex gap-1.5">
-      <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
-      <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" style={{ animationDelay: "0.2s" }} />
-      <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse" style={{ animationDelay: "0.4s" }} />
-    </div>
-    <div className="absolute -left-12 -bottom-5 liquid-glass rounded-2xl rounded-br-sm px-3 py-2 text-[10px] text-white/80 font-body">
-      24/7
+const MotifFlow = () => (
+  <div className="relative w-[340px] h-[270px] md:w-[390px] md:h-[280px] animate-float" style={{ animationDuration: "7s" }}>
+    {/* Conexiones (debajo de los nodos) */}
+    <svg viewBox="0 0 390 280" fill="none" className="absolute inset-0 w-full h-full" aria-hidden>
+      {/* Entradas → agente */}
+      <path className="motif-dash" d="M60 42 C 120 42, 130 120, 165 130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <path className="motif-dash" style={{ animationDuration: "2.4s" }} d="M60 132 H 160" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <path className="motif-dash" style={{ animationDuration: "1.8s" }} d="M60 222 C 120 222, 130 145, 165 136" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" strokeDasharray="4 6" />
+      {/* Agente → salidas */}
+      <path className="motif-dash" style={{ animationDuration: "2.1s" }} d="M225 128 C 265 118, 275 88, 320 82" stroke="rgba(38,189,240,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+      <path className="motif-dash" style={{ animationDuration: "2.7s" }} d="M225 138 C 265 148, 275 178, 320 184" stroke="rgba(38,189,240,0.55)" strokeWidth="1.5" strokeDasharray="4 6" />
+    </svg>
+
+    {/* Entradas */}
+    <FlowNode icon={FileText} label="PDF" className="left-0 top-[10px]" iconClass="text-[#ff8a8a]" />
+    <FlowNode icon={Mail} label="Gmail" className="left-0 top-[100px]" iconClass="text-[#ffd28a]" />
+    <FlowNode icon={MessageCircle} label="WhatsApp" className="left-0 top-[190px]" iconClass="text-[#4ade80]" />
+
+    {/* Agente central */}
+    <FlowNode icon={Bot} label="Agente IA" big className="left-1/2 top-[100px] -translate-x-1/2" iconClass="text-[#26BDF0]" />
+
+    {/* Salidas */}
+    <FlowNode icon={Slack} label="Slack" className="right-0 top-[50px]" iconClass="text-[#e0a3f5]" />
+    <FlowNode icon={Database} label="CRM" className="right-0 top-[152px]" iconClass="text-[#C2FBFF]" />
+
+    {/* Chip de estado del flujo (wrapper posiciona: .liquid-glass fuerza
+        position:relative y pisaría el absolute) */}
+    <div className="absolute left-1/2 -translate-x-1/2 bottom-0">
+      <div className="liquid-glass rounded-full px-3 py-1 font-mono text-[7px] uppercase tracking-[0.2em] text-white/70 bg-black/40 whitespace-nowrap">
+        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#26BDF0] align-middle mr-1.5" />
+        flujo activo · 24/7
+      </div>
     </div>
   </div>
 );
+
+// 04 · Chatbots — simulación de conversación real: el bot responde,
+// agenda y califica el lead, en bucle.
+type ChatMsg = { from: "user" | "bot"; text: string };
+const CHAT_MSGS: ChatMsg[] = [
+  { from: "user", text: "Hola! ¿Tienen disponibilidad para mañana?" },
+  { from: "bot", text: "¡Claro! 👋 Tenemos a las 10:00 a.m. o 3:00 p.m. ¿Cuál prefieres?" },
+  { from: "user", text: "A las 10 está perfecto" },
+  { from: "bot", text: "Listo, agendado para mañana a las 10:00 ✅ Te llega la confirmación por WhatsApp." },
+];
+// Guion del bucle: cuántos mensajes se ven y si el bot está "escribiendo".
+// [visibles, escribiendo, duración ms]
+const CHAT_SCRIPT: Array<[number, boolean, number]> = [
+  [0, false, 700],
+  [1, false, 1100],
+  [1, true, 1300],
+  [2, false, 1900],
+  [3, false, 1300],
+  [3, true, 1300],
+  [4, false, 2200],
+  [5, false, 3800], // 5 = todos + chip de lead calificado
+];
+
+const TypingDots = () => (
+  <div className="self-start liquid-glass rounded-2xl rounded-bl-sm px-3 py-2 flex gap-1.5 bg-black/40">
+    <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse" />
+    <span className="w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse" style={{ animationDelay: "0.2s" }} />
+    <span className="w-1.5 h-1.5 rounded-full bg-white/30 animate-pulse" style={{ animationDelay: "0.4s" }} />
+  </div>
+);
+
+const MotifChat = () => {
+  const reduced = useReducedMotion();
+  const [step, setStep] = useState(reduced ? CHAT_SCRIPT.length - 1 : 0);
+
+  useEffect(() => {
+    if (reduced) return;
+    let i = 0;
+    let id = 0;
+    const advance = () => {
+      id = window.setTimeout(() => {
+        i = (i + 1) % CHAT_SCRIPT.length;
+        setStep(i);
+        advance();
+      }, CHAT_SCRIPT[i][2]);
+    };
+    advance();
+    return () => window.clearTimeout(id);
+  }, [reduced]);
+
+  const [visible, typing] = CHAT_SCRIPT[step];
+
+  return (
+    <div className="w-[300px] md:w-[330px] animate-float" style={{ animationDuration: "6.5s" }}>
+      <div className="liquid-glass rounded-2xl overflow-hidden bg-black/50">
+        {/* Encabezado */}
+        <div className="flex items-center gap-2.5 px-4 py-3 border-b border-white/10">
+          <span className="relative grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0F76D6] to-[#26BDF0]">
+            <Bot className="h-4 w-4 text-white" strokeWidth={1.8} />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#4ade80] border-2 border-[#0a0918]" />
+          </span>
+          <div className="leading-tight">
+            <div className="text-[11px] font-medium text-white font-body">Asistente DT</div>
+            <div className="font-mono text-[7px] uppercase tracking-[0.18em] text-[#4ade80]">en línea · responde en seg.</div>
+          </div>
+          <span className="ml-auto liquid-glass rounded-full px-2 py-0.5 font-mono text-[7px] uppercase tracking-[0.15em] text-white/60">
+            24/7
+          </span>
+        </div>
+
+        {/* Conversación */}
+        <div className="flex flex-col gap-2 px-3.5 py-3.5 min-h-[240px]">
+          <AnimatePresence initial={false}>
+            {CHAT_MSGS.slice(0, Math.min(visible, 4)).map((m, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12, scale: 0.94 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className={`max-w-[85%] rounded-2xl px-3 py-2 text-[10.5px] leading-snug font-body ${
+                  m.from === "user"
+                    ? "self-start rounded-bl-sm liquid-glass bg-black/40 text-white/90"
+                    : "self-end rounded-br-sm bg-gradient-to-br from-[#0F76D6] to-[#1a9de0] text-white"
+                }`}
+              >
+                {m.text}
+              </motion.div>
+            ))}
+            {typing && (
+              <motion.div key="typing" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+                <TypingDots />
+              </motion.div>
+            )}
+            {visible >= 5 && (
+              <motion.div
+                key="lead"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="self-center mt-1 liquid-glass rounded-full px-3 py-1.5 flex items-center gap-1.5 font-mono text-[7.5px] uppercase tracking-[0.18em] text-[#C2FBFF] bg-black/40"
+              >
+                <Check className="h-3 w-3 text-[#26BDF0]" strokeWidth={2.5} />
+                lead calificado → CRM
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Barra de entrada decorativa */}
+        <div className="flex items-center gap-2 px-3.5 pb-3.5">
+          <div className="flex-1 liquid-glass rounded-full px-3.5 py-2 text-[9.5px] text-white/40 font-body bg-black/40">
+            Escribe un mensaje…
+          </div>
+          <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0F76D6] to-[#26BDF0]">
+            <Send className="h-3.5 w-3.5 text-white" strokeWidth={1.8} />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 /**
  * Panel con animación propia ligada al progreso del scroll: la tarjeta
@@ -405,7 +532,7 @@ const ServicesHorizontal = () => {
       highlightsKey: "services.chatbotsHighlights",
       path: WHATSAPP,
       external: true,
-      Motif: MotifBot,
+      Motif: MotifChat,
     },
   ];
 
