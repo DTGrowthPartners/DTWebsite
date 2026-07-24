@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 import {
   FadeInView,
   AnimatedCounter,
-  FloatingElement,
   StaggerContainer,
   StaggerItem,
   ScaleOnHover,
@@ -30,6 +29,7 @@ import {
   LedgerMockup,
   BookingFlowMockup,
   ChannelsTicker,
+  ForecastBackdrop,
 } from "@/components/hoteles/PmsMockups";
 import {
   ArrowRight,
@@ -227,6 +227,48 @@ const faqs = [
 
 /* ------------------------------------------------------------------ */
 
+/**
+ * Encabezado de sección a dos columnas: eyebrow + titular a la izquierda,
+ * párrafo de apoyo y un micro-dato a la derecha (llena el vacío del lado
+ * derecho que dejaban los encabezados de una sola columna).
+ */
+const SectionHead = ({
+  eyebrow,
+  children,
+  lead,
+  stat,
+}: {
+  eyebrow: string;
+  children: React.ReactNode;
+  lead: string;
+  stat?: { value: string; label: string };
+}) => (
+  <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)] gap-8 lg:gap-16 items-end">
+    <div>
+      <span className="text-sm font-body text-white/80">{`// ${eyebrow}`}</span>
+      <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em]">
+        {children}
+      </h2>
+    </div>
+    <FadeInView direction="up" delay={0.1} className="lg:pb-2">
+      <div className="rule-brand mb-6 max-w-[7rem]" />
+      <p className="text-sm md:text-base text-white/65 font-body font-light leading-relaxed">
+        {lead}
+      </p>
+      {stat && (
+        <div className="mt-6 flex items-baseline gap-3">
+          <span className="font-heading font-medium text-3xl md:text-4xl gradient-text leading-none">
+            {stat.value}
+          </span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/45 max-w-[12rem]">
+            {stat.label}
+          </span>
+        </div>
+      )}
+    </FadeInView>
+  </div>
+);
+
 const SistemaHoteles = () => {
   const [tab, setTab] = React.useState(0);
   const active = screens[tab];
@@ -272,36 +314,48 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         {/* Hero                                                        */}
         {/* ---------------------------------------------------------- */}
-        <section className="relative bg-black overflow-hidden">
+        <section className="relative bg-black overflow-hidden min-h-[92vh] flex items-center">
+          {/* La grilla del forecast es el ambiente del hero, no una captura */}
+          <ForecastBackdrop />
+
+          {/* Un solo velo, direccional: opaco donde va el texto, transparente
+              en la derecha para que los bloques se vean a plena intensidad. */}
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.97)_0%,rgba(0,0,0,0.94)_32%,rgba(0,0,0,0.62)_55%,rgba(0,0,0,0.15)_78%,transparent_100%)]" />
+
           <Aurora
             blobs={[
-              { color: "blue", className: "-top-40 left-[5%] w-[620px] h-[620px] opacity-30" },
+              { color: "blue", className: "-top-40 left-[5%] w-[620px] h-[620px] opacity-25" },
               {
                 color: "cyan",
-                className: "top-[20%] right-[-120px] w-[540px] h-[540px] opacity-20",
+                className: "top-[20%] right-[-120px] w-[540px] h-[540px] opacity-15",
                 delay: "-6s",
               },
             ]}
           />
 
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pt-16 pb-24 md:pt-24 md:pb-32">
-            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-12 lg:gap-16 items-center">
-              <div className="min-w-0">
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pt-24 pb-28 md:pt-28 md:pb-36">
+            <div className="max-w-3xl">
                 <span className="text-sm font-body text-white/80">{"// Software para hoteles"}</span>
 
+                {/* La palabra rotativa va sola en su renglón y al final del
+                    titular: así su ancho no reacomoda ningún texto y el alto
+                    del h1 —y por tanto el largo del scroll— nunca cambia.
+                    El span envolvente evita pisar el justify-center y el
+                    width animado que el propio componente maneja. */}
                 <h1 className="mt-6 flex flex-wrap items-baseline gap-x-[0.24em] font-heading font-normal text-white text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.04] tracking-[-0.024em]">
                   El sistema que reemplaza el
-                  <RotatingWord
-                    words={["Excel", "cuaderno", "Drive", "grupo de WhatsApp"]}
-                    interval={3000}
-                    className="font-semibold"
-                    innerClassName="gradient-text"
-                  />
-                  de tu hotel
+                  <span className="basis-full flex">
+                    <RotatingWord
+                      words={["Excel", "cuaderno", "Drive"]}
+                      interval={3000}
+                      className="font-semibold"
+                      innerClassName="gradient-text"
+                    />
+                  </span>
                 </h1>
 
                 <p className="mt-6 text-base md:text-lg text-white/75 font-body font-light max-w-xl leading-relaxed">
-                  DT Hotels es un PMS completo: ocupación, reservas, cobros, contabilidad diaria y
+                  DT Hotels es el PMS de tu hotel: ocupación, reservas, cobros, contabilidad diaria y
                   motor de reservas para tu propia web. Construido dentro de un hotel real, no en una
                   sala de reuniones.
                 </p>
@@ -327,16 +381,7 @@ const SistemaHoteles = () => {
                       </span>
                     </span>
                   ))}
-                </div>
               </div>
-
-              <FadeInView direction="up" delay={0.15} className="min-w-0">
-                <FloatingElement amplitude={5} duration={7}>
-                  <BrowserFrame url="tuhotel.com/dashboard/forecast">
-                    <ForecastMockup />
-                  </BrowserFrame>
-                </FloatingElement>
-              </FadeInView>
             </div>
           </div>
 
@@ -395,11 +440,14 @@ const SistemaHoteles = () => {
           />
 
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// El sistema por dentro"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="El sistema por dentro"
+              lead="No es un tablero más para llenar a mano: es donde recepción, administración y contabilidad trabajan el día a día. Míralo por dentro, pantalla por pantalla."
+              stat={{ value: "3", label: "pantallas donde vive toda la operación" }}
+            >
               Tres pantallas que sostienen{" "}
               <span className="font-semibold gradient-text">toda la operación</span>
-            </h2>
+            </SectionHead>
 
             {/* Pestañas */}
             <div className="mt-10 flex flex-wrap gap-2">
@@ -472,10 +520,13 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section id="modulos" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Módulos"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Módulos"
+              lead="Reservas, cobros, tarifas, contabilidad y reportes dejan de vivir en archivos sueltos y correos. Todo pasa a un mismo lugar, con la misma información para todo el equipo."
+              stat={{ value: "9", label: "módulos ya en producción" }}
+            >
               Nueve módulos, <span className="font-semibold gradient-text">un solo lugar</span>
-            </h2>
+            </SectionHead>
 
             {/* Tilt 3D + glare, el mismo de las tarjetas del equipo en la home */}
             <StaggerContainer
@@ -566,11 +617,14 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Conexiones"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Conexiones"
+              lead="No te pedimos cambiar tu forma de cobrar ni de comunicarte. El sistema se enchufa a tu pasarela de pagos, tu web, tu correo y tu WhatsApp, y trabaja con lo que ya tienes."
+              stat={{ value: "6", label: "conexiones listas de fábrica" }}
+            >
               Conectado con lo que{" "}
               <span className="font-semibold gradient-text">ya usa tu hotel</span>
-            </h2>
+            </SectionHead>
 
             <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
               {integrations.map((it, i) => {
@@ -620,12 +674,14 @@ const SistemaHoteles = () => {
                 { n: 9, l: "Módulos en producción" },
                 { n: 0, l: "Reservas de la web digitadas a mano" },
               ].map((m, i) => (
-                <FadeInView key={m.l} direction="up" delay={i * 0.08}>
-                  <div className="liquid-glass-strong rounded-2xl border border-white/10 p-8">
+                <FadeInView key={m.l} direction="up" delay={i * 0.08} className="h-full">
+                  {/* h-full + flex: las tres cards igualan altura y el label
+                      queda anclado abajo aunque ocupe una o dos líneas. */}
+                  <div className="liquid-glass-strong rounded-2xl border border-white/10 p-8 h-full flex flex-col">
                     <div className="font-heading font-medium text-5xl md:text-6xl gradient-text leading-none">
                       <AnimatedCounter value={m.n} duration={1.6} />
                     </div>
-                    <div className="mt-4 font-mono text-[9px] uppercase tracking-[0.2em] text-white/45">
+                    <div className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/45 mt-auto pt-4">
                       {m.l}
                     </div>
                   </div>
@@ -640,11 +696,14 @@ const SistemaHoteles = () => {
         {/* ---------------------------------------------------------- */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Implementación"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl lg:text-[4rem] leading-[0.95] tracking-[-0.024em] max-w-3xl">
+            <SectionHead
+              eyebrow="Implementación"
+              lead="Nosotros hacemos el montaje: cargamos tus habitaciones, tus tarifas por temporada y tu histórico desde el Excel que ya usas. Tu hotel sigue vendiendo mientras tanto."
+              stat={{ value: "3–6", label: "semanas de la firma al arranque" }}
+            >
               Del Excel al sistema{" "}
               <span className="font-semibold gradient-text">sin parar el hotel</span>
-            </h2>
+            </SectionHead>
 
             <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
               {process.map((s, i) => (
@@ -718,12 +777,14 @@ const SistemaHoteles = () => {
               <div className="relative z-10 max-w-2xl mx-auto text-center">
                 <h2 className="flex flex-wrap items-baseline justify-center gap-x-[0.26em] font-heading font-normal text-white text-3xl md:text-5xl leading-[1.05] tracking-[-0.024em]">
                   <BlurText text="Te lo mostramos" />
-                  <RotatingWord
-                    words={["funcionando", "con datos reales", "sin discurso"]}
-                    interval={2900}
-                    className="font-semibold"
-                    innerClassName="gradient-text"
-                  />
+                  <span className="basis-full flex justify-center">
+                    <RotatingWord
+                      words={["funcionando", "con datos reales", "sin discurso"]}
+                      interval={2900}
+                      className="font-semibold"
+                      innerClassName="gradient-text"
+                    />
+                  </span>
                 </h2>
                 <p className="mt-5 text-sm md:text-base text-white/70 font-body font-light">
                   Agenda una demo y recorremos el sistema con datos de un hotel real. Si tiene

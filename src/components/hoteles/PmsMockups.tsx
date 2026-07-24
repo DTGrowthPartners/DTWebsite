@@ -379,6 +379,191 @@ export const LedgerMockup = () => (
 );
 
 /* ------------------------------------------------------------------ */
+/*  Fondo del hero — la grilla del forecast como ambiente, sin datos    */
+/* ------------------------------------------------------------------ */
+const BG_COLS = 26;
+const BG_ROWS = 14;
+
+type BgBar = { row: number; start: number; span: number; channel: ChannelKey };
+
+/**
+ * Ocupación generada con un PRNG de semilla fija: da un patrón que parece
+ * real (estadías de largo variable, huecos entre reservas) y es idéntico en
+ * cada render, así no baila entre recargas ni entre servidor y cliente.
+ */
+type BgMove = BgBar & { toRow: number; toStart: number; delay: number };
+
+/**
+ * Reservas que se mueven solas, repartidas por el lienzo y desfasadas en el
+ * tiempo. Los recorridos son cortos (una fila y pocas columnas) a propósito:
+ * el pasillo que barren queda vacío, y un pasillo corto no deja un agujero
+ * visible en la ocupación.
+ */
+const BG_MOVES: BgMove[] = [
+  { row: 2, start: 4, span: 3, channel: "booking", toRow: 3, toStart: 9, delay: 0 },
+  { row: 5, start: 17, span: 4, channel: "airbnb", toRow: 6, toStart: 21, delay: 2.4 },
+  { row: 9, start: 6, span: 3, channel: "whatsapp", toRow: 10, toStart: 11, delay: 4.8 },
+  { row: 11, start: 19, span: 3, channel: "expedia", toRow: 12, toStart: 15, delay: 7.2 },
+];
+
+/**
+ * ¿La reserva `a` cae dentro del rectángulo que barre el movimiento `m`?
+ * Se comprueba el recorrido completo, no solo origen y destino: si solo se
+ * liberaran los extremos, la reserva en vuelo pasaría por encima de otras.
+ */
+const inSweptPath = (a: BgBar, m: BgMove) => {
+  const r0 = Math.min(m.row, m.toRow);
+  const r1 = Math.max(m.row, m.toRow);
+  const c0 = Math.min(m.start, m.toStart);
+  const c1 = Math.max(m.start + m.span, m.toStart + m.span);
+  return a.row >= r0 && a.row <= r1 && a.start < c1 && c0 < a.start + a.span;
+};
+
+const BG_BARS: BgBar[] = (() => {
+  const channels: ChannelKey[] = [
+    "booking",
+    "directo",
+    "airbnb",
+    "expedia",
+    "whatsapp",
+    "walkin",
+  ];
+  let seed = 20260721;
+  const rnd = () => (seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648;
+
+  const bars: BgBar[] = [];
+  for (let row = 0; row < BG_ROWS; row++) {
+    let col = Math.floor(rnd() * 4);
+    while (col < BG_COLS) {
+      const span = 2 + Math.floor(rnd() * 5);
+      if (col + span <= BG_COLS) {
+        bars.push({ row, start: col, span, channel: channels[Math.floor(rnd() * channels.length)] });
+      }
+      col += span + 1 + Math.floor(rnd() * 4);
+    }
+  }
+
+  // Vacía el pasillo de cada movimiento: ninguna reserva en vuelo pasa por
+  // encima de otra, ni aterriza sobre una ocupada.
+  return bars.filter((b) => !BG_MOVES.some((m) => inSweptPath(b, m)));
+})();
+
+const colPct = 100 / BG_COLS;
+const rowPct = 100 / BG_ROWS;
+
+const barStyle = (b: BgBar): React.CSSProperties => {
+  const c = CHANNELS[b.channel].color;
+  return {
+    left: `${b.start * colPct}%`,
+    top: `calc(${b.row * rowPct}% + 4px)`,
+    width: `calc(${b.span * colPct}% - 5px)`,
+    height: `calc(${rowPct}% - 8px)`,
+    background: `linear-gradient(90deg, ${c}bf, ${c}59)`,
+    border: `1px solid ${c}`,
+    boxShadow: `inset 0 1px 0 rgba(255,255,255,0.22), 0 0 22px ${c}33`,
+  };
+};
+
+/**
+ * La grilla del forecast usada como fondo del hero: sin nombres, sin cifras,
+ * solo el tejido de bloques por canal. Una reserva se arrastra sola a otra
+ * habitación y otra fecha — el drag & drop es una función real del módulo.
+ */
+export const ForecastBackdrop = () => {
+  /* El desplazamiento se expresa en % del propio elemento: moverse N columnas
+     equivale a N/span de su ancho, y M filas a M veces su alto. Así todo va
+     por transform y no toca el layout. */
+  const CYCLE = 12;
+
+  return (
+    <div aria-hidden className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Tejido de celdas */}
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.10) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.10) 1px, transparent 1px)",
+          backgroundSize: `${colPct}% ${rowPct}%`,
+        }}
+      />
+
+      {/* Reservas */}
+      <div className="absolute inset-0">
+        {BG_BARS.map((b, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{
+              duration: 0.5,
+              delay: 0.15 + Math.min(i * 0.014, 1.1),
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="absolute rounded-[4px] origin-left"
+            style={barStyle(b)}
+          />
+        ))}
+
+        {/* Reservas que se mueven, con el hueco punteado que dejan atrás */}
+        {BG_MOVES.map((m, i) => {
+          const dx = `${((m.toStart - m.start) / m.span) * 100}%`;
+          const dy = `${(m.toRow - m.row) * 100}%`;
+          const flat = "inset 0 1px 0 rgba(255,255,255,0.22)";
+          const lifted =
+            "0 14px 34px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.35)";
+
+          return (
+            <React.Fragment key={`move-${i}`}>
+              <motion.div
+                className="absolute rounded-[4px] border border-dashed border-white/25"
+                style={{
+                  left: `${m.start * colPct}%`,
+                  top: `calc(${m.row * rowPct}% + 4px)`,
+                  width: `calc(${m.span * colPct}% - 5px)`,
+                  height: `calc(${rowPct}% - 8px)`,
+                }}
+                animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
+                transition={{
+                  duration: CYCLE,
+                  times: [0, 0.12, 0.2, 0.6, 0.72, 1],
+                  repeat: Infinity,
+                  delay: m.delay,
+                  ease: "linear",
+                }}
+              />
+
+              <motion.div
+                className="absolute rounded-[4px]"
+                style={barStyle(m)}
+                animate={{
+                  x: ["0%", "0%", dx, dx, "0%", "0%"],
+                  y: ["0%", "0%", dy, dy, "0%", "0%"],
+                  scale: [1, 1.08, 1.08, 1, 1, 1],
+                  boxShadow: [flat, lifted, lifted, flat, flat, flat],
+                }}
+                transition={{
+                  duration: CYCLE,
+                  times: [0, 0.14, 0.42, 0.52, 0.78, 1],
+                  repeat: Infinity,
+                  delay: m.delay,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+              />
+            </React.Fragment>
+          );
+        })}
+      </div>
+
+      {/* Columna del día de hoy */}
+      <div
+        className="absolute top-0 bottom-0 bg-[#26BDF0]/[0.05] border-x border-[#26BDF0]/15 motif-node"
+        style={{ left: `${16 * colPct}%`, width: `${colPct}%` }}
+      />
+    </div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
 /*  Ticker de canales — mismo recurso que el marquee de marcas          */
 /* ------------------------------------------------------------------ */
 const TICKER = [
