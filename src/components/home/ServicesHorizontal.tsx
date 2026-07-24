@@ -580,7 +580,7 @@ const ServicesHorizontal = () => {
   const IntroContent = (
     <div>
       <span className="sh-stagger block text-sm font-body text-white/80 mb-6">{t("services.kicker")}</span>
-      <h2 className="sh-title font-heading font-normal text-white text-[13vw] md:text-[8.5vw] leading-[0.98] tracking-[-0.03em]">
+      <h2 className="sh-title font-heading font-normal text-white text-[13vw] md:text-[6.5vw] leading-[0.98] tracking-[-0.03em]">
         {t("services.title")}
         <br />
         <RotatingWord words={t("services.rotating").split("|")} interval={3100} className="font-semibold" />
@@ -655,7 +655,7 @@ const ServicesHorizontal = () => {
                 <span className="sh-stagger block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0]">
                   {"Servicio " + s.num + " — 04"}
                 </span>
-                <h3 className="sh-title mt-3 font-heading font-medium text-white text-[12vw] md:text-[9vw] leading-[0.95] tracking-[-0.035em] md:whitespace-nowrap">
+                <h3 className="sh-title mt-3 font-heading font-medium text-white text-[12vw] md:text-[6.5vw] leading-[0.95] tracking-[-0.035em] md:whitespace-nowrap">
                   {t(s.titleKey)}
                 </h3>
                 <p className="sh-stagger mt-5 text-base md:text-xl text-white/85 font-body font-light leading-snug max-w-2xl">

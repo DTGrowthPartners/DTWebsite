@@ -24,8 +24,6 @@ import logoOnExpress from "@/assets/marcas/logo-onexpress.png";
 import logoSantaAlejandria from "@/assets/marcas/logo-santa-alejandria-tb6Rekx9.png";
 import logoNanoPlush from "@/assets/marcas/nano-plush.webp";
 import logoVitrina from "@/assets/marcas/vitrina-comercial-cartagena.png";
-import logoBuzos from "@/assets/buzos-removebg-preview.png";
-import logoAventuras from "@/assets/aventuras-removebg-preview.png";
 
 /**
  * Marquee infinito de logos reales en 3 filas que se desplazan solas
@@ -56,9 +54,9 @@ const ROWS: Brand[][] = [
     { name: "Chancletas", logo: logoChancletas },
     { name: "Compu Xtreme", logo: logoCompuXtreme },
     { name: "Importaciones Cartagena", logo: logoImportaciones },
-    { name: "Innovación", logo: logoInnovacion },
   ],
   [
+    { name: "Innovación", logo: logoInnovacion },
     { name: "La Cantina", logo: logoLaCantina },
     { name: "Caribe Jewelry", logo: logoCaribe },
     { name: "Ceenford", logo: logoCeenford },
@@ -66,8 +64,6 @@ const ROWS: Brand[][] = [
     { name: "Santa Alejandría", logo: logoSantaAlejandria },
     { name: "Nano Plush", logo: logoNanoPlush },
     { name: "Vitrina Comercial", logo: logoVitrina },
-    { name: "Buzos", logo: logoBuzos },
-    { name: "Aventuras", logo: logoAventuras },
   ],
 ];
 
