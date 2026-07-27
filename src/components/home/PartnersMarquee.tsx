@@ -18,7 +18,6 @@ import logoCompuXtreme from "@/assets/marcas/compu-xtreme.png";
 import logoImportaciones from "@/assets/marcas/importaciones-cartagena.png";
 import logoInnovacion from "@/assets/marcas/innovacion-logo.png";
 import logoLaCantina from "@/assets/marcas/la-cantina-logo.png";
-import logoCaribe from "@/assets/marcas/logo-caribe-jewerly.png";
 import logoCeenford from "@/assets/marcas/logo-ceenford.png";
 import logoOnExpress from "@/assets/marcas/logo-onexpress.png";
 import logoSantaAlejandria from "@/assets/marcas/logo-santa-alejandria-tb6Rekx9.png";
@@ -58,7 +57,6 @@ const ROWS: Brand[][] = [
   [
     { name: "Innovación", logo: logoInnovacion },
     { name: "La Cantina", logo: logoLaCantina },
-    { name: "Caribe Jewelry", logo: logoCaribe },
     { name: "Ceenford", logo: logoCeenford },
     { name: "OnExpress", logo: logoOnExpress },
     { name: "Santa Alejandría", logo: logoSantaAlejandria },
