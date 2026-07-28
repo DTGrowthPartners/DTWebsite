@@ -31,6 +31,20 @@ const WALL_COLUMNS = [
   { tiles: [tTennis, tAya, tMotostop, tPsico], duration: "66s", reverse: false },
 ];
 
+// Titular del hero: palabra a palabra; g = degradado, br = salto de línea
+const HERO_WORDS: Array<{ t?: string; g?: boolean; br?: boolean }> = [
+  { t: "Desarrollo", g: true },
+  { t: "web", g: true },
+  { t: "en", g: true },
+  { t: "Cartagena", g: true },
+  { br: true },
+  { t: "que" },
+  { t: "convierte" },
+  { t: "visitantes" },
+  { t: "en" },
+  { t: "clientes" },
+];
+
 const WebsWall = () => (
   <div
     aria-hidden
@@ -206,6 +220,26 @@ const DesarrolloWeb = () => {
         (tiltRef.current as any).vanillaTilt.destroy();
       }
     };
+  }, []);
+
+  /* Hero — parallax sutil del muro siguiendo el mouse */
+  const heroRef = useRef<HTMLElement | null>(null);
+  const heroWallRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const hero = heroRef.current;
+    const wall = heroWallRef.current;
+    if (!hero || !wall || !matchMedia("(hover: hover)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const xTo = gsap.quickTo(wall, "x", { duration: 0.9, ease: "power3.out" });
+    const yTo = gsap.quickTo(wall, "y", { duration: 0.9, ease: "power3.out" });
+    const move = (e: PointerEvent) => {
+      const r = hero.getBoundingClientRect();
+      xTo(((e.clientX - r.left) / r.width - 0.5) * -26);
+      yTo(((e.clientY - r.top) / r.height - 0.5) * -18);
+    };
+    hero.addEventListener("pointermove", move);
+    return () => hero.removeEventListener("pointermove", move);
   }, []);
 
   /* Tipos de servicio — imagen que persigue el cursor (CodePen PwqrzeG):
@@ -495,13 +529,32 @@ const DesarrolloWeb = () => {
       <Navigation />
 
       <main>
-        {/* Hero — muro diagonal de webs reales en movimiento, contenido abajo-izquierda */}
-        <section className="relative min-h-screen flex items-end overflow-hidden bg-[#07060F] -mt-16">
-          <WebsWall />
+        {/* Hero — muro diagonal de webs reales con parallax al mouse,
+            titular palabra a palabra y prueba social */}
+        <section ref={heroRef} className="relative min-h-screen flex items-end overflow-hidden bg-[#07060F] -mt-16">
+          {/* Entrada cinematográfica del muro + capa de parallax */}
+          <motion.div
+            initial={{ opacity: 0, scale: 1.09 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-0"
+          >
+            <div ref={heroWallRef} className="absolute inset-0 will-change-transform">
+              <WebsWall />
+            </div>
+          </motion.div>
 
           {/* Velo para legibilidad + fundido con la siguiente sección */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#07060F]/90 via-[#07060F]/45 to-[#07060F]/25 z-[1]" />
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[1]" />
+
+          {/* Pista de scroll */}
+          <div className="pointer-events-none absolute bottom-8 right-8 md:right-12 z-10 hidden md:flex flex-col items-center gap-3">
+            <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/50 [writing-mode:vertical-rl]">
+              scroll
+            </span>
+            <span className="w-px h-12 bg-gradient-to-b from-[#26BDF0] to-transparent animate-pulse" />
+          </div>
 
           <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-14 md:pb-16 pt-36">
             <motion.span
@@ -513,16 +566,24 @@ const DesarrolloWeb = () => {
               {"// Desarrollo Web"}
             </motion.span>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading font-normal text-white text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[0.98] tracking-[-0.03em] max-w-4xl"
-            >
-              <span className="gradient-text font-semibold">Desarrollo web en Cartagena</span>
-              <br />
-              que convierte visitantes en clientes
-            </motion.h1>
+            {/* Titular palabra a palabra (blur-up), degradado en la primera línea */}
+            <h1 className="font-heading font-normal text-white text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[0.98] tracking-[-0.03em] max-w-4xl flex flex-wrap gap-x-[0.26em]">
+              {HERO_WORDS.map((w, i) =>
+                w.br ? (
+                  <span key={i} className="basis-full h-0" aria-hidden />
+                ) : (
+                  <motion.span
+                    key={i}
+                    initial={{ opacity: 0, y: 40, filter: "blur(7px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    transition={{ duration: 0.65, delay: 0.3 + i * 0.075, ease: [0.16, 1, 0.3, 1] }}
+                    className={w.g ? "gradient-text font-semibold pb-[0.12em] -mb-[0.12em]" : ""}
+                  >
+                    {w.t}
+                  </motion.span>
+                )
+              )}
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
@@ -556,14 +617,19 @@ const DesarrolloWeb = () => {
               </a>
             </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.85 }}
-              className="mt-6 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/45"
+            {/* Prueba social en chips de vidrio */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 flex flex-wrap items-center gap-2.5"
             >
-              Next.js & React · Shopify · Software a medida · SEO
-            </motion.p>
+              {["+25 proyectos entregados", "16 webs en producción", "Next.js · Shopify · SEO"].map((c) => (
+                <span key={c} className="liquid-glass rounded-full px-4 py-1.5 text-[11px] md:text-xs text-white/90 font-body whitespace-nowrap bg-black/30">
+                  {c}
+                </span>
+              ))}
+            </motion.div>
           </div>
         </section>
 
@@ -1083,35 +1149,54 @@ const DesarrolloWeb = () => {
           </div>
         </section>
 
-        {/* FAQs — acordeones de vidrio */}
+        {/* FAQs — encabezado sticky a la izquierda, acordeones numerados a la derecha */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <Aurora
             blobs={[{ color: "blue", className: "bottom-[12%] left-[-120px] w-[520px] h-[520px] opacity-20", delay: "-6s" }]}
           />
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// FAQ"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
-              Preguntas <span className="gradient-text font-semibold">frecuentes</span>
-            </h2>
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 grid lg:grid-cols-[minmax(300px,420px)_1fr] gap-12 lg:gap-20 items-start">
+            <div className="lg:sticky lg:top-32">
+              <span className="text-sm font-body text-white/80">{"// FAQ"}</span>
+              <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-5xl leading-[0.98] tracking-[-0.024em]">
+                Lo que todos preguntan <span className="gradient-text font-semibold">antes de empezar</span>
+              </h2>
+              <p className="mt-5 text-sm md:text-base text-white/75 font-body font-light">
+                ¿Tu duda no está aquí? Escríbenos directo y te respondemos con claridad.
+              </p>
+              <a
+                href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Tengo%20una%20pregunta%20sobre%20el%20servicio%20de%20desarrollo%20web.&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white font-body group"
+              >
+                Pregúntanos por WhatsApp
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#26BDF0]" />
+              </a>
+            </div>
 
-            <div className="mt-14 grid md:grid-cols-2 gap-4 items-start">
+            <div className="space-y-3">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.5, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  transition={{ duration: 0.5, delay: 0.04 * (index % 4), ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Accordion type="single" collapsible>
                     <AccordionItem
                       value={`item-${index}`}
                       className="liquid-glass rounded-xl px-6 bg-[#0a0918]/50 border-none"
                     >
-                      <AccordionTrigger className="text-left py-4 hover:no-underline">
-                        <span className="font-heading font-medium text-white text-base">{faq.question}</span>
+                      <AccordionTrigger className="text-left py-4 hover:no-underline gap-4">
+                        <span className="flex items-baseline gap-4">
+                          <span className="font-mono text-[10px] text-[#26BDF0] shrink-0">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          <span className="font-heading font-medium text-white text-base">{faq.question}</span>
+                        </span>
                       </AccordionTrigger>
-                      <AccordionContent className="text-white/70 font-body font-light text-sm pb-5">
+                      <AccordionContent className="text-white/70 font-body font-light text-sm pb-5 pl-9">
                         {faq.answer}
                       </AccordionContent>
                     </AccordionItem>
@@ -1122,44 +1207,66 @@ const DesarrolloWeb = () => {
           </div>
         </section>
 
-        {/* CTA — panel de video con píldora blanca (estilo del home) */}
-        <section className="relative bg-[#07060F] py-24 md:py-28 overflow-hidden">
-          <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="relative overflow-hidden rounded-[2rem] border border-white/10"
-            >
-              <video
-                className="absolute inset-0 w-full h-full object-cover opacity-60"
-                autoPlay
-                loop
-                muted
-                playsInline
-              >
-                <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
-              </video>
-              <div className="absolute inset-0 bg-black/45" />
+        {/* CTA — gran final full-bleed con video, al estilo del CTA del home */}
+        <section className="relative min-h-[75vh] bg-[#07060F] overflow-hidden flex items-center">
+          <video
+            className="absolute inset-0 w-full h-full object-cover opacity-70"
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-black/40" />
+          {/* Costuras con las secciones vecinas */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-[#07060F] to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-[#07060F] to-transparent" />
 
-              <div className="relative z-10 max-w-2xl mx-auto text-center px-6 py-16 md:py-24">
-                <h2 className="font-heading font-normal text-white text-4xl md:text-6xl tracking-[-0.024em] leading-[1.02]">
-                  ¿Listo para <span className="gradient-text font-semibold">construir?</span>
-                </h2>
-                <p className="mt-5 text-sm md:text-base text-white/85 font-body font-light">
-                  Conversemos sobre tu proyecto. Primera consulta sin compromiso.
-                </p>
-                <a
-                  href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm md:text-base font-medium text-black font-body transition-transform duration-300 hover:scale-[1.04]"
-                >
-                  Agendar consulta estratégica
-                  <ArrowUpRight className="h-5 w-5" />
-                </a>
-              </div>
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-24 text-center flex flex-col items-center">
+            <motion.h2
+              initial={{ opacity: 0, y: 34, filter: "blur(6px)" }}
+              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading font-normal text-white text-5xl md:text-7xl tracking-[-0.024em] leading-[1.02]"
+            >
+              ¿Listo para <span className="gradient-text font-semibold">construir?</span>
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-6 text-sm md:text-base text-white/90 font-body font-light max-w-xl"
+            >
+              Conversemos sobre tu proyecto y te decimos con claridad si podemos ayudarte, cuánto toma y cuánto cuesta.
+            </motion.p>
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-base font-medium text-black font-body transition-transform duration-300 hover:scale-[1.04]"
+            >
+              Agendar consulta estratégica
+              <ArrowUpRight className="h-5 w-5" />
+            </motion.a>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: 0.45 }}
+              className="mt-10 flex flex-wrap items-center justify-center gap-3"
+            >
+              {["Sin compromiso", "Respuesta en 24 horas", "Cotización clara"].map((b) => (
+                <span key={b} className="liquid-glass rounded-full px-4 py-1.5 text-xs text-white/90 font-body whitespace-nowrap">
+                  {b}
+                </span>
+              ))}
             </motion.div>
           </div>
         </section>
