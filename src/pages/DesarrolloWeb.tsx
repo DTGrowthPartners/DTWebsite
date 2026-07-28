@@ -6,8 +6,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Code, Smartphone, Package, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { BackgroundBeamsWithCollision } from "@/components/ui/shadcn-io/background-beams-with-collision";
 import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
-import { RetroGrid } from "@/components/ui/shadcn-io/retro-grid";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { motion } from "framer-motion";
+
+// Escena 3D interactiva (Spline) — lazy: solo se descarga al visitar esta página
+const Spline = lazy(() => import("@splinetool/react-spline"));
 import ImageSlider from "@/components/home/ImageSlider";
 import {
   Dialog,
@@ -345,52 +348,84 @@ const DesarrolloWeb = () => {
       <Navigation />
 
       <main>
-        {/* Hero */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black -mt-16 pt-16">
-          {/* Retro Grid Background */}
-          <RetroGrid
-            angle={65}
-            cellSize={60}
-            opacity={0.6}
-            lightLineColor="#0ea5e9"
-            darkLineColor="#0ea5e9"
-          />
+        {/* Hero — escena 3D interactiva de fondo, contenido abajo-izquierda */}
+        <section className="relative min-h-screen flex items-end overflow-hidden bg-[#07060F] -mt-16">
+          {/* Fondo 3D: se puede mover con el mouse (los clics pasan a la escena) */}
+          <div className="absolute inset-0">
+            <Suspense fallback={<div className="absolute inset-0 bg-[#07060F]" />}>
+              <Spline
+                scene="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode"
+                className="w-full h-full"
+              />
+            </Suspense>
+          </div>
 
-          <div className="w-full relative z-10 flex items-center justify-center">
-            <div className="max-w-4xl mx-auto text-center space-y-8 px-6">
-              <div className="inline-block">
-                <span className="px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm font-medium">
-                  Desarrollo Web
-                </span>
-              </div>
+          {/* Velo para legibilidad + fundido con la siguiente sección */}
+          <div className="pointer-events-none absolute inset-0 bg-black/35 z-[1]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent z-[1]" />
 
-              <h1 className="text-5xl lg:text-7xl font-bold text-white">
-                <span className="gradient-text">Desarrollo web en Cartagena</span> que convierte visitantes en clientes
-              </h1>
+          {/* Contenido: deja pasar el mouse a la escena, salvo los botones */}
+          <div className="relative z-10 pointer-events-none w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-14 md:pb-16 pt-36">
+            <motion.span
+              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="block font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0] mb-4"
+            >
+              {"// Desarrollo Web"}
+            </motion.span>
 
-              <p className="text-xl text-neutral-300 max-w-2xl mx-auto">
-                Landing pages, webs corporativas y e-commerce optimizados para crecer
-              </p>
+            <motion.h1
+              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="font-heading font-normal text-white text-[clamp(2.6rem,6.5vw,5.5rem)] leading-[0.98] tracking-[-0.03em] max-w-4xl"
+            >
+              <span className="gradient-text font-semibold">Desarrollo web en Cartagena</span>
+              <br />
+              que convierte visitantes en clientes
+            </motion.h1>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-                <Button
-                  size="lg"
-                  className="btn-primary group"
-                  onClick={() => {
-                    document.getElementById('webs-portafolio')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  Ver Portafolios
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button size="default" variant="outline" className="btn-outline sm:h-11 sm:px-8 sm:text-base" asChild>
-                  <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                    <span className="hidden sm:inline">Agendar consulta estratégica</span>
-                    <span className="sm:hidden">Agendar consulta</span>
-                  </a>
-                </Button>
-              </div>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-5 text-base md:text-xl text-white/85 font-body font-light max-w-xl"
+            >
+              Landing pages, webs corporativas, e-commerce y software a medida, optimizados para crecer.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.7, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-8 flex flex-wrap gap-3"
+            >
+              <button
+                onClick={() => document.getElementById("webs-portafolio")?.scrollIntoView({ behavior: "smooth" })}
+                className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm md:text-base font-medium text-black font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97]"
+              >
+                Ver portafolio
+                <ArrowRight className="h-4 w-4" />
+              </button>
+              <a
+                href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pointer-events-auto inline-flex items-center gap-2 liquid-glass rounded-full px-7 py-3.5 text-sm md:text-base font-medium text-white font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97] bg-black/30"
+              >
+                Agendar consulta estratégica
+              </a>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.85 }}
+              className="mt-6 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/45"
+            >
+              Next.js & React · Shopify · Software a medida · SEO
+            </motion.p>
           </div>
         </section>
 
