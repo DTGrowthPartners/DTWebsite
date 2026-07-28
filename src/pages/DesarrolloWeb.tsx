@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Code, Smartphone, Package, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink } from "lucide-react";
+import { Code, Smartphone, Package, ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Aurora from "@/components/effects/Aurora";
 import Tilt from "@/components/effects/Tilt";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
@@ -167,105 +167,6 @@ const MethodDial = () => {
               />
             ))}
           </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Portafolio interactivo: pestañas + navegador con captura y link en vivo
-const PORTFOLIO = [
-  { name: "Equilibrio Clinic", tag: "Web corporativa · Estética", img: tEquilibrio, url: "https://equilibrioclinic.com.co" },
-  { name: "Arismendy Andrade", tag: "Web corporativa · Industrial", img: tAya, url: "https://arismendyandrade.com" },
-  { name: "ACB Fit", tag: "Gimnasio · Membresías", img: tAcbfit, url: "https://acbfit.com" },
-  { name: "Motos Top", tag: "E-commerce", img: tMotostop, url: null },
-  { name: "CobraFlow", tag: "SaaS · Software a medida", img: tCobraflow, url: null },
-];
-
-const PortfolioBrowser = () => {
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-
-  // Auto-avance cada 5s; se pausa con el mouse encima
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % PORTFOLIO.length), 5000);
-    return () => clearInterval(id);
-  }, [paused]);
-
-  const site = PORTFOLIO[active];
-  return (
-    <div
-      className="grid lg:grid-cols-[300px_1fr] gap-6 lg:gap-10 items-start"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
-      {/* Pestañas de proyectos */}
-      <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
-        {PORTFOLIO.map((p, i) => (
-          <button
-            key={p.name}
-            onClick={() => setActive(i)}
-            className={`text-left shrink-0 lg:w-full rounded-xl px-4 py-3 transition-all duration-300 border ${
-              i === active
-                ? "bg-white/[0.07] border-[#26BDF0]/50 shadow-[0_0_25px_rgba(38,189,240,0.15)]"
-                : "border-white/10 hover:border-white/25 hover:bg-white/[0.03]"
-            }`}
-          >
-            <span className="block font-heading font-medium text-white text-sm md:text-base whitespace-nowrap lg:whitespace-normal">
-              {p.name}
-            </span>
-            <span className="block font-mono text-[9px] uppercase tracking-[0.18em] text-white/45 mt-1 whitespace-nowrap lg:whitespace-normal">
-              {p.tag}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* Navegador */}
-      <div className="liquid-glass rounded-2xl overflow-hidden bg-black/40">
-        <div className="flex items-center gap-2 px-4 py-2.5 border-b border-white/10">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-3 flex-1 min-w-0 rounded-md bg-black/40 px-3 py-1 font-mono text-[10px] text-white/60 truncate">
-            {site.url ? site.url.replace("https://", "") : `${site.name.toLowerCase().replace(/\s/g, "")} · proyecto privado`}
-          </span>
-          {site.url && (
-            <a
-              href={site.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[11px] font-medium text-black font-body whitespace-nowrap transition-transform duration-300 hover:scale-[1.05]"
-            >
-              Abrir en vivo
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          )}
-        </div>
-        <div className="relative h-[300px] md:h-[460px] overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={active}
-              src={site.img}
-              alt={`Sitio web de ${site.name} desarrollado por DT Growth Partners`}
-              initial={{ opacity: 0, scale: 1.04 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 w-full h-full object-cover object-top"
-            />
-          </AnimatePresence>
-          {/* Barra del auto-avance */}
-          {!paused && (
-            <motion.div
-              key={`progress-${active}`}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 5, ease: "linear" }}
-              className="absolute bottom-0 left-0 h-0.5 w-full origin-left bg-gradient-to-r from-[#0F76D6] to-[#26BDF0]"
-            />
-          )}
         </div>
       </div>
     </div>
@@ -934,7 +835,7 @@ const DesarrolloWeb = () => {
         </section>
 
         {/* Tipos de servicio — filas editoriales clicables (abren el detalle) */}
-        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+        <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <Aurora
             blobs={[{ color: "purple", className: "top-[14%] right-[-100px] w-[520px] h-[520px] opacity-20", delay: "-5s" }]}
           />
@@ -1205,35 +1106,6 @@ const DesarrolloWeb = () => {
             </div>
           </DialogContent>
         </Dialog>
-
-        {/* Portafolio interactivo — navegador con pestañas de proyectos reales */}
-        <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
-          <Aurora
-            blobs={[
-              { color: "cyan", className: "top-[12%] right-[-100px] w-[500px] h-[500px] opacity-20" },
-              { color: "blue", className: "bottom-[10%] left-[-120px] w-[540px] h-[540px] opacity-25", delay: "-6s" },
-            ]}
-          />
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Portafolio interactivo"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
-              Navega <span className="gradient-text font-semibold">proyectos reales</span>
-            </h2>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
-              Elige un proyecto, míralo en el navegador y ábrelo en vivo si está publicado.
-            </p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-14"
-            >
-              <PortfolioBrowser />
-            </motion.div>
-          </div>
-        </section>
 
         {/* Encaja en tu negocio — cubo Flip que salta entre moldes al scroll,
             acompañado de contenido editorial por etapa */}
