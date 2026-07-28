@@ -424,11 +424,10 @@ const DesarrolloWeb = () => {
           },
         });
 
-        tl.add(Flip.fit(cube, sB, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, 0.15)
-          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<")
-          .addLabel("mid", "+=0.35")
-          .add(Flip.fit(cube, sC, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, "mid")
-          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<");
+        tl.add(Flip.fit(cube, sB, { duration: 0.5, ease: "none", scale: true }) as gsap.core.Tween, 0.55)
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 0.5, ease: "none" }, "<")
+          .add(Flip.fit(cube, sC, { duration: 0.5, ease: "none", scale: true }) as gsap.core.Tween, 1.75)
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 0.5, ease: "none" }, "<");
       }, area);
     };
 
@@ -587,7 +586,7 @@ const DesarrolloWeb = () => {
             <span className="w-px h-12 bg-gradient-to-b from-[#26BDF0] to-transparent animate-pulse" />
           </div>
 
-          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-14 md:pb-16 pt-36">
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-28 md:pb-16 pt-36">
             <motion.span
               initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
