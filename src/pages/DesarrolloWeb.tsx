@@ -418,13 +418,13 @@ const DesarrolloWeb = () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: area,
-            start: "top 55%",
+            start: "top 45%",
             end: "bottom 90%",
             scrub: 1.5,
           },
         });
 
-        tl.add(Flip.fit(cube, sB, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, 0)
+        tl.add(Flip.fit(cube, sB, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, 0.15)
           .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<")
           .addLabel("mid", "+=0.35")
           .add(Flip.fit(cube, sC, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, "mid")
@@ -997,7 +997,7 @@ const DesarrolloWeb = () => {
                     </div>
                   </Tilt>
                 </motion.div>
-                <div className="flex justify-center md:justify-end md:pr-[8%]">
+                <div className="flex justify-center md:justify-end md:pr-[8%] md:self-start md:mt-2">
                   <div className="flex flex-col items-center gap-3">
                     <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
                       {/* Cubo CSS 3D con el degradado de marca */}
