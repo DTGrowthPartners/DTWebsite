@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Code, Smartphone, Package, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink } from "lucide-react";
 import Aurora from "@/components/effects/Aurora";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Flip } from "gsap/Flip";
 import tVcc from "@/assets/webs/vcc-tile.webp";
 import tBhk from "@/assets/webs/bhk-tile.webp";
 import tAcbfit from "@/assets/webs/acbfit-tile.webp";
@@ -205,6 +208,107 @@ const DesarrolloWeb = () => {
     };
   }, []);
 
+  /* Tipos de servicio — imagen que persigue el cursor (CodePen PwqrzeG):
+     al entrar a una fila, su captura aparece y sigue el mouse con quickTo. */
+  const reasonsRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const root = reasonsRef.current;
+    if (!root || !matchMedia("(hover: hover)").matches) return;
+
+    const cleanups: Array<() => void> = [];
+    root.querySelectorAll<HTMLElement>(".dw-row").forEach((el) => {
+      const image = el.querySelector<HTMLElement>(".dw-swipeimage");
+      if (!image) return;
+      gsap.set(image, { xPercent: -50, yPercent: -50 });
+      const setX = gsap.quickTo(image, "x", { duration: 0.4, ease: "power3" });
+      const setY = gsap.quickTo(image, "y", { duration: 0.4, ease: "power3" });
+      let first = true;
+      const align = (e: MouseEvent) => {
+        if (first) {
+          setX(e.clientX, e.clientX);
+          setY(e.clientY, e.clientY);
+          first = false;
+        } else {
+          setX(e.clientX);
+          setY(e.clientY);
+        }
+      };
+      const stop = () => document.removeEventListener("mousemove", align);
+      const fade = gsap.to(image, { autoAlpha: 1, ease: "none", paused: true, duration: 0.12, onReverseComplete: stop });
+      const enter = (e: MouseEvent) => {
+        first = true;
+        fade.play();
+        document.addEventListener("mousemove", align);
+        align(e);
+      };
+      const leave = () => fade.reverse();
+      el.addEventListener("mouseenter", enter);
+      el.addEventListener("mouseleave", leave);
+      cleanups.push(() => {
+        el.removeEventListener("mouseenter", enter);
+        el.removeEventListener("mouseleave", leave);
+        stop();
+        fade.kill();
+      });
+    });
+    return () => cleanups.forEach((fn) => fn());
+  }, []);
+
+  /* Cubo que "encaja" en cada molde (CodePen GgpMeZp adaptado sin three.js):
+     Flip.fit lo lleva de un slot punteado al siguiente, scrubbed con el
+     scroll, mientras el cubo CSS 3D rota media vuelta por salto. */
+  const flipAreaRef = useRef<HTMLDivElement | null>(null);
+  useLayoutEffect(() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    gsap.registerPlugin(ScrollTrigger, Flip);
+    const area = flipAreaRef.current;
+    if (!area) return;
+
+    let ctx: gsap.Context | null = null;
+    const build = () => {
+      ctx?.revert();
+      ctx = gsap.context(() => {
+        const cube = area.querySelector<HTMLElement>(".dw-cube");
+        const core = area.querySelector<HTMLElement>(".dw-cube-core");
+        const mB = area.querySelector<HTMLElement>(".dw-marker-b");
+        const mC = area.querySelector<HTMLElement>(".dw-marker-c");
+        if (!cube || !core || !mB || !mC) return;
+
+        gsap.set(core, { rotateX: -16, rotateY: 28 });
+        const sB = Flip.getState(mB);
+        const sC = Flip.getState(mC);
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: area,
+            start: "top 55%",
+            end: "bottom 90%",
+            scrub: 1.5,
+          },
+        });
+
+        tl.add(Flip.fit(cube, sB, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, 0)
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<")
+          .addLabel("mid", "+=0.35")
+          .add(Flip.fit(cube, sC, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween, "mid")
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<");
+      }, area);
+    };
+
+    build();
+    let resizeId = 0;
+    const onResize = () => {
+      window.clearTimeout(resizeId);
+      resizeId = window.setTimeout(build, 300);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      window.clearTimeout(resizeId);
+      ctx?.revert();
+    };
+  }, []);
+
   const projects = [
     {
       id: 0,
@@ -280,22 +384,27 @@ const DesarrolloWeb = () => {
     },
   ];
 
+  // img: captura real que persigue el cursor al pasar por la fila
   const reasons = [
     {
       title: "Landing Page de Conversión",
       description: "Cada landing está pensada para guiar al usuario a una única acción, sin distracciones, con velocidad y claridad.",
+      img: tVcc,
     },
     {
       title: "Web Corporativa",
       description: "Un sitio web profesional multipágina que genera confianza, presenta tus servicios con claridad y posiciona tu marca como referente en tu industria.",
+      img: tAya,
     },
     {
       title: "E-commerce / Web de Venta",
       description: "Tienda online optimizada para ventas, con pasarela de pago, gestión de productos y automatización de procesos.",
+      img: tMotostop,
     },
     {
       title: "Aplicaciones Web / Desarrollo Web Personalizado",
       description: "Soluciones web a medida que automatizan procesos, integran sistemas y resuelven problemas específicos de tu negocio.",
+      img: tCobraflow,
     },
   ];
 
@@ -528,7 +637,7 @@ const DesarrolloWeb = () => {
               Validar, posicionar o escalar: no todos necesitan lo mismo.
             </p>
 
-            <div className="mt-14 border-t border-white/10">
+            <div ref={reasonsRef} className="mt-14 border-t border-white/10">
               {reasons.map((reason, index) => (
                 <motion.button
                   key={reason.title}
@@ -542,8 +651,15 @@ const DesarrolloWeb = () => {
                     if (index === 2) setIsEcommerceDialogOpen(true);
                     if (index === 3) setIsWebAppDialogOpen(true);
                   }}
-                  className="group w-full text-left py-8 md:py-10 grid grid-cols-[auto_1fr_auto] gap-5 md:gap-10 items-center border-b border-white/10 transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
+                  className="dw-row group w-full text-left py-8 md:py-10 grid grid-cols-[auto_1fr_auto] gap-5 md:gap-10 items-center border-b border-white/10 transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
                 >
+                  {/* Captura que persigue el cursor (fixed, sobre todo) */}
+                  <img
+                    aria-hidden
+                    src={reason.img}
+                    alt=""
+                    className="dw-swipeimage fixed top-0 left-0 w-[300px] md:w-[360px] rounded-xl border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.65)] opacity-0 invisible pointer-events-none z-[60]"
+                  />
                   <span className="font-mono text-xs text-white/40">0{index + 1}</span>
                   <div className="min-w-0">
                     <h3 className="font-heading font-medium text-white text-xl md:text-3xl tracking-[-0.02em] leading-tight transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#0F76D6] group-hover:via-[#26BDF0] group-hover:to-[#C2FBFF]">
@@ -823,6 +939,79 @@ const DesarrolloWeb = () => {
                   <p className="mt-2.5 text-sm text-white/70 font-body font-light leading-relaxed">{step.description}</p>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Encaja en tu negocio — cubo Flip que salta entre moldes al scroll */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          {/* Retícula de fondo (como el pen: grilla fina + gruesa) */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-70"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+              backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
+              backgroundPosition: "-2px -2px, -2px -2px, -1px -1px, -1px -1px",
+              maskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
+              WebkitMaskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
+            }}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// A tu medida"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              Un proyecto que <span className="gradient-text font-semibold">encaja</span> donde lo necesites
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Landing, tienda o software interno: el mismo sistema toma la forma que tu negocio pide. Sigue bajando.
+            </p>
+
+            <div ref={flipAreaRef} className="relative mt-16 h-[150vh]">
+              {/* Slot A — punto de partida */}
+              <div className="absolute right-[6%] top-0 flex flex-col items-center gap-3">
+                <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                  {/* Cubo CSS 3D con el degradado de marca */}
+                  <div className="dw-cube absolute inset-0 [perspective:900px]">
+                    <div className="dw-cube-core relative w-full h-full [transform-style:preserve-3d]">
+                      {[
+                        "[transform:translateZ(100px)]",
+                        "[transform:rotateY(180deg)_translateZ(100px)]",
+                        "[transform:rotateY(90deg)_translateZ(100px)]",
+                        "[transform:rotateY(-90deg)_translateZ(100px)]",
+                        "[transform:rotateX(90deg)_translateZ(100px)]",
+                        "[transform:rotateX(-90deg)_translateZ(100px)]",
+                      ].map((t, i) => (
+                        <div
+                          key={i}
+                          className={`absolute inset-0 rounded-lg border border-white/25 bg-gradient-to-br from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF] ${t} ${
+                            i % 2 ? "opacity-90" : ""
+                          } grid place-items-center [backface-visibility:hidden]`}
+                        >
+                          <span className="font-heading font-semibold text-black/55 text-3xl select-none">DT</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Landing</span>
+              </div>
+
+              {/* Slot B */}
+              <div className="absolute left-[4%] top-[42%] flex flex-col items-center gap-3">
+                <div className="w-[110px] h-[110px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                  <div className="dw-marker-b w-full h-full" />
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">E-commerce</span>
+              </div>
+
+              {/* Slot C */}
+              <div className="absolute right-[12%] bottom-0 flex flex-col items-center gap-3">
+                <div className="w-[160px] h-[160px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                  <div className="dw-marker-c w-full h-full" />
+                </div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Software a medida</span>
+              </div>
             </div>
           </div>
         </section>
