@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Code, Smartphone, Package, ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Aurora from "@/components/effects/Aurora";
 import Tilt from "@/components/effects/Tilt";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
@@ -255,22 +255,6 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿Con qué tipo de empresas trabajan?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Trabajamos con negocios que buscan crecer con estrategia, tecnología y datos. Idealmente empresas que ya venden y quieren escalar sus procesos digitales."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Trabajan con cualquier tipo de proyecto?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Evaluamos cada caso para asegurarnos de que el proyecto tenga sentido a nivel técnico y de negocio antes de avanzar."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "¿Cuánto tiempo toma un proyecto?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -283,14 +267,6 @@ const faqSchema = {
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Sí. Nuestro proceso es iterativo. Los ajustes se realizan dentro del alcance definido y se validan en cada etapa del proyecto."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Qué necesito tener listo antes de empezar?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Una idea clara del objetivo del proyecto y disponibilidad para validaciones clave. Nosotros guiamos el resto del proceso."
       }
     },
     {
@@ -311,26 +287,10 @@ const faqSchema = {
     },
     {
       "@type": "Question",
-      "name": "¿Trabajan solo desarrollo web o también estrategia?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ambos. No desarrollamos sin entender primero el contexto y los objetivos del negocio."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "¿El proyecto es de pago único o mensual?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "El desarrollo es un proyecto puntual. El acompañamiento, optimización o crecimiento se maneja de forma recurrente si el cliente lo requiere."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Cómo sé si este servicio es para mí?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "En la consulta inicial revisamos tu caso y te decimos con total claridad si podemos ayudarte o no."
       }
     }
   ]
@@ -539,30 +499,6 @@ const DesarrolloWeb = () => {
     }
   ];
 
-  // stat: dato duro con contador animado que ancla cada promesa
-  const services = [
-    {
-      icon: Code,
-      title: "Desarrollo orientado a conversión (CRO)",
-      description: "Cada web parte de un objetivo claro: ventas, leads o activación.",
-      features: ["Arquitectura pensada para guiar decisiones.", "Copy y UI alineados a intención del usuario.", "CTAs estratégicos, no decorativos.", "Integración con Meta Ads, WhatsApp, CRM, formularios y automatizaciones."],
-      stat: { value: 10, suffix: "x", label: "ROI promedio" },
-    },
-    {
-      icon: Package,
-      title: "Diseño + performance + datos",
-      description: "No separamos diseño de resultados.",
-      features: ["UI/UX moderno con foco en claridad.", "Métricas instaladas desde el día uno (GA4, eventos, conversiones).", "Optimización continua basada en datos reales."],
-      stat: { value: 95, prefix: "+", label: "PageSpeed score" },
-    },
-    {
-      icon: Smartphone,
-      title: "Tecnología moderna, escalable y rápida",
-      description: "Construimos con stacks actuales y probados.",
-      features: ["Landing pages rápidas (Core Web Vitals).", "Webs escalables (Next.js, Shopify, CMS optimizados).", "Integraciones con herramientas de marketing y automatización."],
-      stat: { value: 8, prefix: "3–", label: "Semanas al aire" },
-    },
-  ];
 
   // img: captura real que persigue el cursor al pasar por la fila
   const reasons = [
@@ -591,24 +527,12 @@ const DesarrolloWeb = () => {
 
   const faqs = [
     {
-      question: "¿Con qué tipo de empresas trabajan?",
-      answer: "Trabajamos con negocios que buscan crecer con estrategia, tecnología y datos. Idealmente empresas que ya venden y quieren escalar sus procesos digitales.",
-    },
-    {
-      question: "¿Trabajan con cualquier tipo de proyecto?",
-      answer: "No. Evaluamos cada caso para asegurarnos de que el proyecto tenga sentido a nivel técnico y de negocio antes de avanzar.",
-    },
-    {
       question: "¿Cuánto tiempo toma un proyecto?",
       answer: "Depende del alcance. Un proyecto estándar suele tomar entre 3 y 8 semanas, según complejidad y validaciones.",
     },
     {
       question: "¿Puedo solicitar cambios durante el desarrollo?",
       answer: "Sí. Nuestro proceso es iterativo. Los ajustes se realizan dentro del alcance definido y se validan en cada etapa del proyecto.",
-    },
-    {
-      question: "¿Qué necesito tener listo antes de empezar?",
-      answer: "Una idea clara del objetivo del proyecto y disponibilidad para validaciones clave. Nosotros guiamos el resto del proceso.",
     },
     {
       question: "¿Entregan el proyecto listo para operar?",
@@ -619,16 +543,8 @@ const DesarrolloWeb = () => {
       answer: "Sí. Podemos acompañarte con soporte, mejoras continuas o escalamiento según tus necesidades.",
     },
     {
-      question: "¿Trabajan solo desarrollo web o también estrategia?",
-      answer: "Ambos. No desarrollamos sin entender primero el contexto y los objetivos del negocio.",
-    },
-    {
       question: "¿El proyecto es de pago único o mensual?",
       answer: "El desarrollo es un proyecto puntual. El acompañamiento, optimización o crecimiento se maneja de forma recurrente si el cliente lo requiere.",
-    },
-    {
-      question: "¿Cómo sé si este servicio es para mí?",
-      answer: "En la consulta inicial revisamos tu caso y te decimos con total claridad si podemos ayudarte o no.",
     },
   ];
 
@@ -747,102 +663,24 @@ const DesarrolloWeb = () => {
           </div>
         </section>
 
-        {/* Por qué con nosotros + Tipos de servicio — una sola sección */}
+        {/* Tipos de servicio — filas editoriales clicables (abren el detalle) */}
         <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <Aurora
             blobs={[
-              { color: "blue", className: "top-[6%] left-[-120px] w-[520px] h-[520px] opacity-25" },
-              { color: "cyan", className: "top-[42%] right-[6%] w-[480px] h-[480px] opacity-20", delay: "-7s" },
-              { color: "purple", className: "bottom-[8%] left-[10%] w-[520px] h-[520px] opacity-20", delay: "-5s" },
+              { color: "blue", className: "top-[10%] left-[-120px] w-[520px] h-[520px] opacity-25" },
+              { color: "purple", className: "bottom-[10%] right-[-100px] w-[520px] h-[520px] opacity-20", delay: "-5s" },
             ]}
           />
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Por qué con nosotros"}</span>
+            <span className="text-sm font-body text-white/80">{"// Tipos de servicio"}</span>
             <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
-              No construimos páginas, construimos <span className="gradient-text font-semibold">activos digitales</span>
+              La solución correcta para <span className="gradient-text font-semibold">tu objetivo</span>
             </h2>
             <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
-              Webs que convierten, escalan y se integran a tu sistema de ventas.
+              Validar, posicionar o escalar: no todos necesitan lo mismo. Toca una opción para ver el detalle.
             </p>
 
-            <div className="mt-14 grid md:grid-cols-3 gap-4">
-              {services.map((service, index) => {
-                const Icon = service.icon;
-                return (
-                  <motion.div
-                    key={service.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    {/* Tilt 3D + glare (transitions.dev #19) y spotlight que sigue el cursor */}
-                    <Tilt cardClassName="!rounded-[1.25rem]">
-                      <div
-                        className="group liquid-glass rounded-[1.25rem] p-7 bg-[#0a0918]/60 h-full"
-                        onMouseMove={(e) => {
-                          const r = e.currentTarget.getBoundingClientRect();
-                          e.currentTarget.style.setProperty("--sx", `${e.clientX - r.left}px`);
-                          e.currentTarget.style.setProperty("--sy", `${e.clientY - r.top}px`);
-                        }}
-                      >
-                        <div
-                          aria-hidden
-                          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                          style={{
-                            background:
-                              "radial-gradient(320px circle at var(--sx,50%) var(--sy,50%), rgba(38,189,240,0.14), transparent 65%)",
-                          }}
-                        />
-
-                        <div className="flex items-start justify-between gap-4">
-                          <span className="liquid-glass rounded-xl w-12 h-12 flex items-center justify-center bg-black/40 shrink-0">
-                            <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
-                          </span>
-                          <div className="text-right">
-                            <div className="font-heading font-medium text-white text-3xl md:text-4xl tracking-[-0.02em] leading-none">
-                              <AnimatedCounter
-                                value={service.stat.value}
-                                prefix={service.stat.prefix ?? ""}
-                                suffix={service.stat.suffix ?? ""}
-                                duration={1.6}
-                              />
-                            </div>
-                            <div className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/45 mt-1.5">
-                              {service.stat.label}
-                            </div>
-                          </div>
-                        </div>
-
-                        <h3 className="mt-5 font-heading font-medium text-white text-xl md:text-2xl tracking-[-0.01em] leading-tight">
-                          {service.title}
-                        </h3>
-                        <p className="mt-2 text-sm text-white/70 font-body font-light">{service.description}</p>
-                        <ul className="mt-5 space-y-2.5 border-t border-white/10 pt-5">
-                          {service.features.map((feature) => (
-                            <li key={feature} className="flex items-start gap-2.5 text-sm text-white/75 font-body font-light">
-                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#26BDF0]" strokeWidth={1.7} />
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </Tilt>
-                  </motion.div>
-                );
-              })}
-            </div>
-
-            {/* Tipos de servicio, fusionado: la solución correcta para tu objetivo */}
-            <div className="mt-24 md:mt-28">
-              <h3 className="font-heading font-normal text-white text-3xl md:text-5xl leading-[1.0] tracking-[-0.024em] max-w-3xl">
-                La solución correcta para <span className="gradient-text font-semibold">tu objetivo</span>
-              </h3>
-              <p className="mt-4 text-sm md:text-base text-white/75 font-body font-light max-w-xl">
-                Validar, posicionar o escalar: no todos necesitan lo mismo. Toca una opción para ver el detalle.
-              </p>
-
-            <div ref={reasonsRef} className="mt-10 border-t border-white/10">
+            <div ref={reasonsRef} className="mt-14 border-t border-white/10">
               {reasons.map((reason, index) => (
                 <motion.button
                   key={reason.title}
@@ -877,7 +715,6 @@ const DesarrolloWeb = () => {
                   </span>
                 </motion.button>
               ))}
-            </div>
             </div>
           </div>
         </section>
