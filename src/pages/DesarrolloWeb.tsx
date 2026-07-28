@@ -58,7 +58,6 @@ const WebsWall = () => (
     </div>
   </div>
 );
-import ImageSlider from "@/components/home/ImageSlider";
 import {
   Dialog,
   DialogContent,
@@ -625,7 +624,7 @@ const DesarrolloWeb = () => {
         </section>
 
         {/* Tipos de servicio — filas editoriales clicables (abren el detalle) */}
-        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+        <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <Aurora
             blobs={[{ color: "purple", className: "top-[14%] right-[-100px] w-[520px] h-[520px] opacity-20", delay: "-5s" }]}
           />
@@ -897,8 +896,155 @@ const DesarrolloWeb = () => {
           </DialogContent>
         </Dialog>
 
-        {/* Image Slider */}
-        <ImageSlider />
+        {/* Encaja en tu negocio — cubo Flip que salta entre moldes al scroll,
+            acompañado de contenido editorial por etapa */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          {/* Retícula de fondo (como el pen: grilla fina + gruesa) */}
+          <div
+            aria-hidden
+            className="absolute inset-0 opacity-70"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
+              backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
+              backgroundPosition: "-2px -2px, -2px -2px, -1px -1px, -1px -1px",
+              maskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
+              WebkitMaskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
+            }}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// A tu medida"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              Un proyecto que <span className="gradient-text font-semibold">encaja</span> donde lo necesites
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Empieza simple y evoluciona sin rehacer nada: el mismo sistema toma la forma que tu negocio pide en cada etapa.
+            </p>
+
+            <div ref={flipAreaRef} className="relative mt-6">
+              {/* Etapa 1 — Landing (aquí nace el cubo) */}
+              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+                <motion.div
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">Etapa 01</span>
+                  <h3 className="mt-3 font-heading font-medium text-white text-2xl md:text-4xl tracking-[-0.02em] leading-tight">
+                    Arranca enfocado: una landing que convierte
+                  </h3>
+                  <p className="mt-3.5 text-sm md:text-base text-white/70 font-body font-light max-w-md">
+                    Una sola página, un solo objetivo: convertir el tráfico de pauta en leads y ventas desde la primera semana.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Core Web Vitals", "Copy orientado a acción", "Integrada con Meta Ads"].map((c) => (
+                      <span key={c} className="liquid-glass rounded-full px-3.5 py-1.5 text-[11px] text-white/90 font-body whitespace-nowrap">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+                <div className="flex justify-center md:justify-end md:pr-[8%]">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                      {/* Cubo CSS 3D con el degradado de marca */}
+                      <div className="dw-cube absolute inset-0 [perspective:900px]">
+                        <div className="dw-cube-core relative w-full h-full [transform-style:preserve-3d]">
+                          {[
+                            "[transform:translateZ(100px)]",
+                            "[transform:rotateY(180deg)_translateZ(100px)]",
+                            "[transform:rotateY(90deg)_translateZ(100px)]",
+                            "[transform:rotateY(-90deg)_translateZ(100px)]",
+                            "[transform:rotateX(90deg)_translateZ(100px)]",
+                            "[transform:rotateX(-90deg)_translateZ(100px)]",
+                          ].map((t, i) => (
+                            <div
+                              key={i}
+                              className={`absolute inset-0 rounded-lg border border-white/25 bg-gradient-to-br from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF] ${t} ${
+                                i % 2 ? "opacity-90" : ""
+                              } grid place-items-center [backface-visibility:hidden]`}
+                            >
+                              <span className="font-heading font-semibold text-black/55 text-3xl select-none">DT</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Landing</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Etapa 2 — E-commerce (slot a la izquierda, texto a la derecha) */}
+              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+                <div className="order-2 md:order-1 flex justify-center md:justify-start md:pl-[10%]">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-[110px] h-[110px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                      <div className="dw-marker-b w-full h-full" />
+                    </div>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">E-commerce</span>
+                  </div>
+                </div>
+                <motion.div
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="order-1 md:order-2"
+                >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">Etapa 02</span>
+                  <h3 className="mt-3 font-heading font-medium text-white text-2xl md:text-4xl tracking-[-0.02em] leading-tight">
+                    Escala a tienda: catálogo, pagos y pedidos
+                  </h3>
+                  <p className="mt-3.5 text-sm md:text-base text-white/70 font-body font-light max-w-md">
+                    El mismo sistema crece a e-commerce completo con pasarela de pago local y automatización de pedidos.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Shopify / WooCommerce", "Pasarelas locales", "Email + WhatsApp"].map((c) => (
+                      <span key={c} className="liquid-glass rounded-full px-3.5 py-1.5 text-[11px] text-white/90 font-body whitespace-nowrap">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Etapa 3 — Software a medida */}
+              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+                <motion.div
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">Etapa 03</span>
+                  <h3 className="mt-3 font-heading font-medium text-white text-2xl md:text-4xl tracking-[-0.02em] leading-tight">
+                    Conviértelo en tu software
+                  </h3>
+                  <p className="mt-3.5 text-sm md:text-base text-white/70 font-body font-light max-w-md">
+                    Cuando el negocio lo pide, evoluciona a plataforma: dashboards, roles, integraciones y flujos a la medida de tu operación.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Dashboards", "Integraciones API", "Automatizaciones"].map((c) => (
+                      <span key={c} className="liquid-glass rounded-full px-3.5 py-1.5 text-[11px] text-white/90 font-body whitespace-nowrap">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+                <div className="flex justify-center md:justify-end md:pr-[12%]">
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-[160px] h-[160px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
+                      <div className="dw-marker-c w-full h-full" />
+                    </div>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Software a medida</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Metodología — cards de vidrio con número fantasma */}
         <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
@@ -940,79 +1086,6 @@ const DesarrolloWeb = () => {
                   <p className="mt-2.5 text-sm text-white/70 font-body font-light leading-relaxed">{step.description}</p>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Encaja en tu negocio — cubo Flip que salta entre moldes al scroll */}
-        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
-          {/* Retícula de fondo (como el pen: grilla fina + gruesa) */}
-          <div
-            aria-hidden
-            className="absolute inset-0 opacity-70"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.05) 2px, transparent 2px), linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
-              backgroundSize: "100px 100px, 100px 100px, 20px 20px, 20px 20px",
-              backgroundPosition: "-2px -2px, -2px -2px, -1px -1px, -1px -1px",
-              maskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
-              WebkitMaskImage: "linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent)",
-            }}
-          />
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// A tu medida"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
-              Un proyecto que <span className="gradient-text font-semibold">encaja</span> donde lo necesites
-            </h2>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
-              Landing, tienda o software interno: el mismo sistema toma la forma que tu negocio pide. Sigue bajando.
-            </p>
-
-            <div ref={flipAreaRef} className="relative mt-16 h-[150vh]">
-              {/* Slot A — punto de partida */}
-              <div className="absolute right-[6%] top-0 flex flex-col items-center gap-3">
-                <div className="relative w-[200px] h-[200px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
-                  {/* Cubo CSS 3D con el degradado de marca */}
-                  <div className="dw-cube absolute inset-0 [perspective:900px]">
-                    <div className="dw-cube-core relative w-full h-full [transform-style:preserve-3d]">
-                      {[
-                        "[transform:translateZ(100px)]",
-                        "[transform:rotateY(180deg)_translateZ(100px)]",
-                        "[transform:rotateY(90deg)_translateZ(100px)]",
-                        "[transform:rotateY(-90deg)_translateZ(100px)]",
-                        "[transform:rotateX(90deg)_translateZ(100px)]",
-                        "[transform:rotateX(-90deg)_translateZ(100px)]",
-                      ].map((t, i) => (
-                        <div
-                          key={i}
-                          className={`absolute inset-0 rounded-lg border border-white/25 bg-gradient-to-br from-[#0F76D6] via-[#26BDF0] to-[#C2FBFF] ${t} ${
-                            i % 2 ? "opacity-90" : ""
-                          } grid place-items-center [backface-visibility:hidden]`}
-                        >
-                          <span className="font-heading font-semibold text-black/55 text-3xl select-none">DT</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Landing</span>
-              </div>
-
-              {/* Slot B */}
-              <div className="absolute left-[4%] top-[42%] flex flex-col items-center gap-3">
-                <div className="w-[110px] h-[110px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
-                  <div className="dw-marker-b w-full h-full" />
-                </div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">E-commerce</span>
-              </div>
-
-              {/* Slot C */}
-              <div className="absolute right-[12%] bottom-0 flex flex-col items-center gap-3">
-                <div className="w-[160px] h-[160px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
-                  <div className="dw-marker-c w-full h-full" />
-                </div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50">Software a medida</span>
-              </div>
             </div>
           </div>
         </section>
