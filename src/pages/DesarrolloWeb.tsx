@@ -416,31 +416,26 @@ const DesarrolloWeb = () => {
     },
     {
       step: "02",
-      title: "Definición de objetivos y requerimientos",
-      description: "Traducimos necesidades en objetivos medibles. Priorizamos funcionalidades y definimos el alcance.",
+      title: "Objetivos, requerimientos y roadmap",
+      description: "Traducimos necesidades en objetivos medibles, priorizamos el alcance y definimos tiempos, hitos y responsables.",
     },
     {
       step: "03",
-      title: "Planificación y roadmap de entrega",
-      description: "Establecemos tiempos, hitos y responsables con claridad sobre entregables y dependencias.",
-    },
-    {
-      step: "04",
       title: "Diseño y prototipado funcional",
       description: "Validamos estructura y flujos con prototipos. Ajustamos con feedback temprano.",
     },
     {
-      step: "05",
+      step: "04",
       title: "Desarrollo e iteración controlada",
       description: "Construimos por fases con ajustes progresivos. Cada iteración mejora rendimiento y usabilidad.",
     },
     {
-      step: "06",
+      step: "05",
       title: "Validación final y optimización",
       description: "Perfeccionamos hasta cumplir criterios de calidad. Entregamos lista para operar y escalar.",
     },
     {
-      step: "07",
+      step: "06",
       title: "Entrega y acompañamiento",
       description: "Realizamos puesta en producción y acompañamiento inicial. Preparada para futuras mejoras.",
     },
@@ -1071,9 +1066,7 @@ const DesarrolloWeb = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.55, delay: (index % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className={`relative liquid-glass rounded-[1.25rem] p-6 md:p-7 bg-[#0a0918]/50 overflow-hidden ${
-                    index === 6 ? "md:col-span-2 lg:col-span-1 lg:col-start-2" : ""
-                  }`}
+                  className="relative liquid-glass rounded-[1.25rem] p-6 md:p-7 bg-[#0a0918]/50 overflow-hidden"
                 >
                   <span
                     aria-hidden
