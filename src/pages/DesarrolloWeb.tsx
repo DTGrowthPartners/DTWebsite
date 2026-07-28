@@ -3,9 +3,8 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Code, Smartphone, Package, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
-import { BackgroundBeamsWithCollision } from "@/components/ui/shadcn-io/background-beams-with-collision";
-import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
+import { Code, Smartphone, Package, ArrowRight, ArrowUpRight, CheckCircle2, ExternalLink } from "lucide-react";
+import Aurora from "@/components/effects/Aurora";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import tVcc from "@/assets/webs/vcc-tile.webp";
@@ -464,99 +463,108 @@ const DesarrolloWeb = () => {
           </div>
         </section>
 
-        {/* Services */}
-        <section className="py-20 bg-black">
-          <div className="section-container">
-            <div className="text-center mb-16 space-y-6">
-              <h2 className="text-3xl lg:text-4xl font-bold">
-                ¿Por qué desarrollar tu web con <span className="gradient-text whitespace-nowrap">DT Growth Partners</span>?
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                No construimos páginas. Construimos activos digitales que convierten, escalan y se integran a tu sistema de ventas.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
+        {/* Por qué con nosotros — editorial + cards de vidrio */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          <Aurora
+            blobs={[
+              { color: "blue", className: "top-[10%] left-[-120px] w-[520px] h-[520px] opacity-25" },
+              { color: "cyan", className: "bottom-[8%] right-[8%] w-[480px] h-[480px] opacity-20", delay: "-7s" },
+            ]}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// Por qué con nosotros"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              No construimos páginas, construimos <span className="gradient-text font-semibold">activos digitales</span>
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Webs que convierten, escalan y se integran a tu sistema de ventas.
+            </p>
+
+            <div className="mt-14 grid md:grid-cols-3 gap-4">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 return (
-                  <Card
+                  <motion.div
                     key={service.title}
-                    className="card-hover bg-card border-border/50 backdrop-blur-sm animate-fade-in"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-60px" }}
+                    transition={{ duration: 0.6, delay: index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                    className="liquid-glass rounded-[1.25rem] p-7 bg-[#0a0918]/60"
                   >
-                    <CardContent className="p-8 space-y-6">
-                      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                        <Icon className="w-7 h-7 text-primary" />
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <h3 className="text-xl font-semibold">{service.title}</h3>
-                        <p className="text-muted-foreground">{service.description}</p>
-                      </div>
-                      
-                      <ul className="space-y-2">
-                        {service.features.map((feature) => (
-                          <li key={feature} className="flex items-center text-sm text-muted-foreground">
-                            <CheckCircle2 className="w-4 h-4 text-primary mr-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                    <span className="liquid-glass rounded-xl w-12 h-12 flex items-center justify-center bg-black/40">
+                      <Icon className="h-5 w-5 text-white" strokeWidth={1.5} />
+                    </span>
+                    <h3 className="mt-5 font-heading font-medium text-white text-xl md:text-2xl tracking-[-0.01em] leading-tight">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/70 font-body font-light">{service.description}</p>
+                    <ul className="mt-5 space-y-2.5 border-t border-white/10 pt-5">
+                      {service.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-2.5 text-sm text-white/75 font-body font-light">
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#26BDF0]" strokeWidth={1.7} />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
         </section>
 
-        {/* Reasons */}
-        <section className="relative bg-black">
-          <BackgroundBeamsWithCollision className="py-20">
-            <div className="section-container relative z-10 w-full">
-              <div className="text-center mb-16 space-y-4">
-                <h2 className="text-3xl lg:text-4xl font-bold">
-                  Tipos de <span className="gradient-text">servicios</span>
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  No todos necesitan lo mismo. Creamos la solución correcta según tu objetivo actual: validar, posicionar o escalar.
-                </p>
-              </div>
+        {/* Tipos de servicio — filas editoriales clicables (abren el detalle) */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          <Aurora
+            blobs={[{ color: "purple", className: "top-[14%] right-[-100px] w-[520px] h-[520px] opacity-20", delay: "-5s" }]}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// Tipos de servicio"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              La solución correcta para <span className="gradient-text font-semibold">tu objetivo</span>
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Validar, posicionar o escalar: no todos necesitan lo mismo.
+            </p>
 
-              <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
-                {reasons.map((reason, index) => (
-                  <Card
-                    key={reason.title}
-                    className="bg-card/80 backdrop-blur-sm border-border/50 animate-fade-in cursor-pointer hover:border-primary/50 hover:shadow-[0_0_20px_hsl(210_100%_50%/0.15)] transition-all duration-300"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                    onClick={() => {
-                      if (index === 0) setIsDialogOpen(true);
-                      if (index === 1) setIsWebCorporativaDialogOpen(true);
-                      if (index === 2) setIsEcommerceDialogOpen(true);
-                      if (index === 3) setIsWebAppDialogOpen(true);
-                    }}
-                  >
-                    <CardContent className="p-6 space-y-3">
-                      <h3 className="text-lg font-semibold flex items-center">
-                        <div className="w-1.5 h-1.5 bg-primary rounded-full mr-3" />
-                        {reason.title}
-                        <ArrowRight className="ml-auto h-4 w-4 text-primary opacity-70" />
-                      </h3>
-                      <p className="text-muted-foreground text-sm pl-5">{reason.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+            <div className="mt-14 border-t border-white/10">
+              {reasons.map((reason, index) => (
+                <motion.button
+                  key={reason.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.55, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  onClick={() => {
+                    if (index === 0) setIsDialogOpen(true);
+                    if (index === 1) setIsWebCorporativaDialogOpen(true);
+                    if (index === 2) setIsEcommerceDialogOpen(true);
+                    if (index === 3) setIsWebAppDialogOpen(true);
+                  }}
+                  className="group w-full text-left py-8 md:py-10 grid grid-cols-[auto_1fr_auto] gap-5 md:gap-10 items-center border-b border-white/10 transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
+                >
+                  <span className="font-mono text-xs text-white/40">0{index + 1}</span>
+                  <div className="min-w-0">
+                    <h3 className="font-heading font-medium text-white text-xl md:text-3xl tracking-[-0.02em] leading-tight transition-colors duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#0F76D6] group-hover:via-[#26BDF0] group-hover:to-[#C2FBFF]">
+                      {reason.title}
+                    </h3>
+                    <p className="mt-2 text-sm text-white/70 font-body font-light max-w-2xl">{reason.description}</p>
+                  </div>
+                  <span className="liquid-glass rounded-full w-11 h-11 md:w-12 md:h-12 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
+                    <ArrowUpRight className="h-5 w-5 text-white" strokeWidth={1.5} />
+                  </span>
+                </motion.button>
+              ))}
             </div>
-          </BackgroundBeamsWithCollision>
+          </div>
         </section>
 
         {/* Dialog for Landing Page details */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="sm:max-w-md bg-card border-primary/20 w-[calc(100%-2rem)] sm:w-full">
+          <DialogContent className="sm:max-w-md bg-[#0a0918]/95 backdrop-blur-2xl border-white/10 w-[calc(100%-2rem)] sm:w-full rounded-2xl">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold gradient-text">
+              <DialogTitle className="font-heading font-semibold text-2xl gradient-text">
                 Landing Page de Conversión
               </DialogTitle>
               <DialogDescription className="text-muted-foreground pt-2">
@@ -609,9 +617,9 @@ const DesarrolloWeb = () => {
 
         {/* Dialog for Web Corporativa details */}
         <Dialog open={isWebCorporativaDialogOpen} onOpenChange={setIsWebCorporativaDialogOpen}>
-          <DialogContent className="sm:max-w-md bg-card border-primary/20 w-[calc(100%-2rem)] sm:w-full">
+          <DialogContent className="sm:max-w-md bg-[#0a0918]/95 backdrop-blur-2xl border-white/10 w-[calc(100%-2rem)] sm:w-full rounded-2xl">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold gradient-text">
+              <DialogTitle className="font-heading font-semibold text-2xl gradient-text">
                 Web Corporativa
               </DialogTitle>
               <DialogDescription className="text-muted-foreground pt-2">
@@ -664,9 +672,9 @@ const DesarrolloWeb = () => {
 
         {/* Dialog for E-commerce details */}
         <Dialog open={isEcommerceDialogOpen} onOpenChange={setIsEcommerceDialogOpen}>
-          <DialogContent className="sm:max-w-md bg-card border-primary/20 w-[calc(100%-2rem)] sm:w-full">
+          <DialogContent className="sm:max-w-md bg-[#0a0918]/95 backdrop-blur-2xl border-white/10 w-[calc(100%-2rem)] sm:w-full rounded-2xl">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold gradient-text">
+              <DialogTitle className="font-heading font-semibold text-2xl gradient-text">
                 E-commerce / Web de Venta
               </DialogTitle>
               <DialogDescription className="text-muted-foreground pt-2">
@@ -719,9 +727,9 @@ const DesarrolloWeb = () => {
 
         {/* Dialog for Web App / Custom Development details */}
         <Dialog open={isWebAppDialogOpen} onOpenChange={setIsWebAppDialogOpen}>
-          <DialogContent className="sm:max-w-md bg-card border-primary/20 w-[calc(100%-2rem)] sm:w-full">
+          <DialogContent className="sm:max-w-md bg-[#0a0918]/95 backdrop-blur-2xl border-white/10 w-[calc(100%-2rem)] sm:w-full rounded-2xl">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold gradient-text">
+              <DialogTitle className="font-heading font-semibold text-2xl gradient-text">
                 Aplicaciones Web / Desarrollo Web Personalizado
               </DialogTitle>
               <DialogDescription className="text-muted-foreground pt-2">
@@ -775,84 +783,101 @@ const DesarrolloWeb = () => {
         {/* Image Slider */}
         <ImageSlider />
 
-        {/* Process */}
-        <section className="py-20 bg-black relative">
-          {/* Gradient transition from previous section */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent pointer-events-none" />
-          <div className="section-container">
-            <div className="text-center mb-16 space-y-4">
-              <h2 className="text-3xl lg:text-4xl font-bold">
-                Metodología de <span className="gradient-text">implementación</span>
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Proceso estructurado que asegura resultados medibles en cada etapa
-              </p>
-            </div>
+        {/* Metodología — cards de vidrio con número fantasma */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          <Aurora
+            blobs={[
+              { color: "cyan", className: "top-[10%] left-[10%] w-[460px] h-[460px] opacity-20" },
+              { color: "blue", className: "bottom-[10%] right-[-100px] w-[520px] h-[520px] opacity-25", delay: "-8s" },
+            ]}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// Metodología"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              De la idea al <span className="gradient-text font-semibold">despliegue</span>
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Proceso estructurado que asegura resultados medibles en cada etapa.
+            </p>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {process.map((step, index) => (
-                <Card
+                <motion.div
                   key={step.step}
-                  className={`group card-hover bg-card border-border/50 animate-fade-in ${
-                    index === 6 ? 'md:col-span-2 lg:col-span-1 lg:col-start-2' : ''
+                  initial={{ opacity: 0, y: 26 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.55, delay: (index % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  className={`relative liquid-glass rounded-[1.25rem] p-6 md:p-7 bg-[#0a0918]/50 overflow-hidden ${
+                    index === 6 ? "md:col-span-2 lg:col-span-1 lg:col-start-2" : ""
                   }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
                 >
-                  <CardContent className="p-6 space-y-4">
-                    <div className="flex items-start justify-between">
-                      <span className="text-4xl font-bold text-primary/20 group-hover:text-primary transition-colors duration-300">{step.step}</span>
-                    </div>
-                    <div className="space-y-3">
-                      <h3 className="text-lg font-semibold leading-tight">{step.title}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                    </div>
-                  </CardContent>
-                </Card>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none select-none absolute -top-4 right-1 font-heading font-semibold text-white/[0.06] text-[5.5rem] leading-none"
+                  >
+                    {step.step}
+                  </span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">Paso {step.step}</span>
+                  <h3 className="mt-3 font-heading font-medium text-white text-lg md:text-xl leading-tight">{step.title}</h3>
+                  <p className="mt-2.5 text-sm text-white/70 font-body font-light leading-relaxed">{step.description}</p>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* FAQs */}
-        <section className="py-20 bg-black relative">
-          <BackgroundBeams className="absolute inset-0 opacity-50" />
-          <div className="section-container max-w-6xl relative z-10">
-            <h2 className="text-3xl lg:text-4xl font-bold text-center mb-16">
-              Preguntas <span className="gradient-text">frecuentes</span>
+        {/* FAQs — acordeones de vidrio */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          <Aurora
+            blobs={[{ color: "blue", className: "bottom-[12%] left-[-120px] w-[520px] h-[520px] opacity-20", delay: "-6s" }]}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// FAQ"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              Preguntas <span className="gradient-text font-semibold">frecuentes</span>
             </h2>
 
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="mt-14 grid md:grid-cols-2 gap-4 items-start">
               {faqs.map((faq, index) => (
-                <Accordion
+                <motion.div
                   key={index}
-                  type="single"
-                  collapsible
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 0.05}s` }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5, delay: (index % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <AccordionItem
-                    value={`item-${index}`}
-                    className="border border-border/50 rounded-lg px-6 bg-card backdrop-blur-sm"
-                  >
-                    <AccordionTrigger className="text-left hover:text-primary transition-colors py-4">
-                      <span className="text-base font-semibold">{faq.question}</span>
-                    </AccordionTrigger>
-                    <AccordionContent className="text-muted-foreground text-sm pb-4">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                  <Accordion type="single" collapsible>
+                    <AccordionItem
+                      value={`item-${index}`}
+                      className="liquid-glass rounded-xl px-6 bg-[#0a0918]/50 border-none"
+                    >
+                      <AccordionTrigger className="text-left py-4 hover:no-underline">
+                        <span className="font-heading font-medium text-white text-base">{faq.question}</span>
+                      </AccordionTrigger>
+                      <AccordionContent className="text-white/70 font-body font-light text-sm pb-5">
+                        {faq.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-black">
-          <div className="section-container">
-            <div className="relative overflow-hidden rounded-3xl bg-black border border-border/50 p-12 lg:p-16">
+        {/* CTA — panel de video con píldora blanca (estilo del home) */}
+        <section className="relative bg-[#07060F] py-24 md:py-28 overflow-hidden">
+          <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="relative overflow-hidden rounded-[2rem] border border-white/10"
+            >
               <video
-                className="absolute inset-0 w-full h-full object-cover rounded-3xl opacity-50"
+                className="absolute inset-0 w-full h-full object-cover opacity-60"
                 autoPlay
                 loop
                 muted
@@ -860,26 +885,26 @@ const DesarrolloWeb = () => {
               >
                 <source src="/images/fondo-seccion-DT-OS2.mp4" type="video/mp4" />
               </video>
+              <div className="absolute inset-0 bg-black/45" />
 
-              <div className="relative z-10 max-w-2xl mx-auto text-center space-y-6 px-4">
-                <h2 className="text-xl sm:text-3xl lg:text-5xl font-bold whitespace-nowrap">
-                  ¿Listo para <span className="gradient-text">construir</span>?
+              <div className="relative z-10 max-w-2xl mx-auto text-center px-6 py-16 md:py-24">
+                <h2 className="font-heading font-normal text-white text-4xl md:text-6xl tracking-[-0.024em] leading-[1.02]">
+                  ¿Listo para <span className="gradient-text font-semibold">construir?</span>
                 </h2>
-
-                <p className="text-lg text-muted-foreground">
+                <p className="mt-5 text-sm md:text-base text-white/85 font-body font-light">
                   Conversemos sobre tu proyecto. Primera consulta sin compromiso.
                 </p>
-
-                <Button size="default" className="btn-primary group sm:h-11 sm:px-8 sm:text-base" asChild>
-                  <a href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer">
-                    <Code className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                    <span className="hidden sm:inline">Agendar consulta estratégica</span>
-                    <span className="sm:hidden">Agendar consulta</span>
-                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </Button>
+                <a
+                  href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-9 inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm md:text-base font-medium text-black font-body transition-transform duration-300 hover:scale-[1.04]"
+                >
+                  Agendar consulta estratégica
+                  <ArrowUpRight className="h-5 w-5" />
+                </a>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
