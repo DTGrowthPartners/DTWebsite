@@ -25,6 +25,7 @@ import tCasanova from "@/assets/webs/casanova2-tile.webp";
 import tEquilibrio from "@/assets/webs/equilibrio-tile.webp";
 import tCobraflow from "@/assets/webs/cobraflow-tile.webp";
 import tSoftware from "@/assets/webs/software-tile.webp";
+import dtLogo from "@/assets/DT-GROWTH-LOGO.png";
 
 // Muro diagonal de webs reales: 3 columnas en bucle a distintas velocidades
 const WALL_COLUMNS = [
@@ -652,7 +653,7 @@ const DesarrolloWeb = () => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.05, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 flex flex-wrap items-center gap-2.5"
+              className="mt-8 hidden md:flex flex-wrap items-center gap-2.5"
             >
               {["+25 proyectos entregados", "16 webs en producción", "Next.js · Shopify · SEO"].map((c) => (
                 <span key={c} className="liquid-glass rounded-full px-4 py-1.5 text-[11px] md:text-xs text-white/90 font-body whitespace-nowrap bg-black/30">
@@ -966,7 +967,7 @@ const DesarrolloWeb = () => {
 
             <div ref={flipAreaRef} className="relative mt-6">
               {/* Etapa 1 — Landing (aquí nace el cubo) */}
-              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
                 <motion.div
                   initial={{ opacity: 0, y: 26 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1016,7 +1017,7 @@ const DesarrolloWeb = () => {
                                 i % 2 ? "opacity-90" : ""
                               } grid place-items-center [backface-visibility:hidden]`}
                             >
-                              <span className="font-heading font-semibold text-black/55 text-3xl select-none">DT</span>
+                              <img src={dtLogo} alt="" draggable={false} className="w-[68%] select-none opacity-95 drop-shadow-[0_2px_10px_rgba(0,0,0,0.4)]" />
                             </div>
                           ))}
                         </div>
@@ -1028,7 +1029,7 @@ const DesarrolloWeb = () => {
               </div>
 
               {/* Etapa 2 — E-commerce (slot a la izquierda, texto a la derecha) */}
-              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
                 <div className="order-2 md:order-1 flex justify-center md:justify-start md:pl-[10%]">
                   <div className="flex flex-col items-center gap-3">
                     <div className="w-[110px] h-[110px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
@@ -1070,7 +1071,7 @@ const DesarrolloWeb = () => {
               </div>
 
               {/* Etapa 3 — Software a medida */}
-              <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-center py-16 md:py-20 min-h-[52vh]">
+              <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
                 <motion.div
                   initial={{ opacity: 0, y: 26 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -1131,9 +1132,9 @@ const DesarrolloWeb = () => {
             </p>
 
             {/* Móvil: cards apiladas. Desktop: dial giratorio pineado */}
-            <div className="mt-12 md:hidden grid gap-4">
+            <div className="mt-12 md:hidden flex gap-4 overflow-x-auto snap-x snap-mandatory -mx-8 px-8 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {PROCESS_STEPS.map((step) => (
-                <div key={step.step} className="relative liquid-glass rounded-[1.25rem] p-6 bg-[#0a0918]/50 overflow-hidden">
+                <div key={step.step} className="relative liquid-glass rounded-[1.25rem] p-6 bg-[#0a0918]/50 overflow-hidden snap-center shrink-0 w-[82vw] max-w-[340px]">
                   <span aria-hidden className="pointer-events-none select-none absolute -top-4 right-1 font-heading font-semibold text-white/[0.06] text-[5.5rem] leading-none">
                     {step.step}
                   </span>
