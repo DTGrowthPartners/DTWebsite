@@ -33,6 +33,146 @@ const WALL_COLUMNS = [
   { tiles: [tTennis, tAya, tMotostop, tPsico], duration: "66s", reverse: false },
 ];
 
+// Metodología: pasos del proceso (los usa el dial giratorio estilo Orionix)
+const PROCESS_STEPS = [
+  {
+    step: "01",
+    title: "Diagnóstico y levantamiento estratégico",
+    description: "Analizamos objetivos, contexto y restricciones. Validamos que la solución tenga sentido técnico y de negocio.",
+  },
+  {
+    step: "02",
+    title: "Objetivos, requerimientos y roadmap",
+    description: "Traducimos necesidades en objetivos medibles, priorizamos el alcance y definimos tiempos, hitos y responsables.",
+  },
+  {
+    step: "03",
+    title: "Diseño y prototipado funcional",
+    description: "Validamos estructura y flujos con prototipos. Ajustamos con feedback temprano.",
+  },
+  {
+    step: "04",
+    title: "Desarrollo e iteración controlada",
+    description: "Construimos por fases con ajustes progresivos. Cada iteración mejora rendimiento y usabilidad.",
+  },
+  {
+    step: "05",
+    title: "Validación final y optimización",
+    description: "Perfeccionamos hasta cumplir criterios de calidad. Entregamos lista para operar y escalar.",
+  },
+  {
+    step: "06",
+    title: "Entrega y acompañamiento",
+    description: "Realizamos puesta en producción y acompañamiento inicial. Preparada para futuras mejoras.",
+  },
+];
+
+/**
+ * Dial de metodología (adaptación del carrusel de orionix.framer.website):
+ * la sección se fija y, al hacer scroll, la rueda de números gira hasta que
+ * el paso activo aterriza en el punto marcador mientras el contenido rota.
+ */
+const DIAL_STEP_ANGLE = 32;
+
+const MethodDial = () => {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const wheelRef = useRef<HTMLDivElement | null>(null);
+  const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
+
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia(wrapRef);
+    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+      const n = PROCESS_STEPS.length;
+      gsap.to(wheelRef.current, {
+        rotate: -DIAL_STEP_ANGLE * (n - 1),
+        ease: "none",
+        scrollTrigger: {
+          trigger: wrapRef.current,
+          start: "top top",
+          end: () => "+=" + (n - 1) * window.innerHeight * 0.65,
+          pin: true,
+          scrub: 0.6,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const idx = Math.round(self.progress * (n - 1));
+            if (idx !== activeRef.current) {
+              activeRef.current = idx;
+              setActive(idx);
+            }
+          },
+        },
+      });
+    });
+    return () => mm.revert();
+  }, []);
+
+  const step = PROCESS_STEPS[active];
+  return (
+    <div ref={wrapRef} className="relative hidden md:flex h-screen items-center overflow-hidden">
+      {/* Rueda: aro gigante que asoma por la izquierda */}
+      <div className="pointer-events-none absolute left-[-780px] xl:left-[-720px] top-1/2 -translate-y-1/2 w-[1040px] h-[1040px]">
+        <div className="absolute inset-0 rounded-full border border-white/10" />
+        {/* Punto marcador (las 3 en punto) */}
+        <span className="absolute right-[-5px] top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#26BDF0] shadow-[0_0_14px_rgba(38,189,240,0.9)]" />
+        {/* Números girando con la rueda */}
+        <div ref={wheelRef} className="absolute inset-0 will-change-transform">
+          {PROCESS_STEPS.map((s, i) => (
+            <div key={s.step} className="absolute inset-0" style={{ transform: `rotate(${i * DIAL_STEP_ANGLE}deg)` }}>
+              <span
+                className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-[38%] font-heading text-5xl tracking-[-0.02em] transition-colors duration-500 ${
+                  i === active ? "text-white" : "text-white/20"
+                }`}
+              >
+                {s.step}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Contenido del paso activo */}
+      <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+        <div className="md:pl-[340px] xl:pl-[400px] max-w-4xl">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 44, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -34, filter: "blur(5px)" }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#26BDF0]">
+                Paso {step.step} — 0{PROCESS_STEPS.length}
+              </span>
+              <h3 className="mt-4 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.2rem] leading-[1.0] tracking-[-0.024em]">
+                {step.title}
+              </h3>
+              <p className="mt-6 text-base md:text-lg text-white/75 font-body font-light max-w-xl">
+                {step.description}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Progreso del dial */}
+          <div className="mt-10 flex items-center gap-3">
+            {PROCESS_STEPS.map((_, i) => (
+              <span
+                key={i}
+                className={`h-1 rounded-full transition-all duration-500 ${
+                  i === active ? "w-10 bg-gradient-to-r from-[#0F76D6] to-[#26BDF0]" : "w-4 bg-white/15"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Portafolio interactivo: pestañas + navegador con captura y link en vivo
 const PORTFOLIO = [
   { name: "Equilibrio Clinic", tag: "Web corporativa · Estética", img: tEquilibrio, url: "https://equilibrioclinic.com.co" },
@@ -547,38 +687,6 @@ const DesarrolloWeb = () => {
     },
   ];
 
-  const process = [
-    {
-      step: "01",
-      title: "Diagnóstico y levantamiento estratégico",
-      description: "Analizamos objetivos, contexto y restricciones. Validamos que la solución tenga sentido técnico y de negocio.",
-    },
-    {
-      step: "02",
-      title: "Objetivos, requerimientos y roadmap",
-      description: "Traducimos necesidades en objetivos medibles, priorizamos el alcance y definimos tiempos, hitos y responsables.",
-    },
-    {
-      step: "03",
-      title: "Diseño y prototipado funcional",
-      description: "Validamos estructura y flujos con prototipos. Ajustamos con feedback temprano.",
-    },
-    {
-      step: "04",
-      title: "Desarrollo e iteración controlada",
-      description: "Construimos por fases con ajustes progresivos. Cada iteración mejora rendimiento y usabilidad.",
-    },
-    {
-      step: "05",
-      title: "Validación final y optimización",
-      description: "Perfeccionamos hasta cumplir criterios de calidad. Entregamos lista para operar y escalar.",
-    },
-    {
-      step: "06",
-      title: "Entrega y acompañamiento",
-      description: "Realizamos puesta en producción y acompañamiento inicial. Preparada para futuras mejoras.",
-    },
-  ];
 
   const faqs = [
     {
@@ -1318,29 +1426,23 @@ const DesarrolloWeb = () => {
               Proceso estructurado que asegura resultados medibles en cada etapa.
             </p>
 
-            <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {process.map((step, index) => (
-                <motion.div
-                  key={step.step}
-                  initial={{ opacity: 0, y: 26 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.55, delay: (index % 3) * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative liquid-glass rounded-[1.25rem] p-6 md:p-7 bg-[#0a0918]/50 overflow-hidden"
-                >
-                  <span
-                    aria-hidden
-                    className="pointer-events-none select-none absolute -top-4 right-1 font-heading font-semibold text-white/[0.06] text-[5.5rem] leading-none"
-                  >
+            {/* Móvil: cards apiladas. Desktop: dial giratorio pineado */}
+            <div className="mt-12 md:hidden grid gap-4">
+              {PROCESS_STEPS.map((step) => (
+                <div key={step.step} className="relative liquid-glass rounded-[1.25rem] p-6 bg-[#0a0918]/50 overflow-hidden">
+                  <span aria-hidden className="pointer-events-none select-none absolute -top-4 right-1 font-heading font-semibold text-white/[0.06] text-[5.5rem] leading-none">
                     {step.step}
                   </span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">Paso {step.step}</span>
-                  <h3 className="mt-3 font-heading font-medium text-white text-lg md:text-xl leading-tight">{step.title}</h3>
+                  <h3 className="mt-3 font-heading font-medium text-white text-lg leading-tight">{step.title}</h3>
                   <p className="mt-2.5 text-sm text-white/70 font-body font-light leading-relaxed">{step.description}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
+
+          {/* Dial estilo Orionix (md+) */}
+          <MethodDial />
         </section>
 
         {/* FAQs — encabezado sticky a la izquierda, acordeones numerados a la derecha */}
