@@ -22,6 +22,7 @@ import tPsico from "@/assets/webs/psico-tile.webp";
 import tCasanova from "@/assets/webs/casanova2-tile.webp";
 import tEquilibrio from "@/assets/webs/equilibrio-tile.webp";
 import tCobraflow from "@/assets/webs/cobraflow-tile.webp";
+import tSoftware from "@/assets/webs/software-tile.webp";
 
 // Muro diagonal de webs reales: 3 columnas en bucle a distintas velocidades
 const WALL_COLUMNS = [
@@ -389,7 +390,7 @@ const DesarrolloWeb = () => {
     {
       title: "Landing Page de Conversión",
       description: "Cada landing está pensada para guiar al usuario a una única acción, sin distracciones, con velocidad y claridad.",
-      img: tVcc,
+      img: tBhk,
     },
     {
       title: "Web Corporativa",
@@ -404,7 +405,7 @@ const DesarrolloWeb = () => {
     {
       title: "Aplicaciones Web / Desarrollo Web Personalizado",
       description: "Soluciones web a medida que automatizan procesos, integran sistemas y resuelven problemas específicos de tu negocio.",
-      img: tCobraflow,
+      img: tSoftware,
     },
   ];
 
