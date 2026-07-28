@@ -6,11 +6,55 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Code, Smartphone, Package, ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { BackgroundBeamsWithCollision } from "@/components/ui/shadcn-io/background-beams-with-collision";
 import { BackgroundBeams } from "@/components/ui/shadcn-io/background-beams";
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import tVcc from "@/assets/webs/vcc-tile.webp";
+import tBhk from "@/assets/webs/bhk-tile.webp";
+import tAcbfit from "@/assets/webs/acbfit-tile.webp";
+import tHotel from "@/assets/webs/hotel-tile.webp";
+import tNeuro from "@/assets/webs/neurocarolina-tile.webp";
+import tTennis from "@/assets/webs/tennis-tile.webp";
+import tAya from "@/assets/webs/aya-tile.webp";
+import tMotostop from "@/assets/webs/motostop-tile.webp";
+import tPsico from "@/assets/webs/psico-tile.webp";
+import tCasanova from "@/assets/webs/casanova2-tile.webp";
+import tEquilibrio from "@/assets/webs/equilibrio-tile.webp";
+import tCobraflow from "@/assets/webs/cobraflow-tile.webp";
 
-// Escena 3D interactiva (Spline) — lazy: solo se descarga al visitar esta página
-const Spline = lazy(() => import("@splinetool/react-spline"));
+// Muro diagonal de webs reales: 3 columnas en bucle a distintas velocidades
+const WALL_COLUMNS = [
+  { tiles: [tVcc, tHotel, tAcbfit, tEquilibrio], duration: "58s", reverse: false },
+  { tiles: [tBhk, tNeuro, tCasanova, tCobraflow], duration: "74s", reverse: true },
+  { tiles: [tTennis, tAya, tMotostop, tPsico], duration: "66s", reverse: false },
+];
+
+const WebsWall = () => (
+  <div
+    aria-hidden
+    className="absolute -inset-x-[16%] -inset-y-[28%] [transform:perspective(1400px)_rotateX(12deg)_rotate(-8deg)_scale(1.22)] opacity-45"
+  >
+    <div className="grid grid-cols-3 gap-4 h-full">
+      {WALL_COLUMNS.map((col, ci) => (
+        <div key={ci} className="overflow-hidden">
+          <div
+            className="animate-webs-drift flex flex-col gap-4"
+            style={{ "--drift-duration": col.duration, animationDirection: col.reverse ? "reverse" : "normal" } as React.CSSProperties}
+          >
+            {[...col.tiles, ...col.tiles].map((img, i) => (
+              <img
+                key={i}
+                src={img}
+                alt=""
+                loading={i < 4 ? "eager" : "lazy"}
+                className="w-full rounded-xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 import ImageSlider from "@/components/home/ImageSlider";
 import {
   Dialog,
@@ -348,24 +392,15 @@ const DesarrolloWeb = () => {
       <Navigation />
 
       <main>
-        {/* Hero — escena 3D interactiva de fondo, contenido abajo-izquierda */}
+        {/* Hero — muro diagonal de webs reales en movimiento, contenido abajo-izquierda */}
         <section className="relative min-h-screen flex items-end overflow-hidden bg-[#07060F] -mt-16">
-          {/* Fondo 3D: se puede mover con el mouse (los clics pasan a la escena) */}
-          <div className="absolute inset-0">
-            <Suspense fallback={<div className="absolute inset-0 bg-[#07060F]" />}>
-              <Spline
-                scene="https://prod.spline.design/Slk6b8kz3LRlKiyk/scene.splinecode"
-                className="w-full h-full"
-              />
-            </Suspense>
-          </div>
+          <WebsWall />
 
           {/* Velo para legibilidad + fundido con la siguiente sección */}
-          <div className="pointer-events-none absolute inset-0 bg-black/35 z-[1]" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black to-transparent z-[1]" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#07060F]/90 via-[#07060F]/45 to-[#07060F]/25 z-[1]" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-black to-transparent z-[1]" />
 
-          {/* Contenido: deja pasar el mouse a la escena, salvo los botones */}
-          <div className="relative z-10 pointer-events-none w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-14 md:pb-16 pt-36">
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-14 md:pb-16 pt-36">
             <motion.span
               initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -403,7 +438,7 @@ const DesarrolloWeb = () => {
             >
               <button
                 onClick={() => document.getElementById("webs-portafolio")?.scrollIntoView({ behavior: "smooth" })}
-                className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm md:text-base font-medium text-black font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97]"
+                className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm md:text-base font-medium text-black font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97]"
               >
                 Ver portafolio
                 <ArrowRight className="h-4 w-4" />
@@ -412,7 +447,7 @@ const DesarrolloWeb = () => {
                 href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20Me%20interesa%20desarrollar%20una%20web%20que%20convierta%20visitantes%20en%20clientes.%20¿Podr%C3%ADamos%20agendar%20una%20consulta%20estrat%C3%A9gica%3F&type=phone_number&app_absent=0"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="pointer-events-auto inline-flex items-center gap-2 liquid-glass rounded-full px-7 py-3.5 text-sm md:text-base font-medium text-white font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97] bg-black/30"
+                className="inline-flex items-center gap-2 liquid-glass rounded-full px-7 py-3.5 text-sm md:text-base font-medium text-white font-body transition-all duration-300 hover:scale-[1.04] active:scale-[0.97] bg-black/30"
               >
                 Agendar consulta estratégica
               </a>

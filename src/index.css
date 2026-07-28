@@ -436,6 +436,18 @@ html {
   scrollbar-color: rgba(38, 189, 240, 0.35) rgba(255, 255, 255, 0.04);
 }
 
+/* Muro de webs del hero de Desarrollo Web: columnas en bucle vertical */
+@keyframes webs-drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+.animate-webs-drift {
+  animation: webs-drift var(--drift-duration, 60s) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-webs-drift { animation: none; }
+}
+
 /* Marquee infinito para el ticker de marcas (duplicar el contenido en JSX) */
 @keyframes marquee {
   from { transform: translateX(0); }
