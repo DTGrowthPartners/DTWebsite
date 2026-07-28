@@ -18,6 +18,7 @@ const routes = [
     path: "/",
     title: "Agencia de Marketing Digital en Cartagena | DT Growth Partners",
     description: "Pauta digital, Meta Ads y desarrollo web en Cartagena. Escalamos tu negocio con estrategias basadas en datos. Agenda una consulta gratis.",
+    h1: "Escalamos negocios con IA y ciencia, no suposiciones",
   },
   {
     path: "/servicios/meta-ads",
@@ -106,6 +107,51 @@ const routes = [
   },
 ];
 
+/**
+ * Casco estático de contenido dentro de #root: los crawlers que no ejecutan
+ * JS (Semrush, bots de IA, etc.) ven H1, texto real y enlaces internos.
+ * React lo reemplaza al montar, así que el usuario casi nunca lo ve.
+ */
+const SERVICES_NAV = `
+      <h2>Servicios</h2>
+      <ul>
+        <li><a href="/servicios/meta-ads">Meta Ads en Cartagena</a>: campañas en Facebook, Instagram y WhatsApp que generan leads y ventas medibles.</li>
+        <li><a href="/servicios/desarrollo-web">Desarrollo web</a>: sitios, tiendas online y software a medida optimizados para conversión y SEO.</li>
+        <li><a href="/servicios/sistemas-automatizaciones">Automatizaciones e IA</a>: flujos que conectan WhatsApp, Gmail, Shopify y tu CRM con agentes inteligentes.</li>
+        <li><a href="/servicios/sistema-hoteles">DT Hotels</a>: software de gestión hotelera (PMS) con motor de reservas propio.</li>
+        <li><a href="/servicios/publicidad-digital-cartagena">Publicidad digital en Cartagena</a>: estrategia integral multicanal.</li>
+      </ul>`;
+
+const HOME_BODY = `
+      <p>DT Growth Partners es una agencia de crecimiento en Cartagena, Colombia. Combinamos estrategia, tecnología y datos para escalar marcas con resultados medibles: más de 5 millones de dólares en ventas generadas para nuestros clientes, más de 25 proyectos completados y un retorno promedio de 10x sobre la inversión publicitaria.</p>
+      ${SERVICES_NAV}
+      <h2>Casos de éxito</h2>
+      <ul>
+        <li>Tienda de moda: $250K USD en ventas con ROI 4.2x mediante Meta Ads y creative testing estructurado.</li>
+        <li>Clínica de estética: $350M COP en ventas generadas con campañas de leads a WhatsApp y ROAS 5.2x.</li>
+        <li>Empresa B2B: +320% de cotizaciones con un sitio web enfocado en SEO y automatización.</li>
+      </ul>
+      <h2>El método DT</h2>
+      <p>Un sistema de 3 fases para generar crecimiento real y sostenible: entendemos tu negocio, diseñamos la estrategia y escalamos lo que funciona con optimización continua.</p>
+      <h2>Contacto</h2>
+      <p>Cartagena de Indias Convention Center, Third Floor. Lunes a viernes de 8:00 a.m. a 6:00 p.m. Escríbenos a info@dtgrowthpartners.com o al WhatsApp +57 300 718 9383 para agendar una sesión estratégica gratuita de 25 minutos.</p>`;
+
+function staticShell(route) {
+  const h1 = route.h1 ?? route.title.split("|")[0].trim();
+  const isHome = route.path === "/";
+  const body = isHome
+    ? HOME_BODY
+    : `
+      <p>${route.description}</p>
+      ${SERVICES_NAV}
+      <p><a href="/">DT Growth Partners — Agencia de marketing digital en Cartagena</a> · <a href="/#casos">Casos de éxito</a> · <a href="/#nosotros">Nosotros</a> · <a href="/#metodo">El método DT</a> · <a href="/#contacto">Contacto</a></p>`;
+
+  return `<div id="root"><div style="max-width:760px;margin:0 auto;padding:96px 24px;color:#e6e9f5;font-family:Manrope,system-ui,sans-serif;line-height:1.6">
+      <p><a href="/" style="color:#8fd8ff">DT Growth Partners</a></p>
+      <h1>${h1}</h1>${body}
+    </div></div>`;
+}
+
 function generateRouteHtml(templateHtml, route) {
   const canonicalUrl = route.path === "/"
     ? `${BASE_URL}/`
@@ -160,6 +206,9 @@ function generateRouteHtml(templateHtml, route) {
     /<meta name="twitter:description" content="[^"]*" \/>/,
     `<meta name="twitter:description" content="${route.description}" />`
   );
+
+  // Inject static SEO content into #root (crawlers without JS see real content)
+  html = html.replace(/<div id="root">.*?<\/div>/s, staticShell(route));
 
   return html;
 }
