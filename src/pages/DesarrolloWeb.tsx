@@ -747,12 +747,13 @@ const DesarrolloWeb = () => {
           </div>
         </section>
 
-        {/* Por qué con nosotros — editorial + cards de vidrio */}
-        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+        {/* Por qué con nosotros + Tipos de servicio — una sola sección */}
+        <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
           <Aurora
             blobs={[
-              { color: "blue", className: "top-[10%] left-[-120px] w-[520px] h-[520px] opacity-25" },
-              { color: "cyan", className: "bottom-[8%] right-[8%] w-[480px] h-[480px] opacity-20", delay: "-7s" },
+              { color: "blue", className: "top-[6%] left-[-120px] w-[520px] h-[520px] opacity-25" },
+              { color: "cyan", className: "top-[42%] right-[6%] w-[480px] h-[480px] opacity-20", delay: "-7s" },
+              { color: "purple", className: "bottom-[8%] left-[10%] w-[520px] h-[520px] opacity-20", delay: "-5s" },
             ]}
           />
           <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
@@ -831,24 +832,17 @@ const DesarrolloWeb = () => {
                 );
               })}
             </div>
-          </div>
-        </section>
 
-        {/* Tipos de servicio — filas editoriales clicables (abren el detalle) */}
-        <section id="webs-portafolio" className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
-          <Aurora
-            blobs={[{ color: "purple", className: "top-[14%] right-[-100px] w-[520px] h-[520px] opacity-20", delay: "-5s" }]}
-          />
-          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
-            <span className="text-sm font-body text-white/80">{"// Tipos de servicio"}</span>
-            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
-              La solución correcta para <span className="gradient-text font-semibold">tu objetivo</span>
-            </h2>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
-              Validar, posicionar o escalar: no todos necesitan lo mismo.
-            </p>
+            {/* Tipos de servicio, fusionado: la solución correcta para tu objetivo */}
+            <div className="mt-24 md:mt-28">
+              <h3 className="font-heading font-normal text-white text-3xl md:text-5xl leading-[1.0] tracking-[-0.024em] max-w-3xl">
+                La solución correcta para <span className="gradient-text font-semibold">tu objetivo</span>
+              </h3>
+              <p className="mt-4 text-sm md:text-base text-white/75 font-body font-light max-w-xl">
+                Validar, posicionar o escalar: no todos necesitan lo mismo. Toca una opción para ver el detalle.
+              </p>
 
-            <div ref={reasonsRef} className="mt-14 border-t border-white/10">
+            <div ref={reasonsRef} className="mt-10 border-t border-white/10">
               {reasons.map((reason, index) => (
                 <motion.button
                   key={reason.title}
@@ -883,6 +877,7 @@ const DesarrolloWeb = () => {
                   </span>
                 </motion.button>
               ))}
+            </div>
             </div>
           </div>
         </section>
