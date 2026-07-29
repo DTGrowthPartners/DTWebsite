@@ -320,7 +320,7 @@ const MetaAds = () => {
               initial={{ opacity: 0, y: 34 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:hidden mb-12 flex justify-center items-start"
+              className="lg:hidden mt-5 mb-12 flex justify-center items-start"
             >
               <div className="w-[150px] -rotate-3 z-10 animate-float" style={{ animationDuration: "5.4s" }}>
                 <PhoneFrame>
