@@ -311,6 +311,30 @@ const MetaAds = () => {
             <MotifAds />
           </motion.div>
 
+          {/* Móvil: abanico de 3 mockups sobre el titular */}
+          <motion.div
+            initial={{ opacity: 0, y: 34 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="pointer-events-none absolute top-[10rem] inset-x-0 flex justify-center items-start lg:hidden z-[1]"
+          >
+            <div className="w-[80px] -rotate-[10deg] translate-y-4 -mr-4 animate-float" style={{ animationDuration: "6s" }}>
+              <PhoneFrame>
+                <StoryPreview />
+              </PhoneFrame>
+            </div>
+            <div className="w-[96px] z-10 animate-float" style={{ animationDuration: "5.2s", animationDelay: "0.3s" }}>
+              <PhoneFrame>
+                <InstagramAdPreview />
+              </PhoneFrame>
+            </div>
+            <div className="w-[80px] rotate-[10deg] translate-y-4 -ml-4 animate-float" style={{ animationDuration: "6.6s", animationDelay: "0.6s" }}>
+              <PhoneFrame>
+                <WhatsAppLeadPreview />
+              </PhoneFrame>
+            </div>
+          </motion.div>
+
           {/* Fundido con la siguiente sección */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
 
