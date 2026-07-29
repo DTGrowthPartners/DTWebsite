@@ -178,7 +178,7 @@ const AD_PHONES = [
   { label: "Tu WhatsApp", C: WhatsAppLeadPreview, cls: "rotate-[5deg] translate-y-4", dur: "5.8s", delay: "0.9s" },
 ];
 
-const MotifAds = () => (
+export const MotifAds = () => (
   <div className="flex items-start gap-3 md:gap-4">
     {AD_PHONES.map((phone) => {
       const Preview = phone.C;
