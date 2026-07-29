@@ -337,7 +337,7 @@ const flowCenter = (key: string) => {
   return [n.x + 24, n.y + 24] as const;
 };
 
-const MotifFlow = () => (
+export const MotifFlow = () => (
   <div className="relative w-[340px] h-[260px] md:w-[390px] md:h-[290px] animate-float" style={{ animationDuration: "7s" }}>
     {/* Conexiones (debajo de los nodos) */}
     <svg viewBox="0 0 390 290" fill="none" className="absolute inset-0 w-full h-full" aria-hidden>
