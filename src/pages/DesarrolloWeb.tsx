@@ -178,8 +178,6 @@ const MethodDial = () => {
 const HERO_WORDS: Array<{ t?: string; g?: boolean; br?: boolean }> = [
   { t: "Desarrollo", g: true },
   { t: "web", g: true },
-  { t: "en", g: true },
-  { t: "Cartagena", g: true },
   { br: true },
   { t: "que" },
   { t: "convierte" },

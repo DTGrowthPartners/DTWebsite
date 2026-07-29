@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, ShoppingCart, Users, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
+import gsap from "gsap";
+import tBhk from "@/assets/webs/bhk-tile.webp";
+import tEquilibrio from "@/assets/webs/equilibrio-tile.webp";
+import tAya from "@/assets/webs/aya-tile.webp";
 
 /**
  * Casos como filas editoriales (no tarjetas): métrica gigante con contador,
@@ -13,6 +17,52 @@ import AnimatedCounter from "@/components/animations/AnimatedCounter";
 const CaseStudiesSection = () => {
   const { t } = useLanguage();
   const [expanded, setExpanded] = useState<number | null>(null);
+
+  /* Captura del proyecto que persigue el cursor al pasar por cada fila
+     (mismo patrón quickTo de la página de Desarrollo Web). */
+  const rowsRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const root = rowsRef.current;
+    if (!root || !matchMedia("(hover: hover)").matches) return;
+
+    const cleanups: Array<() => void> = [];
+    root.querySelectorAll<HTMLElement>(".cs-row").forEach((el) => {
+      const image = el.querySelector<HTMLElement>(".cs-swipeimage");
+      if (!image) return;
+      gsap.set(image, { xPercent: -50, yPercent: -50 });
+      const setX = gsap.quickTo(image, "x", { duration: 0.4, ease: "power3" });
+      const setY = gsap.quickTo(image, "y", { duration: 0.4, ease: "power3" });
+      let first = true;
+      const align = (e: MouseEvent) => {
+        if (first) {
+          setX(e.clientX, e.clientX);
+          setY(e.clientY, e.clientY);
+          first = false;
+        } else {
+          setX(e.clientX);
+          setY(e.clientY);
+        }
+      };
+      const stop = () => document.removeEventListener("mousemove", align);
+      const fade = gsap.to(image, { autoAlpha: 1, ease: "none", paused: true, duration: 0.12, onReverseComplete: stop });
+      const enter = (e: MouseEvent) => {
+        first = true;
+        fade.play();
+        document.addEventListener("mousemove", align);
+        align(e);
+      };
+      const leave = () => fade.reverse();
+      el.addEventListener("mouseenter", enter);
+      el.addEventListener("mouseleave", leave);
+      cleanups.push(() => {
+        el.removeEventListener("mouseenter", enter);
+        el.removeEventListener("mouseleave", leave);
+        stop();
+        fade.kill();
+      });
+    });
+    return () => cleanups.forEach((fn) => fn());
+  }, []);
 
   const cases = [
     {
@@ -25,6 +75,7 @@ const CaseStudiesSection = () => {
       improvement: "ROI 4.2x",
       descKey: "cases.ecommerceDesc",
       tags: ["Meta Ads", "E-commerce", "Performance"],
+      img: tBhk,
       growth: [18, 24, 22, 35, 42, 55, 68, 100],
       mainMetric: "$250K USD en ventas",
       secondaryMetric: "ROI 4.2x",
@@ -39,6 +90,7 @@ const CaseStudiesSection = () => {
       improvement: "ROAS 5.2x",
       descKey: "cases.clinicDesc",
       tags: ["Meta Ads", "WhatsApp", "Leads"],
+      img: tEquilibrio,
       growth: [12, 20, 30, 28, 45, 60, 78, 100],
       mainMetric: "350M COP en ventas generadas",
       secondaryMetric: "ROAS 5.2x",
@@ -53,6 +105,7 @@ const CaseStudiesSection = () => {
       improvement: "3.1x conversión",
       descKey: "cases.localRetailDesc",
       tags: ["Web Development", "B2B", "SEO"],
+      img: tAya,
       growth: [15, 18, 30, 45, 40, 62, 85, 100],
       mainMetric: "+320% cotizaciones",
       secondaryMetric: "3.1x conversión",
@@ -78,7 +131,7 @@ const CaseStudiesSection = () => {
         </p>
 
         {/* Filas editoriales */}
-        <div className="mt-16 border-t border-white/10">
+        <div ref={rowsRef} className="mt-16 border-t border-white/10">
           {cases.map((c, index) => {
             const Icon = c.icon;
             const isOpen = expanded === index;
@@ -89,12 +142,19 @@ const CaseStudiesSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                className="group border-b border-white/10"
+                className="group cs-row border-b border-white/10"
               >
                 <button
                   onClick={() => setExpanded(isOpen ? null : index)}
                   className="w-full text-left py-10 md:py-12 grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr_auto] lg:grid-cols-[minmax(240px,300px)_1fr_auto_auto] gap-6 md:gap-10 items-center transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
                 >
+                  {/* Captura del proyecto que persigue el cursor */}
+                  <img
+                    aria-hidden
+                    src={c.img}
+                    alt=""
+                    className="cs-swipeimage fixed top-0 left-0 w-[300px] md:w-[360px] rounded-xl border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.65)] opacity-0 invisible pointer-events-none z-[60]"
+                  />
                   {/* Métrica protagonista */}
                   <div>
                     <span className="font-mono text-xs text-white/40">{c.num}</span>
