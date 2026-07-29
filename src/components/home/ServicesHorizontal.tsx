@@ -23,7 +23,7 @@ const PANELS = 5; // intro + 4 servicios
 /* ─── Motivos decorativos por servicio ─────────────────────────── */
 
 // 01 · Meta Ads — preview real de campaña: anuncio en Instagram → lead en WhatsApp
-const PhoneFrame = ({ children }: { children: ReactNode }) => (
+export const PhoneFrame = ({ children }: { children: ReactNode }) => (
   <div className="relative rounded-[1.35rem] bg-[#101014] border border-white/25 p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
     {/* Botones laterales */}
     <div className="absolute -right-[2px] top-[24%] h-12 w-[2.5px] rounded-r bg-white/20" />
@@ -37,7 +37,7 @@ const PhoneFrame = ({ children }: { children: ReactNode }) => (
   </div>
 );
 
-const InstagramAdPreview = () => (
+export const InstagramAdPreview = () => (
   <div className="absolute inset-0 bg-white flex flex-col font-body">
     <div className="flex items-center justify-between px-2.5 pt-3 pb-1.5">
       <span className="text-[11px] font-semibold tracking-tight text-neutral-900">Instagram</span>
@@ -79,7 +79,7 @@ const InstagramAdPreview = () => (
   </div>
 );
 
-const FacebookAdPreview = () => (
+export const FacebookAdPreview = () => (
   <div className="absolute inset-0 bg-white flex flex-col font-body">
     <div className="px-2.5 pt-2.5 pb-1 text-[11px] font-bold tracking-tight text-[#1877F2]">facebook</div>
     <div className="flex items-center gap-1.5 px-2 pb-1">
@@ -108,7 +108,7 @@ const FacebookAdPreview = () => (
   </div>
 );
 
-const StoryPreview = () => (
+export const StoryPreview = () => (
   <div className="absolute inset-0 bg-black flex flex-col">
     <img src={adCartagena} alt="" className="absolute inset-0 h-full w-full object-cover opacity-95" />
     <div className="relative flex gap-0.5 px-1.5 pt-2">
@@ -132,7 +132,7 @@ const StoryPreview = () => (
   </div>
 );
 
-const WhatsAppLeadPreview = () => (
+export const WhatsAppLeadPreview = () => (
   <div className="absolute inset-0 bg-[#EFE7DC] flex flex-col font-body">
     <div className="flex items-center gap-1.5 bg-[#075E54] px-2 pt-3 pb-1.5 text-white">
       <span aria-hidden className="text-[11px] leading-none">‹</span>

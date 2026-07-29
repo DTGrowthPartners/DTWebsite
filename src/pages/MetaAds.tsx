@@ -3,13 +3,23 @@ import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import PartnersMarquee from "@/components/home/PartnersMarquee";
-import { MotifAds } from "@/components/home/ServicesHorizontal";
+import {
+  MotifAds,
+  PhoneFrame,
+  FacebookAdPreview,
+  InstagramAdPreview,
+  StoryPreview,
+  WhatsAppLeadPreview,
+} from "@/components/home/ServicesHorizontal";
+import adInsta from "@/assets/ads/ad-insta.webp";
+import adLocal from "@/assets/ads/ad-local.webp";
+import adCartagena from "@/assets/ads/ad-cartagena.webp";
 import Aurora from "@/components/effects/Aurora";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
 import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Target, BarChart3, TrendingUp, CheckCircle2, ArrowRight, ArrowUpRight } from "lucide-react";
+import { Target, BarChart3, TrendingUp, CheckCircle2, ArrowRight, ArrowUpRight, Heart, MessageCircle, Send, Bookmark } from "lucide-react";
 
 const WA = (text: string) => `https://wa.me/573007189383?text=${encodeURIComponent(text)}`;
 
@@ -31,14 +41,92 @@ const metaAdsServiceSchema = {
 
 // Titular del hero: palabra a palabra; g = degradado, br = salto de línea
 const HERO_WORDS: Array<{ t?: string; g?: boolean; br?: boolean }> = [
-  { t: "Meta", g: true },
-  { t: "Ads", g: true },
+  { t: "Anuncios", g: true },
   { br: true },
   { t: "que" },
   { t: "convierten" },
   { t: "pauta" },
   { t: "en" },
   { t: "ventas" },
+];
+
+/* Mockups extra para la sección de formatos */
+const ReelsPreview = () => (
+  <div className="absolute inset-0 bg-black flex flex-col font-body">
+    <img src={adLocal} alt="" className="absolute inset-0 h-full w-full object-cover opacity-95" />
+    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent" />
+    <div className="relative px-2 pt-3 text-[10px] font-semibold text-white">Reels</div>
+    <div className="flex-1" />
+    {/* Rail de acciones */}
+    <div className="absolute right-1.5 bottom-16 flex flex-col items-center gap-1 text-white drop-shadow">
+      <Heart className="h-3.5 w-3.5" strokeWidth={1.8} />
+      <span className="text-[6px] mb-1">12,4k</span>
+      <MessageCircle className="h-3.5 w-3.5" strokeWidth={1.8} />
+      <span className="text-[6px] mb-1">318</span>
+      <Send className="h-3.5 w-3.5" strokeWidth={1.8} />
+      <Bookmark className="h-3.5 w-3.5 mt-1" strokeWidth={1.8} />
+    </div>
+    <div className="relative px-2 pb-2.5">
+      <div className="flex items-center gap-1">
+        <span className="grid place-items-center rounded-full bg-[#0F76D6] text-white text-[6px] font-semibold" style={{ width: 15, height: 15 }}>
+          DT
+        </span>
+        <span className="text-[6.5px] text-white">dtgrowthpartners · <span className="text-white/70">Publicidad</span></span>
+      </div>
+      <div className="mt-1.5 mr-8 rounded bg-white/95 py-1 text-center text-[6.5px] font-semibold text-black">
+        Más información
+      </div>
+    </div>
+  </div>
+);
+
+const MarketplacePreview = () => (
+  <div className="absolute inset-0 bg-white flex flex-col font-body">
+    <div className="px-2.5 pt-3 pb-1 text-[10px] font-bold text-neutral-900">Marketplace</div>
+    <div className="px-2 pb-1.5">
+      <div className="rounded-full bg-neutral-100 px-2 py-1 text-[6.5px] text-neutral-400">Buscar en Marketplace</div>
+    </div>
+    <div className="grid grid-cols-2 gap-1 px-2 pb-2 flex-1 min-h-0 overflow-hidden">
+      <div className="rounded-md overflow-hidden ring-1 ring-[#0F76D6]/60 flex flex-col bg-white">
+        <div className="relative h-[58%] min-h-0 overflow-hidden">
+          <img src={adLocal} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        </div>
+        <div className="p-1 leading-tight">
+          <div className="text-[5.5px] text-[#0F76D6] font-semibold">Patrocinado</div>
+          <div className="text-[6.5px] font-semibold text-neutral-900 truncate">DT Growth Partners</div>
+          <div className="text-[6px] text-neutral-500">Consulta gratis</div>
+        </div>
+      </div>
+      <div className="rounded-md overflow-hidden bg-neutral-100 flex flex-col">
+        <div className="relative h-[58%] min-h-0 overflow-hidden">
+          <img src={adCartagena} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        </div>
+        <div className="p-1 leading-tight">
+          <div className="text-[6.5px] font-semibold text-neutral-800">$1.250.000</div>
+          <div className="text-[6px] text-neutral-500 truncate">Cartagena</div>
+        </div>
+      </div>
+      {[0, 1].map((i) => (
+        <div key={i} className="rounded-md overflow-hidden bg-neutral-100 flex flex-col">
+          <div className="h-[58%] bg-neutral-200" />
+          <div className="p-1 space-y-0.5">
+            <div className="h-1 w-3/4 rounded bg-neutral-300" />
+            <div className="h-1 w-1/2 rounded bg-neutral-200" />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+// Formatos de Meta que dominamos (6 mockups)
+const FORMATS = [
+  { label: "Feed de Facebook", C: FacebookAdPreview, cls: "-rotate-2 md:translate-y-3" },
+  { label: "Feed de Instagram", C: InstagramAdPreview, cls: "md:-translate-y-1" },
+  { label: "Historias", C: StoryPreview, cls: "rotate-1 md:translate-y-2" },
+  { label: "Reels", C: ReelsPreview, cls: "-rotate-1 md:-translate-y-2" },
+  { label: "Marketplace", C: MarketplacePreview, cls: "rotate-2 md:translate-y-3" },
+  { label: "Tu WhatsApp", C: WhatsAppLeadPreview, cls: "rotate-[3deg] md:translate-y-1" },
 ];
 
 const BENEFITS = [
@@ -363,6 +451,45 @@ const MetaAds = () => {
                       {b.title}
                     </h3>
                     <p className="mt-2.5 text-sm text-white/70 font-body font-light leading-relaxed">{b.description}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Formatos — 6 mockups de campañas reales en Meta */}
+        <section className="relative bg-[#07060F] py-24 md:py-32 overflow-hidden">
+          <Aurora
+            blobs={[{ color: "cyan", className: "top-[20%] left-[-120px] w-[520px] h-[520px] opacity-20", delay: "-5s" }]}
+          />
+          <div className="relative z-10 max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20">
+            <span className="text-sm font-body text-white/80">{"// Formatos"}</span>
+            <h2 className="mt-6 font-heading font-normal text-white text-4xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-[-0.024em] max-w-4xl">
+              Tu marca en <span className="gradient-text font-semibold">todos los formatos</span> de Meta
+            </h2>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-body font-light max-w-xl">
+              Feed, Historias, Reels, Marketplace y el cierre donde ocurre la venta: tu WhatsApp.
+            </p>
+
+            {/* Desktop: fila completa · Móvil: carrusel horizontal con snap */}
+            <div className="mt-16 flex md:grid md:grid-cols-6 gap-5 md:gap-4 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-8 px-8 md:mx-0 md:px-0 pb-4 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {FORMATS.map((f, i) => {
+                const Preview = f.C;
+                return (
+                  <motion.div
+                    key={f.label}
+                    {...fadeUp((i % 6) * 0.08)}
+                    className={`flex flex-col items-center gap-2.5 snap-center shrink-0 w-[170px] md:w-auto ${f.cls}`}
+                  >
+                    <div className="w-full animate-float" style={{ animationDuration: `${5.4 + i * 0.5}s`, animationDelay: `${i * 0.25}s` }}>
+                      <PhoneFrame>
+                        <Preview />
+                      </PhoneFrame>
+                    </div>
+                    <span className="font-mono text-[8px] uppercase tracking-[0.2em] text-white/60 whitespace-nowrap">
+                      {f.label}
+                    </span>
                   </motion.div>
                 );
               })}
