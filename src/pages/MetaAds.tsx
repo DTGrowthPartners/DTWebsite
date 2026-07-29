@@ -311,29 +311,29 @@ const MetaAds = () => {
             <MotifAds />
           </motion.div>
 
-          {/* Móvil: abanico de 3 mockups sobre el titular */}
-          <motion.div
-            initial={{ opacity: 0, y: 34 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute top-[10rem] inset-x-0 flex justify-center items-start lg:hidden z-[1]"
-          >
-            <div className="w-[104px] -rotate-3 z-10 animate-float" style={{ animationDuration: "5.4s" }}>
-              <PhoneFrame compact>
-                <InstagramAdPreview />
-              </PhoneFrame>
-            </div>
-            <div className="w-[96px] rotate-6 translate-y-4 -ml-3 animate-float" style={{ animationDuration: "6.4s", animationDelay: "0.4s" }}>
-              <PhoneFrame compact>
-                <WhatsAppLeadPreview />
-              </PhoneFrame>
-            </div>
-          </motion.div>
-
           {/* Fundido con la siguiente sección */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
 
-          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-24 md:pb-16 pt-36">
+          <div className="relative z-10 w-full max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 pb-24 md:pb-16 pt-28 md:pt-36">
+            {/* Móvil: 2 mockups a tamaño real dentro del flujo */}
+            <motion.div
+              initial={{ opacity: 0, y: 34 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:hidden mb-12 flex justify-center items-start"
+            >
+              <div className="w-[150px] -rotate-3 z-10 animate-float" style={{ animationDuration: "5.4s" }}>
+                <PhoneFrame>
+                  <InstagramAdPreview />
+                </PhoneFrame>
+              </div>
+              <div className="w-[140px] rotate-6 translate-y-5 -ml-4 animate-float" style={{ animationDuration: "6.4s", animationDelay: "0.4s" }}>
+                <PhoneFrame>
+                  <WhatsAppLeadPreview />
+                </PhoneFrame>
+              </div>
+            </motion.div>
+
             <motion.span
               initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
