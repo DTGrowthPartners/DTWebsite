@@ -139,18 +139,21 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} DT Growth Partners. {t("footer.copyright")}</p>
         </div>
         {!presentationMode && (
+          /* Wrapper posiciona: .liquid-glass fuerza position:relative y pisaría el fixed */
+          <div className="fixed bottom-6 right-6 z-50 animate-fade-in">
           <a
             href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
             target="_blank"
             rel="noopener noreferrer"
-            className="fixed bottom-6 right-6 z-50 w-14 h-14 bg-gradient-to-r from-[#012b80] via-[#0D89D6] to-[#40F2FF] rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 animate-fade-in"
+            className="liquid-glass w-14 h-14 rounded-full flex items-center justify-center text-white bg-[#07060F]/45 shadow-[0_0_25px_rgba(38,189,240,0.25)] hover:scale-110 hover:shadow-[0_0_35px_rgba(38,189,240,0.45)] transition-all duration-300"
           >
             <img
               src="https://img.icons8.com/ios11/512/FFFFFF/whatsapp.png"
               alt="WhatsApp"
-              className="w-10 h-10"
+              className="w-8 h-8"
             />
           </a>
+          </div>
         )}
       </div>
     </footer>

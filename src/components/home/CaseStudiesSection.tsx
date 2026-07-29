@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, ShoppingCart, Users, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -26,8 +27,10 @@ const CaseStudiesSection = () => {
     if (!root || !matchMedia("(hover: hover)").matches) return;
 
     const cleanups: Array<() => void> = [];
-    root.querySelectorAll<HTMLElement>(".cs-row").forEach((el) => {
-      const image = el.querySelector<HTMLElement>(".cs-swipeimage");
+    root.querySelectorAll<HTMLElement>(".cs-row").forEach((el, i) => {
+      // Imagen en un portal en <body>: si viviera dentro de la sección, el pin
+      // de la cortina (transform en el ancestro) rompería su position:fixed.
+      const image = document.querySelector<HTMLElement>(`[data-cs-img="${i}"]`);
       if (!image) return;
       gsap.set(image, { xPercent: -50, yPercent: -50 });
       const setX = gsap.quickTo(image, "x", { duration: 0.4, ease: "power3" });
@@ -147,14 +150,7 @@ const CaseStudiesSection = () => {
                 <button
                   onClick={() => setExpanded(isOpen ? null : index)}
                   className="w-full text-left py-10 md:py-12 grid grid-cols-1 md:grid-cols-[minmax(240px,320px)_1fr_auto] lg:grid-cols-[minmax(240px,300px)_1fr_auto_auto] gap-6 md:gap-10 items-center transition-colors duration-300 hover:bg-white/[0.03] md:px-6 md:-mx-6 rounded-2xl"
-                >
-                  {/* Captura del proyecto que persigue el cursor */}
-                  <img
-                    aria-hidden
-                    src={c.img}
-                    alt=""
-                    className="cs-swipeimage fixed top-0 left-0 w-[300px] md:w-[360px] rounded-xl border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.65)] opacity-0 invisible pointer-events-none z-[60]"
-                  />
+>
                   {/* Métrica protagonista */}
                   <div>
                     <span className="font-mono text-xs text-white/40">{c.num}</span>
@@ -257,6 +253,24 @@ const CaseStudiesSection = () => {
           })}
         </div>
       </div>
+
+      {/* Capturas del hover en un portal (fuera de la sección pineable) */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <>
+            {cases.map((c, i) => (
+              <img
+                key={i}
+                data-cs-img={i}
+                aria-hidden
+                src={c.img}
+                alt=""
+                className="fixed top-0 left-0 w-[300px] md:w-[360px] rounded-xl border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.65)] opacity-0 invisible pointer-events-none z-[60]"
+              />
+            ))}
+          </>,
+          document.body
+        )}
     </section>
   );
 };
