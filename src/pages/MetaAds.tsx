@@ -318,18 +318,13 @@ const MetaAds = () => {
             transition={{ duration: 0.9, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="pointer-events-none absolute top-[10rem] inset-x-0 flex justify-center items-start lg:hidden z-[1]"
           >
-            <div className="w-[80px] -rotate-[10deg] translate-y-4 -mr-4 animate-float" style={{ animationDuration: "6s" }}>
-              <PhoneFrame>
-                <StoryPreview />
-              </PhoneFrame>
-            </div>
-            <div className="w-[96px] z-10 animate-float" style={{ animationDuration: "5.2s", animationDelay: "0.3s" }}>
-              <PhoneFrame>
+            <div className="w-[104px] -rotate-3 z-10 animate-float" style={{ animationDuration: "5.4s" }}>
+              <PhoneFrame compact>
                 <InstagramAdPreview />
               </PhoneFrame>
             </div>
-            <div className="w-[80px] rotate-[10deg] translate-y-4 -ml-4 animate-float" style={{ animationDuration: "6.6s", animationDelay: "0.6s" }}>
-              <PhoneFrame>
+            <div className="w-[96px] rotate-6 translate-y-4 -ml-3 animate-float" style={{ animationDuration: "6.4s", animationDelay: "0.4s" }}>
+              <PhoneFrame compact>
                 <WhatsAppLeadPreview />
               </PhoneFrame>
             </div>

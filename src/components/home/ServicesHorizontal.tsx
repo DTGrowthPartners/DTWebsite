@@ -23,16 +23,24 @@ const PANELS = 5; // intro + 4 servicios
 /* ─── Motivos decorativos por servicio ─────────────────────────── */
 
 // 01 · Meta Ads — preview real de campaña: anuncio en Instagram → lead en WhatsApp
-export const PhoneFrame = ({ children }: { children: ReactNode }) => (
-  <div className="relative rounded-[1.35rem] bg-[#101014] border border-white/25 p-[7px] shadow-[0_30px_80px_rgba(0,0,0,0.65)]">
+export const PhoneFrame = ({ children, compact = false }: { children: ReactNode; compact?: boolean }) => (
+  <div
+    className={`relative bg-[#101014] border border-white/25 shadow-[0_30px_80px_rgba(0,0,0,0.65)] ${
+      compact ? "rounded-[0.8rem] p-[4px]" : "rounded-[1.35rem] p-[7px]"
+    }`}
+  >
     {/* Botones laterales */}
     <div className="absolute -right-[2px] top-[24%] h-12 w-[2.5px] rounded-r bg-white/20" />
     <div className="absolute -left-[2px] top-[20%] h-7 w-[2.5px] rounded-l bg-white/20" />
     <div className="absolute -left-[2px] top-[30%] h-7 w-[2.5px] rounded-l bg-white/20" />
-    <div className="relative rounded-[1rem] overflow-hidden bg-black aspect-[9/18.5]">
+    <div className={`relative overflow-hidden bg-black aspect-[9/18.5] ${compact ? "rounded-[0.5rem]" : "rounded-[1rem]"}`}>
       {children}
       {/* Isla de cámara */}
-      <div className="absolute top-2 left-1/2 -translate-x-1/2 z-10 h-[9px] w-[38px] rounded-full bg-black ring-1 ring-white/20" />
+      <div
+        className={`absolute top-2 left-1/2 -translate-x-1/2 z-10 rounded-full bg-black ring-1 ring-white/20 ${
+          compact ? "h-[6px] w-[26px]" : "h-[9px] w-[38px]"
+        }`}
+      />
     </div>
   </div>
 );
