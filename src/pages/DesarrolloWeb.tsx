@@ -413,19 +413,24 @@ const DesarrolloWeb = () => {
         const sB = Flip.getState(mB);
         const sC = Flip.getState(mC);
 
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: area,
-            start: "top 45%",
-            end: "bottom 90%",
-            scrub: 1.5,
-          },
-        });
+        // Cada salto se scrubbea con la ENTRADA de su etapa destino al viewport:
+        // así el movimiento siempre ocurre a la vista, en cualquier pantalla.
+        const rowB = area.querySelector(".dw-stage-2");
+        const rowC = area.querySelector(".dw-stage-3");
 
-        tl.add(Flip.fit(cube, sB, { duration: 0.5, ease: "none", scale: true }) as gsap.core.Tween, 0.55)
-          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 0.5, ease: "none" }, "<")
-          .add(Flip.fit(cube, sC, { duration: 0.5, ease: "none", scale: true }) as gsap.core.Tween, 1.75)
-          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 0.5, ease: "none" }, "<");
+        gsap
+          .timeline({
+            scrollTrigger: { trigger: rowB, start: "top 92%", end: "top 32%", scrub: 0.6, invalidateOnRefresh: true },
+          })
+          .add(Flip.fit(cube, sB, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween)
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<");
+
+        gsap
+          .timeline({
+            scrollTrigger: { trigger: rowC, start: "top 92%", end: "top 32%", scrub: 0.6, invalidateOnRefresh: true },
+          })
+          .add(Flip.fit(cube, sC, { duration: 1, ease: "none", scale: true }) as gsap.core.Tween)
+          .to(core, { rotateX: "+=180", rotateY: "+=180", duration: 1, ease: "none" }, "<");
       }, area);
     };
 
@@ -1026,7 +1031,7 @@ const DesarrolloWeb = () => {
               </div>
 
               {/* Etapa 2 — E-commerce (slot a la izquierda, texto a la derecha) */}
-              <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
+              <div className="dw-stage-2 grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
                 <div className="order-2 md:order-1 flex justify-center md:justify-start md:pl-[10%]">
                   <div className="flex flex-col items-center gap-3">
                     <div className="w-[110px] h-[110px] rounded-xl border-2 border-dashed border-white/25 grid place-items-center">
@@ -1068,7 +1073,7 @@ const DesarrolloWeb = () => {
               </div>
 
               {/* Etapa 3 — Software a medida */}
-              <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
+              <div className="dw-stage-3 grid md:grid-cols-2 gap-8 md:gap-16 items-center py-10 md:py-20 min-h-0 md:min-h-[52vh]">
                 <motion.div
                   initial={{ opacity: 0, y: 26 }}
                   whileInView={{ opacity: 1, y: 0 }}
