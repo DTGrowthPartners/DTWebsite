@@ -36,6 +36,16 @@ const Footer = () => {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
+  // El flotante de WhatsApp aparece tras scrollear: en el hero de cada página
+  // ya hay CTAs a la vista y el botón tapaba elementos al aterrizar.
+  const [showWhatsApp, setShowWhatsApp] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowWhatsApp(window.scrollY > 400);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <footer className="relative bg-[#07060F]">
       <div className="max-w-[1600px] mx-auto px-8 md:px-16 lg:px-20 py-16">
@@ -140,7 +150,11 @@ const Footer = () => {
         </div>
         {!presentationMode && (
           /* Wrapper posiciona: .liquid-glass fuerza position:relative y pisaría el fixed */
-          <div className="fixed bottom-6 right-6 z-50 animate-fade-in">
+          <div
+            className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ${
+              showWhatsApp ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+            }`}
+          >
           <a
             href="https://api.whatsapp.com/send/?phone=573007189383&text=Hola!%20vengo%20de%20su%20web%20y%20estoy%20interesado%20en%20sus%20servicios%20de%3A&type=phone_number&app_absent=0"
             target="_blank"
