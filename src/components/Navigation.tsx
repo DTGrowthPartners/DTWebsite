@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronRight, TrendingUp, Code, Zap, Megaphone, Target, Facebook, Instagram, Share2, BarChart3, MessageCircle, Users, ArrowUpRight, Hotel } from "lucide-react";
+import { ChevronDown, TrendingUp, Code, Zap, ArrowUpRight, Hotel } from "lucide-react";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { useLanguage } from "@/context/LanguageContext";
@@ -11,14 +11,11 @@ const Navigation = () => {
   const { language, toggleLanguage, t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileSubMenuOpen, setMobileSubMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const subTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   /* Menú móvil "isla" (CodePen JoRMPLg de GreenSock): timeline pausada que
      entra con rebote back.out y sale suave gracias a easeReverse (GSAP 3.14). */
@@ -80,17 +77,6 @@ const Navigation = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const pubDigitalSubItems = [
-    { name: "Meta Ads Cartagena", path: "/servicios/meta-ads-cartagena", icon: Target },
-    { name: "Facebook Ads", path: "/servicios/facebook-ads-cartagena", icon: Facebook },
-    { name: "Instagram Ads", path: "/servicios/instagram-ads-cartagena", icon: Instagram },
-    { name: "Pauta Digital", path: "/servicios/pauta-digital-cartagena", icon: BarChart3 },
-    { name: "WhatsApp Marketing", path: "/servicios/whatsapp-marketing-cartagena", icon: MessageCircle },
-    { name: "Redes Sociales", path: "/servicios/publicidad-redes-sociales-cartagena", icon: Share2 },
-    { name: "Agencia de Publicidad", path: "/servicios/agencia-publicidad-cartagena", icon: Users },
-    { name: "Marketing Digital", path: "/servicios/agencia-marketing-digital-cartagena", icon: Megaphone },
-    { name: "Campañas Publicitarias", path: "/servicios/campanas-publicitarias-cartagena", icon: TrendingUp },
-  ];
 
   const navLinks = [
     { name: t("nav.home"), path: "/" },
@@ -104,8 +90,7 @@ const Navigation = () => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setServicesOpen(false);
-        setSubMenuOpen(false);
-      }
+          }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -119,18 +104,7 @@ const Navigation = () => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setServicesOpen(false);
-      setSubMenuOpen(false);
-    }, 250);
-  };
-
-  const handleSubMouseEnter = () => {
-    if (subTimeoutRef.current) clearTimeout(subTimeoutRef.current);
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setSubMenuOpen(true);
-  };
-
-  const handleSubMouseLeave = () => {
-    subTimeoutRef.current = setTimeout(() => setSubMenuOpen(false), 200);
+      }, 250);
   };
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
@@ -156,17 +130,13 @@ const Navigation = () => {
 
     closeMobile();
     setServicesOpen(false);
-    setSubMenuOpen(false);
     setMobileServicesOpen(false);
-    setMobileSubMenuOpen(false);
   };
 
   const closeAll = () => {
     closeMobile();
     setServicesOpen(false);
-    setSubMenuOpen(false);
     setMobileServicesOpen(false);
-    setMobileSubMenuOpen(false);
   };
 
   return (
@@ -262,66 +232,6 @@ const Navigation = () => {
                     <span>{t("nav.services.hotels")}</span>
                   </Link>
 
-                  {/* Divider */}
-                  <div className="my-1.5 mx-3 border-t border-border/30" />
-
-                  {/* Publicidad Digital - WITH SUB-DROPDOWN */}
-                  <div
-                    className="relative"
-                    onMouseEnter={handleSubMouseEnter}
-                    onMouseLeave={handleSubMouseLeave}
-                  >
-                    <div className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group cursor-pointer">
-                      <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                        <Megaphone className="w-4 h-4 text-primary" />
-                      </div>
-                      <span className="flex-1">{t("nav.services.digitalAds")}</span>
-                      <ChevronRight className={`w-4 h-4 text-muted-foreground transition-transform duration-200 ${subMenuOpen ? "translate-x-0.5" : ""}`} />
-                    </div>
-
-                    {/* Second Level Sub-Dropdown */}
-                    <div
-                      className={`absolute left-full top-0 pl-2 transition-all duration-200 ${
-                        subMenuOpen
-                          ? "opacity-100 translate-x-0 pointer-events-auto"
-                          : "opacity-0 -translate-x-2 pointer-events-none"
-                      }`}
-                    >
-                      <div className="bg-[#07060F]/70 backdrop-blur-2xl border border-white/10 rounded-2xl shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_20px_60px_rgba(0,0,0,0.55)] p-2 min-w-[250px] max-h-[70vh] overflow-y-auto">
-                        {/* Link to main pillar page */}
-                        <Link
-                          to="/servicios/publicidad-digital-cartagena"
-                          onClick={closeAll}
-                          className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium text-primary hover:bg-primary/10 transition-all duration-200 group"
-                        >
-                          <div className="w-7 h-7 bg-primary/15 rounded-md flex items-center justify-center">
-                            <Megaphone className="w-3.5 h-3.5 text-primary" />
-                          </div>
-                          <span>Ver todo</span>
-                        </Link>
-
-                        <div className="my-1 mx-3 border-t border-border/20" />
-
-                        {/* Sub-items */}
-                        {pubDigitalSubItems.map((item) => {
-                          const Icon = item.icon;
-                          return (
-                            <Link
-                              key={item.path}
-                              to={item.path}
-                              onClick={closeAll}
-                              className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
-                            >
-                              <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                                <Icon className="w-3.5 h-3.5 text-primary" />
-                              </div>
-                              <span>{item.name}</span>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -428,45 +338,6 @@ const Navigation = () => {
                       <span>{t("nav.services.hotels")}</span>
                     </Link>
 
-                    {/* Publicidad Digital sub-accordion */}
-                    <div className="border-t border-border/20 pt-2">
-                      <button
-                        className="flex items-center justify-between w-full text-sm text-white/95 hover:text-white transition-colors"
-                        onClick={() => setMobileSubMenuOpen(!mobileSubMenuOpen)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Megaphone className="w-3.5 h-3.5 text-primary" /></div>
-                          <span>{t("nav.services.digitalAds")}</span>
-                        </div>
-                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${mobileSubMenuOpen ? "rotate-180" : ""}`} />
-                      </button>
-
-                      {mobileSubMenuOpen && (
-                        <div className="mt-2 ml-10 flex flex-col space-y-2.5 animate-fade-in">
-                          <Link
-                            to="/servicios/publicidad-digital-cartagena"
-                            onClick={closeAll}
-                            className="text-xs font-medium text-primary hover:text-primary/80 transition-colors"
-                          >
-                            → Ver todo
-                          </Link>
-                          {pubDigitalSubItems.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                              <Link
-                                key={item.path}
-                                to={item.path}
-                                onClick={closeAll}
-                                className="flex items-center gap-2.5 text-xs text-white/95 hover:text-white transition-colors"
-                              >
-                                <Icon className="w-3 h-3 text-primary/70" />
-                                <span>{item.name}</span>
-                              </Link>
-                            );
-                          })}
-                        </div>
-                      )}
-                    </div>
                   </div>
                 )}
               </div>
