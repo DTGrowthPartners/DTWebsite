@@ -146,7 +146,9 @@ function staticShell(route) {
       ${SERVICES_NAV}
       <p><a href="/">DT Growth Partners — Agencia de marketing digital en Cartagena</a> · <a href="/#casos">Casos de éxito</a> · <a href="/#nosotros">Nosotros</a> · <a href="/#metodo">El método DT</a> · <a href="/#contacto">Contacto</a></p>`;
 
-  return `<div id="root"><div style="max-width:760px;margin:0 auto;padding:96px 24px;color:#e6e9f5;font-family:Manrope,system-ui,sans-serif;line-height:1.6">
+  // El casco arranca invisible: si React monta rápido nadie lo ve; si la
+  // carga es lenta, aparece con fade a los 0.7s como preview del contenido.
+  return `<div id="root"><div style="max-width:760px;margin:0 auto;padding:96px 24px;color:#e6e9f5;font-family:Manrope,system-ui,sans-serif;line-height:1.6;opacity:0;animation:seo-shell-in .5s ease-out .7s forwards">
       <p><a href="/" style="color:#8fd8ff">DT Growth Partners</a></p>
       <h1>${h1}</h1>${body}
     </div></div>`;
@@ -209,6 +211,9 @@ function generateRouteHtml(templateHtml, route) {
 
   // Inject static SEO content into #root (crawlers without JS see real content)
   html = html.replace(/<div id="root">.*?<\/div>/s, staticShell(route));
+
+  // Keyframe para el fade retardado del casco
+  html = html.replace("</head>", "<style>@keyframes seo-shell-in{to{opacity:1}}</style></head>");
 
   return html;
 }
