@@ -554,8 +554,8 @@ const ServicesHorizontal = () => {
       titleKey: "services.chatbots",
       descKey: "services.chatbotsDesc",
       highlightsKey: "services.chatbotsHighlights",
-      path: WHATSAPP,
-      external: true,
+      path: "/servicios/chatbots",
+      external: false,
       Motif: MotifChat,
     },
   ];

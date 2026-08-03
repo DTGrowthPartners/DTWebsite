@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, TrendingUp, Code, Zap, ArrowUpRight, Hotel } from "lucide-react";
+import { ChevronDown, TrendingUp, Code, Zap, Bot, ArrowUpRight, Hotel } from "lucide-react";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { useLanguage } from "@/context/LanguageContext";
@@ -220,6 +220,18 @@ const Navigation = () => {
                     <span>{t("nav.services.automation")}</span>
                   </Link>
 
+                  {/* Chatbots IA */}
+                  <Link
+                    to="/servicios/chatbots"
+                    onClick={closeAll}
+                    className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm text-white/95 hover:text-white hover:bg-primary/10 transition-all duration-200 group"
+                  >
+                    <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                      <Bot className="w-4 h-4 text-primary" />
+                    </div>
+                    <span>Chatbots Inteligentes</span>
+                  </Link>
+
                   {/* Sistema para Hoteles */}
                   <Link
                     to="/servicios/sistema-hoteles"
@@ -332,6 +344,10 @@ const Navigation = () => {
                     <Link to="/servicios/sistemas-automatizaciones" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Zap className="w-3.5 h-3.5 text-primary" /></div>
                       <span>{t("nav.services.automation")}</span>
+                    </Link>
+                    <Link to="/servicios/chatbots" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
+                      <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Bot className="w-3.5 h-3.5 text-primary" /></div>
+                      <span>Chatbots Inteligentes</span>
                     </Link>
                     <Link to="/servicios/sistema-hoteles" onClick={closeAll} className="flex items-center gap-3 text-sm text-white/95 hover:text-white transition-colors">
                       <div className="w-7 h-7 bg-primary/10 rounded-md flex items-center justify-center"><Hotel className="w-3.5 h-3.5 text-primary" /></div>

@@ -31,6 +31,11 @@ const routes = [
     description: "Desarrollo web profesional en Cartagena. Landing pages, tiendas online y sitios web optimizados para SEO y conversión. Cotiza hoy.",
   },
   {
+    path: "/servicios/chatbots",
+    title: "Chatbots con IA para WhatsApp en Cartagena | DT Growth Partners",
+    description: "Chatbots con IA que responden, califican leads y agendan citas 24/7 en WhatsApp e Instagram. Tu mejor vendedor trabaja sin descanso.",
+  },
+  {
     path: "/servicios/sistemas-automatizaciones",
     title: "Automatizaciones e IA para Empresas en Cartagena | DT Growth Partners",
     description: "Automatiza tu negocio con IA. Flujos, chatbots y agentes inteligentes para empresas en Cartagena. Trabaja menos, crece más.",

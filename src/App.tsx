@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import MetaAds from "./pages/MetaAds";
 import DesarrolloWeb from "./pages/DesarrolloWeb";
 import SistemasAutomatizaciones from "./pages/SistemasAutomatizaciones";
+import ChatbotsIA from "./pages/ChatbotsIA";
 import SistemaHoteles from "./pages/SistemaHoteles";
 import CaseStudyRetailLicores from "./pages/CaseStudyRetailLicores";
 import CaseStudyEscalamientoTrimestral from "./pages/CaseStudyEscalamientoTrimestral";
@@ -80,6 +81,7 @@ const App = () => (
                 <Route path="/servicios/meta-ads" element={<MetaAds />} />
                 <Route path="/servicios/desarrollo-web" element={<DesarrolloWeb />} />
                 <Route path="/servicios/sistemas-automatizaciones" element={<SistemasAutomatizaciones />} />
+                <Route path="/servicios/chatbots" element={<ChatbotsIA />} />
                 <Route path="/servicios/sistema-hoteles" element={<SistemaHoteles />} />
                 <Route path="/sistemaHoteles" element={<Navigate to="/servicios/sistema-hoteles" replace />} />
                 <Route path="/sistemahoteles" element={<Navigate to="/servicios/sistema-hoteles" replace />} />

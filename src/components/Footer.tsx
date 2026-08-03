@@ -82,6 +82,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/servicios/chatbots" className="hover:text-white transition-colors">
+                  Chatbots Inteligentes
+                </Link>
+              </li>
+              <li>
                 <Link to="/servicios/sistema-hoteles" className="hover:text-white transition-colors">
                   {t("nav.services.hotels")}
                 </Link>
