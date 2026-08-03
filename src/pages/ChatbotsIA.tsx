@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ContactFormSection from "@/components/home/ContactFormSection";
@@ -6,8 +7,7 @@ import Aurora from "@/components/effects/Aurora";
 import AnimatedCounter from "@/components/animations/AnimatedCounter";
 import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
-import { Inbox, Sparkles, RefreshCcw, Zap, CalendarCheck, ShieldCheck, Users, ArrowRight, ArrowUpRight } from "lucide-react";
-import chatGlass from "@/assets/chatbots/chat-glass.webp";
+import { Inbox, Sparkles, RefreshCcw, Zap, CalendarCheck, ShieldCheck, Users, ArrowRight, ArrowUpRight, Bot, Phone, MoreVertical, Smile, Mic, Camera } from "lucide-react";
 import videoHero from "@/assets/chatbots/video-hero.mp4";
 
 const WA = (text: string) => `https://wa.me/573007189383?text=${encodeURIComponent(text)}`;
@@ -90,6 +90,143 @@ const METRICS = [
   { value: 100, prefix: "", suffix: "%", label: "De los chats reciben respuesta en segundos" },
   { value: 3, prefix: "", suffix: "x", label: "Más conversaciones atendidas por tu mismo equipo" },
 ];
+
+/* Simulación de chat: la conversación se escribe sola en bucle —
+   el bot responde, agenda la cita y registra el lead en el CRM. */
+type ChatStep =
+  | { kind: "user" | "bot"; text: string; time: string }
+  | { kind: "system"; text: string };
+
+const CHAT_SCRIPT: ChatStep[] = [
+  { kind: "user", text: "Hola! ¿Tienen disponibilidad para mañana?", time: "9:41" },
+  { kind: "bot", text: "¡Claro! 👋 Tenemos cupo a las 10:00 a.m. o 3:00 p.m. ¿Cuál te sirve?", time: "9:41" },
+  { kind: "user", text: "A las 10 perfecto, ¿cuánto cuesta?", time: "9:42" },
+  { kind: "bot", text: "La valoración inicial es gratis 😊 ¿A nombre de quién agendo la cita?", time: "9:42" },
+  { kind: "user", text: "María González", time: "9:42" },
+  { kind: "bot", text: "✅ Listo, María: mañana 10:00 a.m. Te llega la confirmación por aquí.", time: "9:43" },
+  { kind: "system", text: "📅 Cita creada · Lead calificado → CRM" },
+];
+
+const ChatSim = () => {
+  const [visible, setVisible] = useState(0);
+  const [typing, setTyping] = useState(false);
+
+  useEffect(() => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setVisible(CHAT_SCRIPT.length);
+      return;
+    }
+    let cancelled = false;
+    const timers: number[] = [];
+    const t = (fn: () => void, ms: number) => {
+      timers.push(window.setTimeout(() => { if (!cancelled) fn(); }, ms));
+    };
+
+    if (visible >= CHAT_SCRIPT.length) {
+      t(() => setVisible(0), 4500);
+    } else {
+      const next = CHAT_SCRIPT[visible];
+      if (next.kind === "bot") {
+        t(() => setTyping(true), 550);
+        t(() => { setTyping(false); setVisible((v) => v + 1); }, 2000);
+      } else {
+        t(() => setVisible((v) => v + 1), next.kind === "system" ? 1000 : 1400);
+      }
+    }
+    return () => { cancelled = true; timers.forEach(window.clearTimeout); };
+  }, [visible]);
+
+  return (
+    <div className="relative w-full max-w-[440px] mx-auto">
+      {/* Badge flotante */}
+      <div className="absolute -top-4 -right-2 md:-right-6 z-10 rotate-3">
+        <span className="liquid-glass rounded-full px-3.5 py-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-white/85 bg-black/50">
+          ⚡ Responde en segundos
+        </span>
+      </div>
+
+      <div className="liquid-glass rounded-[2rem] overflow-hidden bg-[#0a0918]/70">
+        {/* Header del chat */}
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-black/30">
+          <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0F76D6] to-[#26BDF0]">
+            <Bot className="h-5 w-5 text-white" strokeWidth={1.7} />
+            <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-[#28c840] ring-2 ring-[#0a0918]" />
+          </span>
+          <div className="flex-1 min-w-0 leading-tight">
+            <div className="font-heading font-medium text-white text-sm">Asistente DT</div>
+            <div className="font-mono text-[9px] uppercase tracking-[0.16em] text-[#28c840]">en línea · IA</div>
+          </div>
+          <Phone className="h-4 w-4 text-white/40" strokeWidth={1.6} />
+          <MoreVertical className="h-4 w-4 text-white/40" strokeWidth={1.6} />
+        </div>
+
+        {/* Mensajes */}
+        <div className="h-[400px] md:h-[430px] flex flex-col justify-end gap-2.5 px-4 pb-4 pt-6 overflow-hidden">
+          {CHAT_SCRIPT.slice(0, visible).map((m, i) =>
+            m.kind === "system" ? (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="self-center liquid-glass rounded-full px-4 py-1.5 font-mono text-[9px] uppercase tracking-[0.14em] text-[#C2FBFF] bg-black/40"
+              >
+                {m.text}
+              </motion.div>
+            ) : (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                className={`max-w-[82%] rounded-2xl px-3.5 py-2.5 text-[13px] font-body leading-snug ${
+                  m.kind === "bot"
+                    ? "self-end rounded-br-md bg-gradient-to-br from-[#0F76D6] to-[#1191e0] text-white"
+                    : "self-start rounded-bl-md bg-white/[0.08] border border-white/10 text-white/90"
+                }`}
+              >
+                {m.text}
+                <span className={`ml-2 inline-flex items-baseline gap-1 text-[9px] ${m.kind === "bot" ? "text-white/60" : "text-white/40"}`}>
+                  {m.time}
+                  {m.kind === "bot" && <span className="text-[#C2FBFF]">✓✓</span>}
+                </span>
+              </motion.div>
+            )
+          )}
+
+          {/* Indicador escribiendo... */}
+          {typing && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="self-end rounded-2xl rounded-br-md bg-gradient-to-br from-[#0F76D6]/60 to-[#1191e0]/60 px-4 py-3 flex items-center gap-1"
+            >
+              {[0, 1, 2].map((d) => (
+                <span
+                  key={d}
+                  className="h-1.5 w-1.5 rounded-full bg-white/90 animate-bounce"
+                  style={{ animationDelay: `${d * 0.15}s`, animationDuration: "0.9s" }}
+                />
+              ))}
+            </motion.div>
+          )}
+        </div>
+
+        {/* Barra de entrada (decorativa) */}
+        <div className="flex items-center gap-2.5 px-4 pb-4">
+          <div className="flex-1 flex items-center gap-2.5 rounded-full bg-white/[0.06] border border-white/10 px-4 py-2.5">
+            <Smile className="h-4 w-4 text-white/40" strokeWidth={1.6} />
+            <span className="flex-1 text-[12px] text-white/35 font-body">Escribe un mensaje</span>
+            <Camera className="h-4 w-4 text-white/40" strokeWidth={1.6} />
+          </div>
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0F76D6] to-[#26BDF0]">
+            <Mic className="h-4 w-4 text-white" strokeWidth={1.8} />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 26, filter: "blur(5px)" },
@@ -311,12 +448,7 @@ const ChatbotsIA = () => {
               </a>
             </motion.div>
             <motion.div {...fadeUp(0.15)}>
-              <img
-                src={chatGlass}
-                alt="Conversación de WhatsApp atendida por el chatbot con IA de DT Growth Partners"
-                loading="lazy"
-                className="w-full max-w-[520px] mx-auto rounded-[2rem] border border-white/10 shadow-[0_40px_120px_rgba(15,118,214,0.25)]"
-              />
+              <ChatSim />
             </motion.div>
           </div>
         </section>
