@@ -7,8 +7,8 @@ import AnimatedCounter from "@/components/animations/AnimatedCounter";
 import SEO from "@/components/SEO";
 import { motion } from "framer-motion";
 import { Inbox, Sparkles, RefreshCcw, Zap, CalendarCheck, ShieldCheck, Users, ArrowRight, ArrowUpRight } from "lucide-react";
-import flujoBot from "@/assets/chatbots/flujo-bot.webp";
 import chatGlass from "@/assets/chatbots/chat-glass.webp";
+import videoHero from "@/assets/chatbots/video-hero.mp4";
 
 const WA = (text: string) => `https://wa.me/573007189383?text=${encodeURIComponent(text)}`;
 const WA_MAIN = WA("Hola DT Growth Partners, quiero un chatbot con IA para mi negocio");
@@ -125,9 +125,16 @@ const ChatbotsIA = () => {
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute right-[2vw] xl:right-[5vw] top-[46%] -translate-y-1/2 hidden lg:block w-[420px] xl:w-[500px] z-[1]"
+            className="pointer-events-none absolute right-[2vw] xl:right-[5vw] top-[36%] -translate-y-1/2 hidden lg:block w-[420px] xl:w-[500px] z-[1]"
           >
-            <img src={flujoBot} alt="" className="w-full [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]" />
+            <video
+              src={videoHero}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]"
+            />
           </motion.div>
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07060F] to-transparent z-[2]" />
@@ -140,7 +147,7 @@ const ChatbotsIA = () => {
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="lg:hidden mt-2 mb-8 flex justify-center"
             >
-              <img src={flujoBot} alt="" className="w-[300px] [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]" />
+              <video src={videoHero} autoPlay loop muted playsInline className="w-[320px] [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]" />
             </motion.div>
 
             <motion.span
