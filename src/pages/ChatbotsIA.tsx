@@ -125,7 +125,7 @@ const ChatbotsIA = () => {
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="pointer-events-none absolute right-[2vw] xl:right-[5vw] top-[36%] -translate-y-1/2 hidden lg:block w-[420px] xl:w-[500px] z-[1]"
+            className="pointer-events-none absolute right-[2vw] xl:right-[5vw] top-[30%] -translate-y-1/2 hidden lg:block w-[420px] xl:w-[480px] z-[1]"
           >
             <video
               src={videoHero}
@@ -133,7 +133,7 @@ const ChatbotsIA = () => {
               loop
               muted
               playsInline
-              className="w-full [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]"
+              className="w-full rounded-[2rem] border border-white/10 shadow-[0_40px_120px_rgba(15,118,214,0.3)]"
             />
           </motion.div>
 
@@ -147,7 +147,7 @@ const ChatbotsIA = () => {
               transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="lg:hidden mt-2 mb-8 flex justify-center"
             >
-              <video src={videoHero} autoPlay loop muted playsInline className="w-[320px] [mask-image:radial-gradient(72%_72%_at_50%_50%,#000_45%,transparent_92%)]" />
+              <video src={videoHero} autoPlay loop muted playsInline className="w-[320px] rounded-[1.5rem] border border-white/10 shadow-[0_30px_90px_rgba(15,118,214,0.3)]" />
             </motion.div>
 
             <motion.span
