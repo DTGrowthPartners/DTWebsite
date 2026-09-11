@@ -140,7 +140,7 @@ const FAQS = [
   },
 ];
 
-const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwlLgQ9Rf6lSXEMxhk8E6wSyEa2aAxNG3wFVjJlka-IAgbD91PKh0_fMiLl-ciOghef/exec";
+const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyipVTYEHi_jx7q7tf2UtEW3SJoWwv7BVbX6pKVcFB7NNljZhM4e_T3HnYVZitRRE4/exec";
 
 export default function Semillero() {
   const [formData, setFormData] = useState<SemilleroFormData>(INITIAL_FORM);
