@@ -46,6 +46,12 @@ const routes = [
     description: "PMS para hoteles independientes: forecast de ocupación, reservas, pagos, contabilidad diaria y motor de reservas para tu web. Ya operando en hoteles reales.",
   },
   {
+    path: "/semillero",
+    title: "Semillero DTGP | Programa de Práctica y Talento en Cartagena — DT Growth Partners",
+    description: "Únete al Semillero DTGP. Programa de práctica presencial en el Centro de Convenciones de Cartagena para mayores de 18 años. Aprende pauta, diseño, IA y desarrollo en proyectos reales.",
+    h1: "Semillero DTGP — Aprende haciendo en proyectos reales",
+  },
+  {
     path: "/casos-exito/retail-bebidas",
     title: "Caso de Éxito: Retail de Bebidas — De ROAS 1.3x a $29.2M en ventas | DT Growth Partners",
     description: "Cómo transformamos las campañas de Meta Ads de un retail de bebidas en Cartagena, logrando $29.2M COP en ventas y un ROAS de 31x.",

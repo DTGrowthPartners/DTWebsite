@@ -112,6 +112,14 @@ const Footer = () => {
                   {t("method.label")}
                 </a>
               </li>
+              <li>
+                <Link to="/semillero" className="hover:text-white transition-colors inline-flex items-center gap-1.5">
+                  <span>Semillero DTGP</span>
+                  <span className="text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-[#0F76D6]/30 text-[#26BDF0] border border-[#0F76D6]/40">
+                    Prácticas
+                  </span>
+                </Link>
+              </li>
             </ul>
           </div>
 

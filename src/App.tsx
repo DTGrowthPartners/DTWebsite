@@ -16,6 +16,7 @@ import SistemaHoteles from "./pages/SistemaHoteles";
 import CaseStudyRetailLicores from "./pages/CaseStudyRetailLicores";
 import CaseStudyEscalamientoTrimestral from "./pages/CaseStudyEscalamientoTrimestral";
 import CaseStudyRestaurante from "./pages/CaseStudyRestaurante";
+import Semillero from "./pages/Semillero";
 import NotFound from "./pages/NotFound";
 
 // SEO Service Pages (lazy loaded)
@@ -99,6 +100,10 @@ const App = () => (
                 <Route path="/servicios/agencia-marketing-digital-cartagena" element={<AgenciaMarketingDigitalCartagena />} />
                 <Route path="/servicios/campanas-publicitarias-cartagena" element={<CampanasPublicitariasCartagena />} />
                 <Route path="/servicios/whatsapp-marketing-cartagena" element={<WhatsAppMarketingCartagena />} />
+                {/* Programa de Práctica y Talento Semillero DTGP */}
+                <Route path="/semillero" element={<Semillero />} />
+                <Route path="/trabaja-con-nosotros" element={<Navigate to="/semillero" replace />} />
+                <Route path="/trabajaconnosotros" element={<Navigate to="/semillero" replace />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
