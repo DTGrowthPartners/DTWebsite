@@ -397,7 +397,7 @@ export default function Semillero() {
 
             {/* Tarjetas de condiciones clave */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 pb-2 max-w-3xl mx-auto text-left">
-              <div className="p-4 rounded-2xl liquid-glass border border-white/10">
+              <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center gap-2 text-white/50 text-[10px] font-mono tracking-widest uppercase mb-1">
                   <Calendar className="w-3.5 h-3.5 text-[#26BDF0]" />
                   <span>Días</span>
@@ -406,7 +406,7 @@ export default function Semillero() {
                 <div className="text-[11px] text-white/50 font-light">Medio tiempo</div>
               </div>
 
-              <div className="p-4 rounded-2xl liquid-glass border border-white/10">
+              <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center gap-2 text-white/50 text-[10px] font-mono tracking-widest uppercase mb-1">
                   <Clock className="w-3.5 h-3.5 text-[#26BDF0]" />
                   <span>Turnos</span>
@@ -415,7 +415,7 @@ export default function Semillero() {
                 <div className="text-[11px] text-white/50 font-light">8-12m / 1:30-5:30pm</div>
               </div>
 
-              <div className="p-4 rounded-2xl liquid-glass border border-white/10">
+              <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center gap-2 text-white/50 text-[10px] font-mono tracking-widest uppercase mb-1">
                   <DollarSign className="w-3.5 h-3.5 text-[#26BDF0]" />
                   <span>Auxilio</span>
@@ -424,7 +424,7 @@ export default function Semillero() {
                 <div className="text-[11px] text-white/50 font-light">Mensual (3 meses)</div>
               </div>
 
-              <div className="p-4 rounded-2xl liquid-glass border border-white/10">
+              <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center gap-2 text-white/50 text-[10px] font-mono tracking-widest uppercase mb-1">
                   <MapPin className="w-3.5 h-3.5 text-[#26BDF0]" />
                   <span>Sede</span>
@@ -463,21 +463,26 @@ export default function Semillero() {
 
         {/* ======================= LOS 3 PILARES ======================= */}
         <section id="requisitos" className="scroll-mt-24 relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
-          <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50">
-              // POR QUÉ ES DIFERENTE
+          <div className="text-center max-w-3xl mx-auto mb-14 space-y-2">
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">
+              // MODELO DE TRABAJO & PRÁCTICA
             </span>
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tight">
-              No es un curso teórico. Es aceleración real.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white tracking-tight">
+              Cero teoría abstracta. Trabajo y ejecución en proyectos reales.
             </h2>
+            <p className="text-sm text-white/65 font-light max-w-xl mx-auto pt-2 leading-relaxed">
+              En el Semillero no vienes a ver clases teóricas: vienes a producir, crear y resolver sobre cuentas, marcas y clientes reales desde el primer día.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-8 rounded-2xl liquid-glass-strong space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-[#0F76D6]/20 border border-[#0F76D6]/40 flex items-center justify-center text-[#26BDF0]">
+            <div className="group p-8 rounded-2xl liquid-glass-strong border border-white/10 hover:border-[#26BDF0] hover:shadow-[0_0_40px_rgba(15,118,214,0.35)] hover:bg-[#0F76D6]/[0.08] hover:-translate-y-1 transition-all duration-300 space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#0F76D6]/20 border border-[#0F76D6]/40 flex items-center justify-center text-[#26BDF0] group-hover:scale-110 group-hover:bg-[#0F76D6]/35 group-hover:shadow-[0_0_20px_rgba(38,189,240,0.5)] transition-all duration-300">
                 <Users className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white">Mentoría Directa</h3>
+              <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors duration-200">
+                Mentoría Directa
+              </h3>
               <p className="text-sm text-white/70 leading-relaxed font-light">
                 Trabajas hombro a hombro con el fundador y los especialistas técnicos en nuestro
                 espacio de cowork en el Centro de Convenciones. Recibes retroalimentación diaria y aprendes
@@ -485,22 +490,26 @@ export default function Semillero() {
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl liquid-glass-strong space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-[#26BDF0]/20 border border-[#26BDF0]/40 flex items-center justify-center text-[#26BDF0]">
+            <div className="group p-8 rounded-2xl liquid-glass-strong border border-white/10 hover:border-[#26BDF0] hover:shadow-[0_0_40px_rgba(15,118,214,0.35)] hover:bg-[#0F76D6]/[0.08] hover:-translate-y-1 transition-all duration-300 space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-[#26BDF0]/20 border border-[#26BDF0]/40 flex items-center justify-center text-[#26BDF0] group-hover:scale-110 group-hover:bg-[#26BDF0]/35 group-hover:shadow-[0_0_20px_rgba(38,189,240,0.5)] transition-all duration-300">
                 <TrendingUp className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white">Cuentas y Proyectos Reales</h3>
+              <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors duration-200">
+                Cuentas y Proyectos Reales
+              </h3>
               <p className="text-sm text-white/70 leading-relaxed font-light">
                 Cero ejercicios ficticios. Cada pieza gráfica, automatización, anuncio o flujo que
                 desarrolles se pondrá a prueba en marcas y empresas que confían en DT Growth Partners.
               </p>
             </div>
 
-            <div className="p-8 rounded-2xl liquid-glass-strong space-y-4">
-              <div className="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300">
+            <div className="group p-8 rounded-2xl liquid-glass-strong border border-white/10 hover:border-[#26BDF0] hover:shadow-[0_0_40px_rgba(15,118,214,0.35)] hover:bg-[#0F76D6]/[0.08] hover:-translate-y-1 transition-all duration-300 space-y-4">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-300 group-hover:scale-110 group-hover:bg-purple-500/35 group-hover:shadow-[0_0_20px_rgba(168,85,247,0.5)] transition-all duration-300">
                 <Award className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-white">Plan de Contratación</h3>
+              <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors duration-200">
+                Plan de Contratación
+              </h3>
               <p className="text-sm text-white/70 leading-relaxed font-light">
                 El Semillero es nuestra principal cantera de talento. Al culminar los 3 meses,
                 evaluamos tu rendimiento y compromiso con posibilidad real de ingresar a nuestro
@@ -532,19 +541,19 @@ export default function Semillero() {
               return (
                 <div
                   key={area.id}
-                  className="group relative p-7 rounded-2xl liquid-glass-strong border border-white/10 hover:border-[#26BDF0]/50 transition-all duration-300 flex flex-col justify-between"
+                  className="group relative p-7 rounded-2xl liquid-glass-strong border border-white/10 hover:border-[#26BDF0] hover:shadow-[0_0_40px_rgba(15,118,214,0.35)] hover:bg-[#0F76D6]/[0.08] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white group-hover:scale-110 group-hover:bg-[#0F76D6]/25 group-hover:border-[#26BDF0]/60 group-hover:shadow-[0_0_20px_rgba(38,189,240,0.45)] transition-all duration-300">
                         <Icon className="w-6 h-6 text-[#26BDF0]" />
                       </div>
-                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/60">
+                      <span className="font-mono text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-white/60 group-hover:border-[#26BDF0]/40 group-hover:text-[#26BDF0] transition-colors duration-200">
                         {area.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors">
+                    <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors duration-200">
                       {area.title}
                     </h3>
 
@@ -572,12 +581,14 @@ export default function Semillero() {
             })}
 
             {/* Tarjeta de resumen de condiciones */}
-            <div className="p-7 rounded-2xl liquid-glass-strong border border-[#0F76D6]/50 flex flex-col justify-between">
+            <div className="group p-7 rounded-2xl liquid-glass-strong border border-[#0F76D6]/50 hover:border-[#26BDF0] hover:shadow-[0_0_40px_rgba(15,118,214,0.35)] hover:bg-[#0F76D6]/[0.08] hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-xl bg-[#0F76D6]/20 border border-[#0F76D6]/50 flex items-center justify-center text-[#26BDF0]">
+                <div className="w-12 h-12 rounded-xl bg-[#0F76D6]/20 border border-[#0F76D6]/50 flex items-center justify-center text-[#26BDF0] group-hover:scale-110 group-hover:bg-[#0F76D6]/35 group-hover:shadow-[0_0_20px_rgba(38,189,240,0.5)] transition-all duration-300">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
-                <h3 className="text-xl font-bold text-white">Requisitos del Programa</h3>
+                <h3 className="text-xl font-bold text-white group-hover:text-[#26BDF0] transition-colors duration-200">
+                  Requisitos del Programa
+                </h3>
                 <ul className="space-y-3 text-sm text-white/80 font-light">
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
