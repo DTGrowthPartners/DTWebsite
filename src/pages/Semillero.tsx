@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import Aurora from "@/components/effects/Aurora";
 import { Button } from "@/components/ui/button";
@@ -33,7 +32,7 @@ import {
   Check,
 } from "lucide-react";
 import { scrollToTarget } from "@/lib/smooth-scroll";
-import dtMonogram from "@/assets/dt-monogram-blue.png";
+import logo from "@/assets/DT-GROWTH-LOGO.png";
 
 interface SemilleroFormData {
   fullName: string;
@@ -73,7 +72,11 @@ const AREAS = [
     icon: Palette,
     description:
       "Piezas gráficas para pauta publicitaria, stories de alta conversión y edición de video vertical (Reels/TikTok) para las marcas y clientes de DTGP.",
-    learn: ["Photoshop & Illustrator para pauta", "CapCut & edición vertical dinámica", "Sistemas de diseño visual"],
+    items: [
+      "Creatividades y piezas estáticas de alta conversión para pauta",
+      "Edición de video vertical dinámico con ritmo comercial (Reels / TikTok)",
+      "Líneas gráficas y sistemas visuales aplicados a marcas reales",
+    ],
   },
   {
     id: "ia-content",
@@ -82,7 +85,11 @@ const AREAS = [
     icon: Bot,
     description:
       "Experimentación y generación con IA: copys persuasivos, avatares hiperrealistas, prompts para imágenes comerciales y video con modelos generativos.",
-    learn: ["Prompting avanzado de marketing", "Midjourney, Flux, Kling y Runway", "Flujos con Claude, ChatGPT y ElevenLabs"],
+    items: [
+      "Generación de imágenes y creatividades comerciales con Midjourney y Flux",
+      "Producción de video con modelos generativos (Kling, Runway, Luma)",
+      "Copys persuasivos y flujos de contenido asistidos por Claude y ChatGPT",
+    ],
   },
   {
     id: "google-ads",
@@ -90,8 +97,12 @@ const AREAS = [
     badge: "Performance",
     icon: Search,
     description:
-      "Aprende a capturar clientes con intención activa en Google Search. Arquitectura de campañas, pujas inteligentes y analítica de conversión.",
-    learn: ["Campañas de búsqueda (Search) desde cero", "Keywords con intención de compra", "Seguimiento de conversiones y ROI"],
+      "Captura de clientes con intención activa en Google Search. Arquitectura de campañas, pujas inteligentes y analítica de conversión.",
+    items: [
+      "Estructura y segmentación de campañas en Google Search",
+      "Investigación y análisis de palabras clave con intención comercial",
+      "Seguimiento de conversiones, medición de ROI y optimización de pujas",
+    ],
   },
   {
     id: "desarrollo-ia",
@@ -100,7 +111,11 @@ const AREAS = [
     icon: Code2,
     description:
       "Construcción de landing pages optimizadas para ventas, integraciones de APIs y flujos automatizados con n8n, webhooks y agentes inteligentes.",
-    learn: ["Frontend moderno (React, Vite, Tailwind)", "Automatizaciones con n8n y Make", "Conexión de APIs y agentes de IA"],
+    items: [
+      "Desarrollo de landing pages de alta conversión (React, Vite, Tailwind)",
+      "Flujos de integración y automatización con n8n, Make y webhooks",
+      "Conexión de APIs y agentes de IA aplicados a operaciones reales",
+    ],
   },
   {
     id: "community-manager",
@@ -109,14 +124,18 @@ const AREAS = [
     icon: Share2,
     description:
       "Planificación y parrillas de contenido en redes, redacción de copys comerciales persuasivos y dinamización activa de comunidades de marcas.",
-    learn: ["Estrategia y parrillas mensuales", "Copywriting persuasivo para ventas", "Gestión de interacción y leads"],
+    items: [
+      "Planificación estratégica y parrillas de contenido para marcas",
+      "Copywriting comercial enfocado en retención y engagement",
+      "Gestión de comunidades, atención de interacciones y captación de leads",
+    ],
   },
 ];
 
 const FAQS = [
   {
-    q: "¿Necesito experiencia previa para postularme?",
-    a: "No. El Semillero DTGP está diseñado precisamente para formar talento desde cero. No evaluamos años de experiencia previa: evaluamos tu compromiso, disciplina, puntualidad y tus ganas reales de aprender y trabajar.",
+    q: "¿Necesito años de experiencia previa para postularme?",
+    a: "No exigimos años de experiencia laboral formal en agencias, pero sí es ideal que tengas afinidad, curiosidad o conocimientos base en el área que elijas. Evaluamos tu criterio, disciplina, puntualidad y tu compromiso para trabajar en proyectos reales con el equipo.",
   },
   {
     q: "¿Por qué el programa es 100% presencial en el Centro de Convenciones?",
@@ -295,7 +314,36 @@ export default function Semillero() {
       </Helmet>
 
       <div className="min-h-screen bg-[#07060F] text-[#F5F8FF] selection:bg-[#0F76D6]/40 selection:text-white relative overflow-hidden font-body">
-        <Navigation />
+        {/* Header Dedicado Semillero DTGP */}
+        <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-[#07060F]/85 border-b border-white/10 transition-all">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="/" className="flex items-center gap-2 group transition-opacity hover:opacity-80">
+              <img src={logo} alt="DT Growth Partners" className="h-8 sm:h-9 w-auto object-contain" />
+            </a>
+
+            <div className="flex items-center gap-3 sm:gap-6">
+              <a
+                href="#areas"
+                className="hidden sm:inline-block font-mono text-xs uppercase tracking-wider text-white/70 hover:text-white transition-colors"
+              >
+                5 Áreas
+              </a>
+              <a
+                href="#requisitos"
+                className="hidden sm:inline-block font-mono text-xs uppercase tracking-wider text-white/70 hover:text-white transition-colors"
+              >
+                Requisitos
+              </a>
+              <button
+                onClick={handleScrollToForm}
+                className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full font-medium text-xs sm:text-sm px-4 sm:px-6 py-2.5 bg-white text-black hover:scale-[1.03] transition-transform duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              >
+                <span>Postularme</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </header>
 
         {/* Aurora atmosférica */}
         <Aurora
@@ -307,17 +355,13 @@ export default function Semillero() {
         />
 
         {/* ======================= HERO ======================= */}
-        <section className="relative pt-32 pb-16 md:pt-44 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
+        <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
           <div className="text-center max-w-4xl mx-auto space-y-7">
             
-            {/* Monograma DT y Badges */}
+            {/* Badges de Convocatoria */}
             <div className="flex flex-col items-center justify-center gap-3">
-              <div className="flex items-center gap-3">
-                <img
-                  src={dtMonogram}
-                  alt="DT Monogram"
-                  className="h-10 w-auto object-contain drop-shadow-[0_0_24px_rgba(15,118,214,0.7)]"
-                />
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-[#26BDF0] animate-pulse" />
                 <span className="font-mono text-xs tracking-[0.25em] text-[#26BDF0] uppercase font-semibold">
                   Semillero DTGP · 2026
                 </span>
@@ -418,7 +462,7 @@ export default function Semillero() {
         <div className="max-w-5xl mx-auto h-[2px] bg-gradient-to-r from-transparent via-[rgba(15,118,214,0.6)] to-transparent" />
 
         {/* ======================= LOS 3 PILARES ======================= */}
-        <section className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
+        <section id="requisitos" className="scroll-mt-24 relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/50">
               // POR QUÉ ES DIFERENTE
@@ -467,7 +511,7 @@ export default function Semillero() {
         </section>
 
         {/* ======================= LAS 5 ÁREAS ======================= */}
-        <section id="areas" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
+        <section id="areas" className="scroll-mt-24 relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
           <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#26BDF0]">
               // PERFILES Y ESPECIALIZACIONES
@@ -510,12 +554,13 @@ export default function Semillero() {
                   </div>
 
                   <div className="pt-6 border-t border-white/10 mt-6">
-                    <div className="font-mono text-[11px] uppercase tracking-wider text-white/40 mb-2">
-                      Lo que aprenderás:
+                    <div className="font-mono text-[11px] uppercase tracking-wider text-white/50 mb-2.5 flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-[#26BDF0]" />
+                      <span>Lo que desarrollarás:</span>
                     </div>
-                    <ul className="space-y-1.5">
-                      {area.learn.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-white/80 font-light">
+                    <ul className="space-y-2">
+                      {area.items.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs text-white/80 font-light leading-snug">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#26BDF0] mt-0.5 shrink-0" />
                           <span>{item}</span>
                         </li>
@@ -564,7 +609,7 @@ export default function Semillero() {
         </section>
 
         {/* ======================= FORMULARIO PASO A PASO (STEPPER) ======================= */}
-        <section ref={formRef} id="postulacion" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto z-10">
+        <section ref={formRef} id="postulacion" className="scroll-mt-24 relative py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto z-10">
           <div className="relative p-6 sm:p-12 rounded-3xl liquid-glass-strong border border-white/15 shadow-[0_0_60px_rgba(15,118,214,0.2)]">
             
             {status === "success" ? (
@@ -611,9 +656,9 @@ export default function Semillero() {
               <div>
                 {/* Header del Formulario */}
                 <div className="text-center space-y-2 pb-6 border-b border-white/10">
-                  <div className="flex items-center justify-center gap-2.5 mb-1">
-                    <img src={dtMonogram} alt="DT" className="h-6 w-auto object-contain" />
-                    <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#26BDF0]">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#0F76D6]/15 border border-[#0F76D6]/30 mb-1">
+                    <Sparkles className="w-3.5 h-3.5 text-[#26BDF0]" />
+                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[#26BDF0] font-semibold">
                       POSTULACIÓN AL SEMILLERO
                     </span>
                   </div>
@@ -848,7 +893,7 @@ export default function Semillero() {
 
                     <div>
                       <label className="block text-xs font-medium text-white/80 mb-1.5">
-                        ¿Por qué quieres entrar específicamente al Semillero DTGP y qué esperas aprender en estos 3 meses? *
+                        ¿Por qué quieres entrar al Semillero DTGP y qué te gustaría desarrollar en estos 3 meses? *
                       </label>
                       <Textarea
                         required
@@ -856,7 +901,7 @@ export default function Semillero() {
                         value={formData.motivation}
                         onChange={handleChange}
                         rows={3}
-                        placeholder="Cuéntanos con honestidad qué te motiva, qué te interesa y qué esperas lograr con nosotros..."
+                        placeholder="Cuéntanos qué área te apasiona, qué proyectos o habilidades quieres desarrollar y qué esperas aportar al equipo..."
                         className="bg-black/60 border-white/15 text-white focus:border-[#26BDF0] rounded-xl text-xs"
                       />
                     </div>
