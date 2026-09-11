@@ -471,7 +471,7 @@ export default function Semillero() {
               Cero teoría abstracta. Trabajo y ejecución en proyectos reales.
             </h2>
             <p className="text-sm text-white/65 font-light max-w-xl mx-auto pt-2 leading-relaxed">
-              En el Semillero no vienes a ver clases teóricas: vienes a producir, crear y resolver sobre cuentas, marcas y clientes reales desde el primer día.
+              Produces, creas y resuelves sobre cuentas, marcas y clientes reales desde el primer día.
             </p>
           </div>
 
