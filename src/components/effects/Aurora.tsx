@@ -16,7 +16,7 @@ export type AuroraBlob = {
   delay?: string;
 };
 
-const Aurora = ({ blobs }: { blobs: AuroraBlob[] }) => (
+const Aurora = ({ blobs = [] }: { blobs?: AuroraBlob[] }) => (
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
     {blobs.map((b, i) => (
       <div

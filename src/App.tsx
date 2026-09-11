@@ -102,8 +102,9 @@ const App = () => (
                 <Route path="/servicios/whatsapp-marketing-cartagena" element={<WhatsAppMarketingCartagena />} />
                 {/* Programa de Práctica y Talento Semillero DTGP */}
                 <Route path="/semillero" element={<Semillero />} />
-                <Route path="/trabaja-con-nosotros" element={<Navigate to="/semillero" replace />} />
-                <Route path="/trabajaconnosotros" element={<Navigate to="/semillero" replace />} />
+                <Route path="/trabaja-con-nosotros" element={<Semillero />} />
+                <Route path="/trabajaconnosotros" element={<Semillero />} />
+                <Route path="/preview-semillero" element={<Semillero />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

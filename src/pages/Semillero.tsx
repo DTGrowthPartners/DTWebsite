@@ -298,7 +298,13 @@ export default function Semillero() {
         <Navigation />
 
         {/* Aurora atmosférica */}
-        <Aurora />
+        <Aurora
+          blobs={[
+            { color: "cyan", className: "top-[4%] right-[10%] w-[550px] h-[550px] opacity-25" },
+            { color: "blue", className: "top-[35%] left-[-80px] w-[600px] h-[600px] opacity-20", delay: "-8s" },
+            { color: "purple", className: "bottom-[5%] right-[5%] w-[500px] h-[500px] opacity-20", delay: "-14s" },
+          ]}
+        />
 
         {/* ======================= HERO ======================= */}
         <section className="relative pt-32 pb-16 md:pt-44 md:pb-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto z-10">
