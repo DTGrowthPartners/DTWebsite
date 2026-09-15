@@ -30,6 +30,7 @@ import {
   Building2,
   Flame,
   Check,
+  Upload,
 } from "lucide-react";
 import { scrollToTarget } from "@/lib/smooth-scroll";
 import logo from "@/assets/DT-GROWTH-LOGO.png";
@@ -47,6 +48,8 @@ interface SemilleroFormData {
   portfolioOrProject: string;
   socialLink: string;
   confirmedTerms: boolean;
+  cvFileName: string;
+  cvBase64: string;
 }
 
 const INITIAL_FORM: SemilleroFormData = {
@@ -62,72 +65,74 @@ const INITIAL_FORM: SemilleroFormData = {
   portfolioOrProject: "",
   socialLink: "",
   confirmedTerms: false,
+  cvFileName: "",
+  cvBase64: "",
 };
 
 const AREAS = [
   {
-    id: "diseno",
-    title: "Diseño Gráfico & Video Corto",
-    badge: "Creatividad",
-    icon: Palette,
-    description:
-      "Piezas gráficas para pauta publicitaria, stories de alta conversión y edición de video vertical (Reels/TikTok) para las marcas y clientes de DTGP.",
-    items: [
-      "Creatividades y piezas estáticas de alta conversión para pauta",
-      "Edición de video vertical dinámico con ritmo comercial (Reels / TikTok)",
-      "Líneas gráficas y sistemas visuales aplicados a marcas reales",
-    ],
-  },
-  {
-    id: "ia-content",
-    title: "Creación de Contenido con IA",
-    badge: "Tendencia",
-    icon: Bot,
-    description:
-      "Experimentación y generación con IA: copys persuasivos, avatares hiperrealistas, prompts para imágenes comerciales y video con modelos generativos.",
-    items: [
-      "Generación de imágenes y creatividades comerciales con Midjourney y Flux",
-      "Producción de video con modelos generativos (Kling, Runway, Luma)",
-      "Copys persuasivos y flujos de contenido asistidos por Claude y ChatGPT",
-    ],
-  },
-  {
-    id: "google-ads",
-    title: "Google Ads & Pauta Digital",
+    id: "growth",
+    title: "Growth",
     badge: "Performance",
     icon: Search,
     description:
-      "Captura de clientes con intención activa en Google Search. Arquitectura de campañas, pujas inteligentes y analítica de conversión.",
+      "Estrategia y ejecución de campañas de pauta digital en Meta Ads y Google Ads. Análisis de datos, funnels de conversión, reporting y optimización de rendimiento para marcas reales.",
     items: [
-      "Estructura y segmentación de campañas en Google Search",
-      "Investigación y análisis de palabras clave con intención comercial",
-      "Seguimiento de conversiones, medición de ROI y optimización de pujas",
+      "Campañas de Meta Ads y Google Ads con presupuesto real",
+      "Análisis de métricas, funnels de conversión y reporting de resultados",
+      "Optimización de ROAS, segmentación de audiencias y escalamiento",
     ],
   },
   {
-    id: "desarrollo-ia",
-    title: "Desarrollo Web & Automatizaciones IA",
+    id: "contenido",
+    title: "Contenido",
+    badge: "Creatividad",
+    icon: Palette,
+    description:
+      "Diseño gráfico, edición de video, creativos publicitarios para Ads, producción ágil de contenido con IA: avatars, videos generativos y piezas para redes sociales.",
+    items: [
+      "Creativos estáticos y dinámicos de alta conversión para pauta",
+      "Edición de video, Reels y contenido visual para redes sociales",
+      "Producción ágil con IA: avatars, videos generativos e imágenes comerciales",
+    ],
+  },
+  {
+    id: "desarrollo",
+    title: "Desarrollo",
     badge: "Tecnología",
     icon: Code2,
     description:
-      "Construcción de landing pages optimizadas para ventas, integraciones de APIs y flujos automatizados con n8n, webhooks y agentes inteligentes.",
+      "Construcción de sitios web, landing pages y aplicaciones con React, Next.js y Node.js. APIs, infraestructura en VPS y despliegue de proyectos en producción.",
     items: [
-      "Desarrollo de landing pages de alta conversión (React, Vite, Tailwind)",
-      "Flujos de integración y automatización con n8n, Make y webhooks",
-      "Conexión de APIs y agentes de IA aplicados a operaciones reales",
+      "Desarrollo de landing pages y sitios web con React, Next.js y Tailwind",
+      "Construcción de APIs, integraciones y servicios backend con Node.js",
+      "Infraestructura, despliegue en VPS y mantenimiento de proyectos en producción",
     ],
   },
   {
-    id: "community-manager",
-    title: "Community Manager & Contenido",
-    badge: "Comunidad",
+    id: "ia-automatizacion",
+    title: "IA & Automatización",
+    badge: "Automatización",
+    icon: Bot,
+    description:
+      "Agentes inteligentes, scripts de automatización, integración de APIs, cron jobs en VPS y flujos con modelos de IA aplicados a operaciones reales.",
+    items: [
+      "Desarrollo de agentes de IA con Claude y OpenAI aplicados al negocio",
+      "Scripts de automatización en Python, Node.js y React desplegados en VPS",
+      "Integración de APIs, webhooks y Google Apps Script para flujos operativos",
+    ],
+  },
+  {
+    id: "operaciones",
+    title: "Operaciones",
+    badge: "Gestión",
     icon: Share2,
     description:
-      "Planificación y parrillas de contenido en redes, redacción de copys comerciales persuasivos y dinamización activa de comunidades de marcas.",
+      "Gestión de clientes, seguimiento de proyectos, CRM, procesos internos, ventas y coordinación operativa del equipo y las cuentas de la consultora.",
     items: [
-      "Planificación estratégica y parrillas de contenido para marcas",
-      "Copywriting comercial enfocado en retención y engagement",
-      "Gestión de comunidades, atención de interacciones y captación de leads",
+      "Gestión de CRM, seguimiento de clientes y pipeline de ventas",
+      "Coordinación de proyectos, procesos internos y entregables",
+      "Atención a cuentas, reporting operativo y mejora continua de procesos",
     ],
   },
 ];
@@ -147,15 +152,23 @@ const FAQS = [
   },
   {
     q: "¿Cómo funciona la proyección al terminar los 3 meses?",
-    a: "Los 3 meses iniciales corresponden al periodo intensivo de aceleración con auxilio económico de $500.000 COP/mes. Al culminar, evaluamos el desempeño, la actitud y los resultados de cada participante para ingresar a nuestro plan de contratación formal dentro de DT Growth Partners.",
-  },
-  {
-    q: "¿Puedo postularme si soy menor de edad?",
-    a: "No. El programa es exclusivo para personas mayores de 18 años cumplidos (+18) al momento de postularse.",
+    a: "Los 3 meses iniciales corresponden al periodo intensivo de aceleración con remuneración de $500.000 COP/mes. Al culminar, evaluamos el desempeño, la actitud y los resultados de cada participante para ingresar a nuestro plan de contratación formal dentro de DT Growth Partners.",
   },
   {
     q: "¿Cuál es el proceso de selección una vez envíe el formulario?",
     a: "Revisamos cada postulación de manera individual. Si tu formulario demuestra motivación y cumple con los requisitos de horario y ciudad, nos pondremos en contacto contigo por WhatsApp o correo para una breve entrevista de alineación.",
+  },
+  {
+    q: "¿Puedo validar mi experiencia como práctica académica?",
+    a: "Si tu institución educativa lo permite, podemos gestionar la vinculación formativa correspondiente.",
+  },
+  {
+    q: "¿Necesito computador propio?",
+    a: "Para participar en el Semillero es recomendable contar con computador portátil propio. Los requerimientos técnicos dependerán del área seleccionada.",
+  },
+  {
+    q: "¿Hay restricción de edad?",
+    a: "No exigimos una edad específica. Buscamos talento, disciplina y ganas de aprender. Si eres menor de edad, tu participación estará sujeta a las autorizaciones correspondientes.",
   },
 ];
 
@@ -168,6 +181,7 @@ export default function Semillero() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const formRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleScrollToForm = () => {
     if (formRef.current) {
@@ -188,6 +202,22 @@ export default function Semillero() {
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMessage("El archivo de CV no debe superar los 5 MB.");
+      return;
+    }
+    setErrorMessage("");
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64 = (reader.result as string).split(",")[1];
+      setFormData((prev) => ({ ...prev, cvFileName: file.name, cvBase64: base64 }));
+    };
+    reader.readAsDataURL(file);
+  };
+
   const selectArea = (areaTitle: string) => {
     setFormData((prev) => ({ ...prev, area: areaTitle }));
   };
@@ -195,7 +225,7 @@ export default function Semillero() {
   const validateStep1 = () => {
     if (!formData.fullName.trim()) return "Por favor ingresa tu nombre completo.";
     const ageNum = parseInt(formData.age, 10);
-    if (isNaN(ageNum) || ageNum < 18) return "Debes ser mayor de 18 años (+18) para participar.";
+    if (isNaN(ageNum) || ageNum < 1) return "Por favor ingresa tu edad.";
     if (!formData.whatsapp.trim()) return "Por favor ingresa tu número de WhatsApp.";
     if (!formData.email.trim() || !formData.email.includes("@")) return "Por favor ingresa un correo válido.";
     return null;
@@ -248,13 +278,13 @@ export default function Semillero() {
       return;
     }
     if (!formData.confirmedTerms) {
-      setErrorMessage("Debes confirmar los requisitos de edad, presencialidad y horario.");
+      setErrorMessage("Debes confirmar los requisitos de presencialidad y horario.");
       return;
     }
 
     setStatus("sending");
 
-    const payload = {
+    const payload: Record<string, string> = {
       fullName: formData.fullName,
       age: formData.age,
       whatsapp: formData.whatsapp,
@@ -267,6 +297,12 @@ export default function Semillero() {
       portfolioOrProject: formData.portfolioOrProject || "No especificado",
       socialLink: formData.socialLink || "No especificado",
     };
+
+    // Incluir CV si fue adjuntado
+    if (formData.cvBase64) {
+      payload.cvFileName = formData.cvFileName;
+      payload.cvBase64 = formData.cvBase64;
+    }
 
     // 1. Enviar a Google Sheets Webhook
     try {
@@ -298,13 +334,13 @@ export default function Semillero() {
   return (
     <>
       <Helmet>
-        <title>Semillero DTGP | Programa de Práctica y Talento en Cartagena — DT Growth Partners</title>
+        <title>Semillero DTGP | Programa Remunerado de Talento en Cartagena — DT Growth Partners</title>
         <meta
           name="description"
-          content="Únete al Semillero DTGP. Programa de práctica presencial en el Centro de Convenciones de Cartagena para mayores de 18 años. Aprende pauta digital, diseño, IA y desarrollo en proyectos reales con auxilio económico."
+          content="Únete al Semillero DTGP. Programa presencial remunerado de medio tiempo en el Centro de Convenciones de Cartagena. Trabaja en proyectos reales de pauta digital, diseño, IA y desarrollo con remuneración mensual."
         />
         <link rel="canonical" href="https://dtgrowthpartners.com/semillero" />
-        <meta property="og:title" content="Semillero DTGP | Programa de Práctica y Talento — DT Growth Partners" />
+        <meta property="og:title" content="Semillero DTGP | Programa Remunerado de Talento — DT Growth Partners" />
         <meta
           property="og:description"
           content="Aprende haciendo. Trabaja en proyectos reales desde el primer día en nuestro cowork en el Centro de Convenciones de Cartagena."
@@ -370,7 +406,7 @@ export default function Semillero() {
               <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#0F76D6]/20 border border-[#0F76D6]/40 text-[#26BDF0] font-mono text-xs tracking-wider uppercase backdrop-blur-md">
                   <Flame className="w-3.5 h-3.5 text-[#26BDF0] animate-pulse" />
-                  Convocatoria Abierta · Cartagena (+18)
+                  Convocatoria Abierta · Cartagena
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full liquid-glass border border-white/10 text-white/70 font-mono text-xs tracking-wider uppercase backdrop-blur-md">
                   <Building2 className="w-3.5 h-3.5 text-white/50" />
@@ -395,6 +431,14 @@ export default function Semillero() {
               mentoría directa y trabajo práctico sobre marcas y empresas reales.
             </p>
 
+            {/* Frase prominente: Programa presencial remunerado */}
+            <div className="flex justify-center">
+              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-medium text-sm tracking-wide">
+                <DollarSign className="w-4 h-4" />
+                Programa presencial remunerado de medio tiempo en Cartagena
+              </span>
+            </div>
+
             {/* Tarjetas de condiciones clave */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 pb-2 max-w-3xl mx-auto text-left">
               <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
@@ -403,7 +447,7 @@ export default function Semillero() {
                   <span>Días</span>
                 </div>
                 <div className="text-sm font-semibold text-white">Lunes a Viernes</div>
-                <div className="text-[11px] text-white/50 font-light">Medio tiempo</div>
+                <div className="text-[11px] text-white/50 font-light">Medio tiempo · Cupos limitados</div>
               </div>
 
               <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
@@ -412,13 +456,13 @@ export default function Semillero() {
                   <span>Turnos</span>
                 </div>
                 <div className="text-sm font-semibold text-white">Mañana o Tarde</div>
-                <div className="text-[11px] text-white/50 font-light">8-12m / 1:30-5:30pm</div>
+                <div className="text-[11px] text-white/50 font-light">8:30-12:30 / 1:30-5:30pm</div>
               </div>
 
               <div className="p-4 rounded-2xl liquid-glass border border-white/10 hover:border-[#26BDF0]/60 hover:bg-[#0F76D6]/[0.08] hover:shadow-[0_0_20px_rgba(15,118,214,0.25)] hover:-translate-y-0.5 transition-all duration-300">
                 <div className="flex items-center gap-2 text-white/50 text-[10px] font-mono tracking-widest uppercase mb-1">
                   <DollarSign className="w-3.5 h-3.5 text-[#26BDF0]" />
-                  <span>Auxilio</span>
+                  <span>Remuneración</span>
                 </div>
                 <div className="text-sm font-semibold text-emerald-400">$500.000 COP</div>
                 <div className="text-[11px] text-white/50 font-light">Mensual (3 meses)</div>
@@ -447,7 +491,7 @@ export default function Semillero() {
                 href="#areas"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full font-mono text-xs uppercase tracking-wider px-6 py-4 border border-white/15 bg-white/5 hover:bg-white/10 text-white/80 hover:text-white transition-all"
               >
-                Ver las 5 áreas de formación ↓
+                Ver las 5 áreas de especialización ↓
               </a>
             </div>
 
@@ -526,7 +570,7 @@ export default function Semillero() {
               // PERFILES Y ESPECIALIZACIONES
             </span>
             <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
-              5 áreas de formación práctica
+              5 áreas de especialización
             </h2>
             <p className="text-sm sm:text-base text-white/70 max-w-2xl mx-auto font-light">
               <strong className="text-white">Aclaración:</strong> Son 5 áreas de especialización, no
@@ -592,19 +636,19 @@ export default function Semillero() {
                 <ul className="space-y-3 text-sm text-white/80 font-light">
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
-                    <span><strong>Edad:</strong> Exclusivo para mayores de 18 años (+18).</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
                     <span><strong>Ubicación:</strong> 100% presencial en Cartagena (Cowork Centro de Convenciones).</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
-                    <span><strong>Horario:</strong> Lunes a viernes en turno mañana o tarde.</span>
+                    <span><strong>Horario:</strong> Lunes a viernes. Mañana 8:30 am – 12:30 pm / Tarde 1:30 – 5:30 pm.</span>
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
-                    <span><strong>Auxilio:</strong> $500.000 COP/mes (3 meses).</span>
+                    <span><strong>Remuneración:</strong> $500.000 COP/mes (3 meses).</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#26BDF0]" />
+                    <span><strong>Cupos:</strong> Limitados por turno. Selección por desempeño.</span>
                   </li>
                 </ul>
               </div>
@@ -648,6 +692,9 @@ export default function Semillero() {
                   <p>🎯 Área: <span className="text-white">{formData.area}</span></p>
                   <p>⏰ Turno: <span className="text-white">{formData.shift}</span></p>
                   <p>📍 Sede: <span className="text-white">Cowork Centro de Convenciones Cartagena</span></p>
+                  {formData.cvFileName && (
+                    <p>📄 CV: <span className="text-white">{formData.cvFileName}</span></p>
+                  )}
                 </div>
 
                 <div className="pt-4">
@@ -727,11 +774,11 @@ export default function Semillero() {
 
                       <div>
                         <label className="block text-xs font-medium text-white/80 mb-1.5">
-                          Edad (+18 obligatorio) *
+                          Edad *
                         </label>
                         <Input
                           type="number"
-                          min="18"
+                          min="1"
                           max="99"
                           name="age"
                           value={formData.age}
@@ -815,8 +862,8 @@ export default function Semillero() {
                           className="w-full rounded-xl bg-black/60 border border-white/15 px-3 py-3 text-sm text-white focus:border-[#26BDF0] focus:outline-none h-12"
                         >
                           <option value="" className="bg-[#07060F]">Selecciona un turno...</option>
-                          <option value="Turno Mañana (8:00 am - 12:00 pm)" className="bg-[#07060F]">
-                            Turno Mañana: 8:00 am – 12:00 pm
+                          <option value="Turno Mañana (8:30 am - 12:30 pm)" className="bg-[#07060F]">
+                            Turno Mañana: 8:30 am – 12:30 pm
                           </option>
                           <option value="Turno Tarde (1:30 pm - 5:30 pm)" className="bg-[#07060F]">
                             Turno Tarde: 1:30 pm – 5:30 pm
@@ -885,11 +932,11 @@ export default function Semillero() {
                             >
                               <div className="flex items-center gap-2.5">
                                 <span className="text-lg">
-                                  {a.id === "diseno" && "🎨"}
-                                  {a.id === "ia-content" && "🤖"}
-                                  {a.id === "google-ads" && "📈"}
-                                  {a.id === "desarrollo-ia" && "💻"}
-                                  {a.id === "community-manager" && "📱"}
+                                  {a.id === "growth" && "📈"}
+                                  {a.id === "contenido" && "🎨"}
+                                  {a.id === "desarrollo" && "💻"}
+                                  {a.id === "ia-automatizacion" && "🤖"}
+                                  {a.id === "operaciones" && "📋"}
                                 </span>
                                 <span className="text-xs font-medium text-white">
                                   {a.title}
@@ -945,6 +992,44 @@ export default function Semillero() {
                       </div>
                     </div>
 
+                    {/* CV Upload */}
+                    <div>
+                      <label className="block text-xs font-medium text-white/80 mb-1.5">
+                        Adjuntar CV / Hoja de vida (Opcional, máx. 5 MB)
+                      </label>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current?.click()}
+                        className={`w-full p-4 rounded-xl border border-dashed text-left transition-all flex items-center gap-3 ${
+                          formData.cvFileName
+                            ? "bg-[#0F76D6]/10 border-[#26BDF0]/50 text-[#26BDF0]"
+                            : "bg-white/[0.02] border-white/20 text-white/50 hover:border-white/40 hover:text-white/70"
+                        }`}
+                      >
+                        <Upload className="w-5 h-5 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          {formData.cvFileName ? (
+                            <div>
+                              <span className="text-xs font-medium text-white block truncate">{formData.cvFileName}</span>
+                              <span className="text-[10px] text-[#26BDF0]">Archivo adjunto ✓ — Click para cambiar</span>
+                            </div>
+                          ) : (
+                            <div>
+                              <span className="text-xs font-medium block">Seleccionar archivo PDF, DOC o DOCX</span>
+                              <span className="text-[10px]">Sube tu hoja de vida si la tienes disponible</span>
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+
                     <div className="pt-2">
                       <label className="flex items-start gap-2.5 cursor-pointer select-none">
                         <input
@@ -956,9 +1041,10 @@ export default function Semillero() {
                           className="mt-1 h-4 w-4 rounded border-white/20 bg-black/40 text-[#0F76D6] focus:ring-[#26BDF0]"
                         />
                         <span className="text-[11px] text-white/70 leading-relaxed font-light">
-                          Confirmo que <strong className="text-white">soy mayor de 18 años (+18)</strong>, resido en
-                          Cartagena y puedo asistir de <strong className="text-white">lunes a viernes</strong> en el turno
-                          elegido al espacio de cowork en el <strong className="text-white">Centro de Convenciones</strong>.
+                          Confirmo que resido en Cartagena y puedo asistir de{" "}
+                          <strong className="text-white">lunes a viernes</strong> en el turno
+                          elegido al espacio de cowork en el{" "}
+                          <strong className="text-white">Centro de Convenciones</strong>.
                         </span>
                       </label>
                     </div>

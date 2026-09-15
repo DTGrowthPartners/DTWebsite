@@ -47,20 +47,20 @@ const routes = [
   },
   {
     path: "/semillero",
-    title: "Semillero DTGP | Programa de Práctica y Talento en Cartagena — DT Growth Partners",
-    description: "Únete al Semillero DTGP. Programa de práctica presencial en el Centro de Convenciones de Cartagena para mayores de 18 años. Aprende pauta, diseño, IA y desarrollo en proyectos reales.",
+    title: "Semillero DTGP | Programa Remunerado de Talento en Cartagena — DT Growth Partners",
+    description: "Únete al Semillero DTGP. Programa presencial remunerado de medio tiempo en el Centro de Convenciones de Cartagena. Trabaja en proyectos reales de pauta digital, diseño, IA y desarrollo con remuneración mensual.",
     h1: "Semillero DTGP — Aprende haciendo en proyectos reales",
   },
   {
     path: "/trabaja-con-nosotros",
-    title: "Semillero DTGP | Programa de Práctica y Talento en Cartagena — DT Growth Partners",
-    description: "Únete al Semillero DTGP. Programa de práctica presencial en el Centro de Convenciones de Cartagena para mayores de 18 años. Aprende pauta, diseño, IA y desarrollo en proyectos reales.",
+    title: "Semillero DTGP | Programa Remunerado de Talento en Cartagena — DT Growth Partners",
+    description: "Únete al Semillero DTGP. Programa presencial remunerado de medio tiempo en el Centro de Convenciones de Cartagena. Trabaja en proyectos reales de pauta digital, diseño, IA y desarrollo con remuneración mensual.",
     h1: "Semillero DTGP — Aprende haciendo en proyectos reales",
   },
   {
     path: "/trabajaconnosotros",
-    title: "Semillero DTGP | Programa de Práctica y Talento en Cartagena — DT Growth Partners",
-    description: "Únete al Semillero DTGP. Programa de práctica presencial en el Centro de Convenciones de Cartagena para mayores de 18 años. Aprende pauta, diseño, IA y desarrollo en proyectos reales.",
+    title: "Semillero DTGP | Programa Remunerado de Talento en Cartagena — DT Growth Partners",
+    description: "Únete al Semillero DTGP. Programa presencial remunerado de medio tiempo en el Centro de Convenciones de Cartagena. Trabaja en proyectos reales de pauta digital, diseño, IA y desarrollo con remuneración mensual.",
     h1: "Semillero DTGP — Aprende haciendo en proyectos reales",
   },
   {
