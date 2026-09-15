@@ -284,7 +284,7 @@ export default function Semillero() {
 
     setStatus("sending");
 
-    const payload: Record<string, string> = {
+    const payload: Record<string, string | boolean> = {
       fullName: formData.fullName,
       age: formData.age,
       whatsapp: formData.whatsapp,
@@ -296,6 +296,7 @@ export default function Semillero() {
       motivation: formData.motivation,
       portfolioOrProject: formData.portfolioOrProject || "No especificado",
       socialLink: formData.socialLink || "No especificado",
+      confirmedTerms: formData.confirmedTerms,
     };
 
     // Incluir CV si fue adjuntado
@@ -310,7 +311,7 @@ export default function Semillero() {
         method: "POST",
         mode: "no-cors",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "text/plain",
         },
         body: JSON.stringify(payload),
       });
