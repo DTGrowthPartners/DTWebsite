@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-route
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./context/LanguageContext";
 import SmoothScroll, { scrollToTarget } from "./lib/smooth-scroll";
+import { initConversionTracking } from "./lib/analytics";
 import { useEffect, lazy, Suspense } from "react";
 import Index from "./pages/Index";
 import MetaAds from "./pages/MetaAds";
@@ -35,12 +36,18 @@ const queryClient = new QueryClient();
 
 declare global {
   interface Window {
-    fbq: (action: string, event: string) => void;
+    fbq: (action: string, event: string, params?: Record<string, unknown>) => void;
   }
 }
 
 function ScrollToTop() {
   const { pathname } = useLocation();
+
+  // Tracking de conversiones (clics a WhatsApp, teléfono y correo) hacia
+  // dataLayer/GA4. Es idempotente, así que basta con montarlo una vez.
+  useEffect(() => {
+    initConversionTracking();
+  }, []);
 
   useEffect(() => {
     // Reinicia el scroll al cambiar de ruta usando Lenis si está activo.

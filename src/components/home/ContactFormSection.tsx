@@ -8,6 +8,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import RotatingWord from "@/components/effects/RotatingWord";
 import Aurora from "@/components/effects/Aurora";
 import { Send, CheckCircle, XCircle, Mail, MessageCircle, MapPin, Clock } from "lucide-react";
+import { trackFormLead } from "@/lib/analytics";
 
 // Declarar grecaptcha en el scope global
 declare global {
@@ -199,6 +200,8 @@ const ContactFormSection = () => {
         if (widgetIdRef.current !== null && window.grecaptcha) {
           window.grecaptcha.reset(widgetIdRef.current);
         }
+        // El lead ya quedó guardado en el CRM: recién aquí es una conversión.
+        trackFormLead({ has_company: Boolean(formDataCopy.company), has_phone: Boolean(formDataCopy.phone) });
         openWhatsApp(formDataCopy);
       } else {
         setStatus("error");
