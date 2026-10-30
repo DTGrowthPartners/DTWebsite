@@ -14,6 +14,13 @@
  * Los eventos van al dataLayer (para GTM) y además directo a GA4 vía gtag,
  * que ya está instalado en index.html.
  *
+ * click_whatsapp = tocó el botón. generate_lead = el mensaje llegó de verdad:
+ * cada clic agrega «Ref: XXXXX» al texto prellenado y registra el código en
+ * el puente (/ga/ref → pm2 dtgp-ga4-bridge). Cuando el bot de WhatsApp ve ese
+ * código en el primer mensaje, el puente manda generate_lead a GA4 por
+ * Measurement Protocol con el client_id de esta visita. Por eso generate_lead
+ * NO se envía desde aquí.
+ *
  * OJO con el doble conteo: si en GTM se crea una etiqueta "Evento de GA4"
  * disparada por estos eventos del dataLayer, GA4 recibiría el evento DOS veces
  * (una por gtag y otra por GTM). En ese caso poner SEND_VIA_GTAG = false.
@@ -23,6 +30,11 @@ const SEND_VIA_GTAG = true;
 
 /** Dominios que cuentan como "abrir WhatsApp". */
 const WHATSAPP_HOSTS = ["wa.me", "api.whatsapp.com", "web.whatsapp.com", "whatsapp.com"];
+
+const GA4_ID = "G-LHE1YXX5Z6";
+const REF_ENDPOINT = "/ga/ref";
+const REF_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+const REF_RE = /Ref:\s*[A-Z0-9]{5}/;
 
 type EventParams = Record<string, string | number | boolean | undefined>;
 
@@ -101,13 +113,92 @@ function labelOf(el: Element | null): string | undefined {
   return aria ? aria.slice(0, 100) : undefined;
 }
 
-function trackWhatsApp(url: string, method: "link" | "window_open", el?: Element | null): void {
-  fireOnce("whatsapp_click", url, {
+function trackWhatsApp(url: string, method: "link" | "window_open", el?: Element | null, ref?: string): void {
+  fireOnce("click_whatsapp", url.replace(REF_RE, ""), {
     link_url: url,
     link_text: labelOf(el ?? null),
     wa_phone: extractPhone(url),
     method,
+    wa_ref: ref,
   });
+}
+
+// ---- Código Ref: une el clic con el mensaje que recibe el bot ----
+
+function newRef(): string {
+  let out = "";
+  for (let i = 0; i < 5; i++) out += REF_ALPHABET.charAt(Math.floor(Math.random() * REF_ALPHABET.length));
+  return out;
+}
+
+function cookie(name: string): string {
+  const m = document.cookie.match(`(?:^|; )${name}=([^;]*)`);
+  return m ? decodeURIComponent(m[1]) : "";
+}
+
+/** gclid/gbraid/wbraid de la URL de entrada: se guardan para la sesión. */
+function clickId(name: string): string {
+  try {
+    const fromUrl = new URLSearchParams(window.location.search).get(name);
+    if (fromUrl) sessionStorage.setItem(`dt_${name}`, fromUrl);
+    return fromUrl || sessionStorage.getItem(`dt_${name}`) || "";
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Guarda el código en el puente con los ids de GA4 de esta visita.
+ * client_id: cookie _ga = GA1.1.<cid> · session_id: _ga_<ID> = GS1.1.<sid>… o GS2.1.s<sid>$…
+ * Va como texto plano a propósito: sendBeacon con application/json no se envía.
+ */
+function registerRef(ref: string, buttonLocation: string): void {
+  const sessionCookie = cookie(`_ga_${GA4_ID.replace("G-", "")}`);
+  const body = JSON.stringify({
+    ref,
+    client_id: (cookie("_ga").match(/^GA\d\.\d\.(.+)$/) || [])[1] || "",
+    session_id: (sessionCookie.match(/^GS\d\.\d\.s?(\d{9,11})/) || [])[1] || "",
+    gclid: clickId("gclid"),
+    gbraid: clickId("gbraid"),
+    wbraid: clickId("wbraid"),
+    // Servicio = último tramo de la ruta (/servicios/meta-ads/ → meta-ads); la home es "home".
+    service: window.location.pathname.split("/").filter(Boolean).pop() || "home",
+    page: window.location.pathname,
+    button_location: buttonLocation,
+  });
+  try {
+    if (navigator.sendBeacon && navigator.sendBeacon(REF_ENDPOINT, body)) return;
+  } catch {
+    /* sigue con fetch */
+  }
+  fetch(REF_ENDPOINT, { method: "POST", body, headers: { "content-type": "text/plain" }, keepalive: true }).catch(() => {});
+}
+
+/**
+ * Agrega al texto prellenado que el mensaje viene de la web y el código Ref.
+ * Devuelve null si la URL ya traía código (doble clic, o <a> + window.open).
+ */
+function withRef(url: string): { url: string; ref: string } | null {
+  try {
+    const parsed = new URL(url, window.location.href);
+    const text = parsed.searchParams.get("text") || "";
+    if (REF_RE.test(text)) return null;
+    const ref = newRef();
+    parsed.searchParams.set("text", `${text}${text ? "\n\n" : ""}(Escribo desde la web · Ref: ${ref})`);
+    return { url: parsed.toString(), ref };
+  } catch {
+    return null;
+  }
+}
+
+function locationOf(el: Element | null | undefined): string {
+  if (!el) return "desconocido";
+  if (el.closest("footer")) return "footer";
+  if (el.closest("header, nav")) return "header";
+  if (el.closest("form")) return "formulario";
+  const fixed = (node: Element | null) => !!node && getComputedStyle(node).position === "fixed";
+  if (fixed(el) || fixed(el.parentElement)) return "flotante";
+  return "contenido";
 }
 
 let initialized = false;
@@ -131,7 +222,13 @@ export function initConversionTracking(): void {
       const href = anchor.getAttribute("href") || "";
 
       if (isWhatsAppUrl(href)) {
-        trackWhatsApp(anchor.href, "link", anchor);
+        // Fase de captura: el href se cambia antes de que el navegador lo siga.
+        const tagged = withRef(anchor.href);
+        if (tagged) {
+          anchor.href = tagged.url;
+          registerRef(tagged.ref, locationOf(anchor));
+        }
+        trackWhatsApp(anchor.href, "link", anchor, tagged?.ref);
         return;
       }
       if (href.startsWith("tel:")) {
@@ -162,18 +259,25 @@ export function initConversionTracking(): void {
     target?: string,
     features?: string
   ): Window | null {
-    const asString = typeof url === "string" ? url : url?.toString() ?? "";
+    let asString = typeof url === "string" ? url : url?.toString() ?? "";
     if (isWhatsAppUrl(asString)) {
-      trackWhatsApp(asString, "window_open", document.activeElement);
+      const tagged = withRef(asString);
+      if (tagged) {
+        asString = tagged.url;
+        registerRef(tagged.ref, locationOf(document.activeElement));
+      }
+      trackWhatsApp(asString, "window_open", document.activeElement, tagged?.ref);
+      return nativeOpen(asString, target, features);
     }
     return nativeOpen(url as string, target, features);
   } as typeof window.open;
 }
 
 /**
- * Lead del formulario de contacto. `generate_lead` es un evento recomendado
- * de GA4, así que Google Ads lo reconoce al importarlo como conversión.
+ * Formulario de contacto guardado en el CRM. Ya no es generate_lead: el
+ * formulario abre WhatsApp con su propio Ref, y si el mensaje llega el bot
+ * cuenta el generate_lead (method=form). Así no se cuenta dos veces.
  */
 export function trackFormLead(params: EventParams = {}): void {
-  trackEvent("generate_lead", { form_name: "contact-form", ...params });
+  trackEvent("form_submit", { form_name: "contact-form", ...params });
 }
