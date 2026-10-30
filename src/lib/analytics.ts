@@ -31,7 +31,7 @@ const SEND_VIA_GTAG = true;
 /** Dominios que cuentan como "abrir WhatsApp". */
 const WHATSAPP_HOSTS = ["wa.me", "api.whatsapp.com", "web.whatsapp.com", "whatsapp.com"];
 
-const GA4_ID = "G-LHE1YXX5Z6";
+const GA4_ID = "G-FWH69NBM5H";
 const REF_ENDPOINT = "/ga/ref";
 const REF_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const REF_RE = /Ref:\s*[A-Z0-9]{5}/;
